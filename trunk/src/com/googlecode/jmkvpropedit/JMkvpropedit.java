@@ -108,6 +108,7 @@ public class JMkvpropedit {
 	private JCheckBox cbNumbGeneral;
 	private JTextField txtNumbStartGeneral;
 	private JTextField txtNumbPadGeneral;
+	private JCheckBox chbRemoveChapters;
 	private JCheckBox chbExtraCmdGeneral;
 	private JTextField txtExtraCmdGeneral;
 	private JTextField txtMkvPropExe;
@@ -169,7 +170,7 @@ public class JMkvpropedit {
 	 */
 	private void initialize() {
 		frmJMkvpropedit = new JFrame();
-		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.1");
+		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.2");
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -286,13 +287,17 @@ public class JMkvpropedit {
 		pnlGeneral.add(txtNumbPadGeneral);
 		txtNumbPadGeneral.setColumns(10);
 		
+		chbRemoveChapters = new JCheckBox("Remove chapters");
+		chbRemoveChapters.setBounds(6, 75, 119, 23);
+		pnlGeneral.add(chbRemoveChapters);
+		
 		chbExtraCmdGeneral = new JCheckBox("Extra parameters");
-		chbExtraCmdGeneral.setBounds(6, 75, 109, 23);
+		chbExtraCmdGeneral.setBounds(6, 101, 109, 23);
 		pnlGeneral.add(chbExtraCmdGeneral);
 		
 		txtExtraCmdGeneral = new JTextField();
 		txtExtraCmdGeneral.setEnabled(false);
-		txtExtraCmdGeneral.setBounds(126, 76, 592, 20);
+		txtExtraCmdGeneral.setBounds(126, 102, 592, 20);
 		pnlGeneral.add(txtExtraCmdGeneral);
 		txtExtraCmdGeneral.setColumns(10);
 		
@@ -376,7 +381,6 @@ public class JMkvpropedit {
 		txtOutput = new JTextArea();
 		txtOutput.setLineWrap(true);
 		txtOutput.setEditable(false);
-		pnlOutput.add(txtOutput);
 		JScrollPane scrollOutput = new JScrollPane(txtOutput);
 		pnlOutput.add(scrollOutput);
 		
@@ -1574,6 +1578,10 @@ public class JMkvpropedit {
 				}
 			}
 			
+			if (chbRemoveChapters.isSelected()) {
+				cmdLineGeneral[i] += " --chapters \"\"";
+			}
+
 			if (chbExtraCmdGeneral.isSelected()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
 			}
