@@ -22,7 +22,7 @@
 	</target>
 	
 	<target name="compile" depends="init" >
-		<javac destdir="${build.dir}" debug="false" srcdir="${src.dir}" />
+		<javac destdir="${build.dir}" debug="false" srcdir="${src.dir}" encoding="ISO-8859-1" />
 	</target>
 	
 	<target name="jar" depends="compile">
