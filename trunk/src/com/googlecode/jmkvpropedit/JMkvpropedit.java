@@ -136,13 +136,10 @@ public class JMkvpropedit {
 	private File iniFile = new File("JMkvpropedit.ini");
 	
 	private String[] cmdLineGeneral = null;
-	private String[] cmdLineGeneralOpt = null;
 	private String[] cmdLineVideo = null;
 	private String[] cmdLineAudio = null;
 	private String[] cmdLineSubtitle = null;
 	private ArrayList<String> cmdLineBatch = null;
-	private ArrayList<String> cmdLineBatchOpt = null;
-	
 	
 	/**
 	 * Launch the application.
@@ -1558,16 +1555,13 @@ public class JMkvpropedit {
 	
 	private void setCmdLineGeneral() {
 		cmdLineGeneral = new String[modelFiles.size()];
-		cmdLineGeneralOpt = new String[modelFiles.size()];
 		int start = Integer.parseInt(txtNumbStartGeneral.getText());
 	
 		for (int i = 0; i < modelFiles.size(); i++) {
 			cmdLineGeneral[i] = "";
-			cmdLineGeneralOpt[i] = "";
 			
 			if (chbTitleGeneral.isSelected()) {	
 				cmdLineGeneral[i] += " --edit info";
-				cmdLineGeneralOpt[i] += " --edit info";
 				
 				if (cbNumbGeneral.isSelected()) {
 					int pad = 0;
@@ -1579,21 +1573,17 @@ public class JMkvpropedit {
 					start++;
 					
 					cmdLineGeneral[i] += " --set title=\"" + newTitle + "\"";
-					cmdLineGeneralOpt[i] += " --set title=\"" + newTitle + "\"";
 				} else {
 					cmdLineGeneral[i] += " --set title=\"" + txtTitleGeneral.getText() + "\"";
-					cmdLineGeneralOpt[i] += " --set title=\"" + txtTitleGeneral.getText() + "\"";
 				}
 			}
 			
 			if (chbRemoveChapters.isSelected()) {
 				cmdLineGeneral[i] += " --chapters \"\"";
-				cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
 			}
 
 			if (chbExtraCmdGeneral.isSelected()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
-				cmdLineGeneralOpt[i] += " " + txtExtraCmdGeneral.getText();
 			}
 		}
 		
@@ -1825,7 +1815,6 @@ public class JMkvpropedit {
 		setCmdLineSubtitle();
 		
 		cmdLineBatch = new ArrayList<String>();
-		cmdLineBatchOpt = new ArrayList<String>();
 		
 		String cmdTemp = cmdLineGeneral[0] + cmdLineVideo[0] + cmdLineAudio[0] + cmdLineSubtitle[0];
 		
@@ -1833,9 +1822,6 @@ public class JMkvpropedit {
 			for (int i = 0; i < modelFiles.getSize(); i++) {
 				String cmdLineAll = cmdLineGeneral[i] + cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
 				cmdLineBatch.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
-				
-				cmdLineAll = cmdLineGeneralOpt[i] + cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
-				cmdLineBatchOpt.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
 			}
 		}
 
