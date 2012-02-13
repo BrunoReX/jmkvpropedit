@@ -1,30 +1,8 @@
-/* 
  * Copyright (c) 2012, Bruno Barbieri
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- */
 
 package com.googlecode.jmkvpropedit;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.filechooser.*;
-import org.ini4j.*;
 
 public class JMkvpropedit {
 	private JFrame frmJMkvpropedit;
@@ -136,10 +114,13 @@ public class JMkvpropedit {
 	private File iniFile = new File("JMkvpropedit.ini");
 	
 	private String[] cmdLineGeneral = null;
+	private String[] cmdLineGeneralOpt = null;
 	private String[] cmdLineVideo = null;
 	private String[] cmdLineAudio = null;
 	private String[] cmdLineSubtitle = null;
 	private ArrayList<String> cmdLineBatch = null;
+	private ArrayList<String> cmdLineBatchOpt = null;
+	
 	
 	/**
 	 * Launch the application.
@@ -1555,13 +1536,16 @@ public class JMkvpropedit {
 	
 	private void setCmdLineGeneral() {
 		cmdLineGeneral = new String[modelFiles.size()];
+		cmdLineGeneralOpt = new String[modelFiles.size()];
 		int start = Integer.parseInt(txtNumbStartGeneral.getText());
 	
 		for (int i = 0; i < modelFiles.size(); i++) {
 			cmdLineGeneral[i] = "";
+			cmdLineGeneralOpt[i] = "";
 			
 			if (chbTitleGeneral.isSelected()) {	
 				cmdLineGeneral[i] += " --edit info";
+				cmdLineGeneralOpt[i] += " --edit info";
 				
 				if (cbNumbGeneral.isSelected()) {
 					int pad = 0;
@@ -1573,17 +1557,21 @@ public class JMkvpropedit {
 					start++;
 					
 					cmdLineGeneral[i] += " --set title=\"" + newTitle + "\"";
+					cmdLineGeneralOpt[i] += " --set title=\"" + newTitle + "\"";
 				} else {
 					cmdLineGeneral[i] += " --set title=\"" + txtTitleGeneral.getText() + "\"";
+					cmdLineGeneralOpt[i] += " --set title=\"" + txtTitleGeneral.getText() + "\"";
 				}
 			}
 			
 			if (chbRemoveChapters.isSelected()) {
 				cmdLineGeneral[i] += " --chapters \"\"";
+				cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
 			}
 
 			if (chbExtraCmdGeneral.isSelected()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
+				cmdLineGeneralOpt[i] += " " + txtExtraCmdGeneral.getText();
 			}
 		}
 		
@@ -1815,6 +1803,7 @@ public class JMkvpropedit {
 		setCmdLineSubtitle();
 		
 		cmdLineBatch = new ArrayList<String>();
+		cmdLineBatchOpt = new ArrayList<String>();
 		
 		String cmdTemp = cmdLineGeneral[0] + cmdLineVideo[0] + cmdLineAudio[0] + cmdLineSubtitle[0];
 		
@@ -1822,6 +1811,9 @@ public class JMkvpropedit {
 			for (int i = 0; i < modelFiles.getSize(); i++) {
 				String cmdLineAll = cmdLineGeneral[i] + cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
 				cmdLineBatch.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
+				
+				cmdLineAll = cmdLineGeneralOpt[i] + cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
+				cmdLineBatchOpt.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
 			}
 		}
 
@@ -1908,7 +1900,7 @@ public class JMkvpropedit {
 			} catch (IOException e) {
 
 			}
-		} else {
+		} else if (isWindows()) {
 			String exePath = getMkvPropExeFromReg();
 			
 			if (exePath != null) {
@@ -2009,5 +2001,14 @@ public class JMkvpropedit {
 			formatter = new DecimalFormat(n);
 		}
 		return formatter;
+	}
+	
+	private boolean isWindows() {
+		String OS = System.getProperty("os.name");
+		
+		if (OS.startsWith("Windows"))
+			return true;
+		else
+			return false;
 	}
 }
