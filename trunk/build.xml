@@ -1,15 +1,21 @@
-<?xml version="1.0" ?> 
+<?xml version="1.0" encoding="ISO-8859-1" ?> 
 <project name="JMkvpropedit" default="jar">
 	
 	<property name="src.dir" value="src" />
 	<property name="res.dir" value="${src.dir}/res" />
 	<property name="dist.dir" value="dist" />
 	<property name="build.dir" value="build" />
+	<property name="launch4j.dir" location="launch4j" />
 	<property name="main.class" value="com.googlecode.jmkvpropedit.JMkvpropedit" />
+	
+	<condition property="isWindows">
+		<os family="windows" />
+	</condition>
 	
 	<target name="init">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${dist.dir}" />
+		
 		<copy todir="${build.dir}/res">
 			<fileset dir="${res.dir}" includes="*.png" />
 		</copy>
@@ -24,13 +30,18 @@
 		    <manifest>
                 <attribute name="Main-Class" value="${main.class}" />
             </manifest>
-        </jar> 
+        </jar>
+	</target>
+	
+	<target name="exe" depends="jar" if="isWindows">
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+		<launch4j configFile="${launch4j.dir}/config/Launch4j_project.xml" />
 	</target>
 	
 	<target name="run" depends="jar">
 		<java classname="${main.class}" classpath="${build.dir}" fork="true" />
 	</target>
-	
+
 	<target name="clean">
 		<delete dir="${dist.dir}" />
 		<delete dir="${build.dir}" />
