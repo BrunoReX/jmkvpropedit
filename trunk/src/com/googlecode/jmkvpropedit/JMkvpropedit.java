@@ -109,6 +109,7 @@ public class JMkvpropedit {
 	private JTextField txtNumbStartGeneral;
 	private JTextField txtNumbPadGeneral;
 	private JCheckBox chbRemoveChapters;
+	private JCheckBox chbRemoveTags;
 	private JCheckBox chbExtraCmdGeneral;
 	private JTextField txtExtraCmdGeneral;
 	private JTextField txtMkvPropExe;
@@ -290,6 +291,10 @@ public class JMkvpropedit {
 		chbRemoveChapters = new JCheckBox("Remove chapters");
 		chbRemoveChapters.setBounds(6, 75, 119, 23);
 		pnlGeneral.add(chbRemoveChapters);
+		
+		chbRemoveTags = new JCheckBox("Remove tags");
+		chbRemoveTags.setBounds(6, 101, 91, 23);
+		pnlGeneral.add(chbRemoveTags);
 		
 		chbExtraCmdGeneral = new JCheckBox("Extra parameters");
 		chbExtraCmdGeneral.setBounds(6, 101, 109, 23);
@@ -1560,6 +1565,14 @@ public class JMkvpropedit {
 		for (int i = 0; i < modelFiles.size(); i++) {
 			cmdLineGeneral[i] = "";
 			
+			if (chbRemoveTags.isSelected()) {
+				cmdLineGeneral[i] += " --tags all:";
+			}
+			
+			if (chbRemoveChapters.isSelected()) {
+				cmdLineGeneral[i] += " --chapters \"\"";
+			}
+			
 			if (chbTitleGeneral.isSelected()) {	
 				cmdLineGeneral[i] += " --edit info";
 				
@@ -1578,11 +1591,7 @@ public class JMkvpropedit {
 				}
 			}
 			
-			if (chbRemoveChapters.isSelected()) {
-				cmdLineGeneral[i] += " --chapters \"\"";
-			}
-
-			if (chbExtraCmdGeneral.isSelected()) {
+			if (chbExtraCmdGeneral.isSelected() && !txtExtraCmdGeneral.getText().trim().isEmpty()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
 			}
 		}
@@ -1638,7 +1647,7 @@ public class JMkvpropedit {
 					editCount++;
 				}
 				
-				if (chbExtraCmdVideo[j].isSelected()) {
+				if (chbExtraCmdVideo[j].isSelected() && !txtExtraCmdVideo[j].getText().trim().isEmpty()) {
 					tmpCmdLineVideo[j] += " " + txtExtraCmdVideo[j].getText();
 					editCount++;
 				}
@@ -1711,7 +1720,7 @@ public class JMkvpropedit {
 					editCount++;
 				}
 				
-				if (chbExtraCmdAudio[j].isSelected()) {
+				if (chbExtraCmdAudio[j].isSelected() && !txtExtraCmdAudio[j].getText().trim().isEmpty()) {
 					tmpCmdLineAudio[j] += " " + txtExtraCmdAudio[j].getText();
 					editCount++;
 				}
@@ -1784,7 +1793,7 @@ public class JMkvpropedit {
 					editCount++;
 				}
 				
-				if (chbExtraCmdSubtitle[j].isSelected()) {
+				if (chbExtraCmdSubtitle[j].isSelected() && !txtExtraCmdSubtitle[j].getText().trim().isEmpty()) {
 					tmpCmdLineSubtitle[j] += " " + txtExtraCmdSubtitle[j].getText();
 					editCount++;
 				}
