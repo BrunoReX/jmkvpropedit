@@ -33,9 +33,14 @@
         </jar>
 	</target>
 	
-	<target name="exe" depends="jar" if="isWindows">
+	<target name="exe" depends="jar" if="isWindows" description="Compile standalone executable">
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
-		<launch4j configFile="${launch4j.dir}/config/Launch4j_project.xml" />
+		<launch4j configFile="${launch4j.dir}/config/exe-standalone.xml" />
+	</target>
+	
+	<target name="exe-launcher" depends="jar" if="isWindows" description="Compile executable that launches the JAR file">
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+		<launch4j configFile="${launch4j.dir}/config/exe-with-jar.xml" />
 	</target>
 	
 	<target name="run" depends="jar">
