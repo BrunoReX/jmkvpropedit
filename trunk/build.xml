@@ -22,7 +22,7 @@
 	</target>
 	
 	<target name="compile" depends="init" >
-		<javac includeantruntime="false" destdir="${build.dir}" debug="false" srcdir="${src.dir}" encoding="ISO-8859-1" />
+		<javac includeantruntime="false" target="1.6" srcdir="${src.dir}" destdir="${build.dir}" debug="false" encoding="ISO-8859-1" />
 	</target>
 	
 	<target name="jar" depends="compile">
