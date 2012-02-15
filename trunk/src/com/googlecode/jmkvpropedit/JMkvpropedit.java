@@ -180,7 +180,7 @@ public class JMkvpropedit {
 	 */
 	private void initialize() {
 		frmJMkvpropedit = new JFrame();
-		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.3");
+		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.3"); /* Version */
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
