@@ -2312,7 +2312,20 @@ public class JMkvpropedit {
 		if (isWindows()) {
 			path = path.replace("\\", "\\\\");
 		} else {
+			path = path.replace("\\", "\\\\");
 			path = path.replace(" ", "\\ ");
+			path = path.replace("[", "\\[");
+			path = path.replace("]", "\\]");
+			path = path.replace("<", "\\<");
+			path = path.replace(">", "\\>");
+			path = path.replace("\'", "\\\'");
+			path = path.replace("\"", "\\\"");
+			path = path.replace("&", "\\&");
+			path = path.replace("*", "\\*");
+			path = path.replace("?", "\\?");
+			path = path.replace("|", "\\|");
+			path = path.replace(":", "\\:");
+			path = path.replace(";", "\\;");
 		}
 		
 		return path;
