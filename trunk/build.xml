@@ -19,6 +19,10 @@
 		<copy todir="${build.dir}/res">
 			<fileset dir="${res.dir}" includes="*.png" />
 		</copy>
+		
+		<copy todir="${dist.dir}">
+			<fileset dir="." includes="*.txt" />
+		</copy>
 	</target>
 	
 	<target name="compile" depends="init" >
