@@ -5,8 +5,15 @@
 	<property name="res.dir" value="${src.dir}/res" />
 	<property name="dist.dir" value="dist" />
 	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="lib" />
 	<property name="launch4j.dir" location="launch4j" />
 	<property name="main.class" value="com.googlecode.jmkvpropedit.JMkvpropedit" />
+	
+	<path id="lib.classpath">
+	  <fileset dir="${lib.dir}" >
+		<include name="**/*.jar" />
+	  </fileset>
+	</path>
 	
 	<condition property="isWindows">
 		<os family="windows" />
@@ -26,11 +33,14 @@
 	</target>
 	
 	<target name="compile" depends="init" >
-		<javac includeantruntime="false" target="1.6" source="1.6" srcdir="${src.dir}" destdir="${build.dir}" debug="false" encoding="ISO-8859-1" />
+		<javac includeantruntime="false" target="1.6" source="1.6" srcdir="${src.dir}" destdir="${build.dir}" debug="false" encoding="ISO-8859-1">
+			<classpath refid="lib.classpath" />
+		</javac>
 	</target>
 	
 	<target name="jar" depends="compile">
 		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+			<zipfileset src="${lib.dir}/ini4j/ini4j-0.5.2.jar" excludes="**/META-INF/" />
 		    <manifest>
                 <attribute name="Main-Class" value="${main.class}" />
             </manifest>
@@ -48,7 +58,9 @@
 	</target>
 	
 	<target name="run" depends="jar">
-		<java classname="${main.class}" classpath="${build.dir}" fork="true" />
+		<java classname="${main.class}" classpath="${build.dir}" fork="true">
+			<classpath refid="lib.classpath" />
+		</java>
 	</target>
 
 	<target name="clean">
