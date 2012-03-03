@@ -66,6 +66,7 @@
 	<target name="clean">
 		<delete dir="${dist.dir}" />
 		<delete dir="${build.dir}" />
+		<delete file="JMkvpropedit.ini" />
 	</target>
 	
 </project>
