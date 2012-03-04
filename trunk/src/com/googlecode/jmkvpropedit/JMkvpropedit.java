@@ -39,6 +39,7 @@ import java.text.NumberFormat;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
+
 import org.ini4j.*;
 
 public class JMkvpropedit {
@@ -149,6 +150,7 @@ public class JMkvpropedit {
 	MkvLanguage mkvLang = new MkvLanguage();
 	URL imgRes = null;
 	JFileChooser chooser = null;
+	private static ArrayList<String> argsArray = new ArrayList<String>();
 	private File iniFile = new File("JMkvpropedit.ini");
 	
 	private String[] cmdLineGeneral = null;
@@ -166,10 +168,14 @@ public class JMkvpropedit {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static final void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					for (String arg : args) {
+						argsArray.add(arg);
+					}
+					
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); // Use native theme for GUI
 					JMkvpropedit window = new JMkvpropedit();
 					window.frmJMkvpropedit.setVisible(true);
@@ -185,6 +191,7 @@ public class JMkvpropedit {
 	 */
 	public JMkvpropedit() {
 		initialize();
+		parseFiles(argsArray);
 	}
 
 	/**
@@ -192,7 +199,7 @@ public class JMkvpropedit {
 	 */
 	private void initialize() {
 		frmJMkvpropedit = new JFrame();
-		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.3.1"); /* Version */
+		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.4"); /* Version */
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -2162,6 +2169,23 @@ public class JMkvpropedit {
 		    }						   
 		 };
 		 worker.execute();
+	}
+	
+	private void parseFiles(ArrayList<String> argsArray) {
+		FileFilter filter = new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
+		
+		if (argsArray.size() > 0) {
+			File f = null;
+			for (String arg : argsArray) {
+				try {
+					f = new File(arg);
+					if (f.exists() && !f.isDirectory() && filter.accept(f)) {
+						modelFiles.add(modelFiles.getSize(), f.getCanonicalPath());
+					}
+				} catch (Exception e) {
+				}
+			}
+		}
 	}
 	
 	/* End of command line operations */
