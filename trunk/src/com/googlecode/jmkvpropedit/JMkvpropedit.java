@@ -2179,7 +2179,7 @@ public class JMkvpropedit {
 			for (String arg : argsArray) {
 				try {
 					f = new File(arg);
-					if (f.exists() && !f.isDirectory() && filter.accept(f)) {
+					if (f.exists() && !f.isDirectory() && filter.accept(f) && !modelFiles.contains(f.getCanonicalPath())) {
 						modelFiles.add(modelFiles.getSize(), f.getCanonicalPath());
 					}
 				} catch (Exception e) {
