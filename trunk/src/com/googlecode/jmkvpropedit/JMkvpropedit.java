@@ -848,7 +848,7 @@ public class JMkvpropedit {
 			rbNoDefVideo[nVideo] = new JRadioButton("No");
 			rbNoDefVideo[nVideo].setBounds(143, 32, 46, 23);
 			if (!isWindows())
-				rbNoDefVideo[nVideo].setBounds(194, 32, 46, 23);
+				rbNoDefVideo[nVideo].setBounds(194, 32, 55, 23);
 			rbNoDefVideo[nVideo].setEnabled(false);
 			subPnlVideo[nVideo].add(rbNoDefVideo[nVideo]);
 			
@@ -874,7 +874,7 @@ public class JMkvpropedit {
 			rbNoForcedVideo[nVideo] = new JRadioButton("No");
 			rbNoForcedVideo[nVideo].setBounds(143, 57, 46, 23);
 			if (!isWindows())
-				rbNoForcedVideo[nVideo].setBounds(194, 57, 46, 23);
+				rbNoForcedVideo[nVideo].setBounds(194, 57, 55, 23);
 			rbNoForcedVideo[nVideo].setEnabled(false);
 			subPnlVideo[nVideo].add(rbNoForcedVideo[nVideo]);
 			
@@ -1150,7 +1150,7 @@ public class JMkvpropedit {
 			rbNoDefAudio[nAudio] = new JRadioButton("No");
 			rbNoDefAudio[nAudio].setBounds(143, 32, 46, 23);
 			if (!isWindows())
-				rbNoDefAudio[nAudio].setBounds(194, 32, 46, 23);
+				rbNoDefAudio[nAudio].setBounds(194, 32, 55, 23);
 			rbNoDefAudio[nAudio].setEnabled(false);
 			subPnlAudio[nAudio].add(rbNoDefAudio[nAudio]);
 			
@@ -1176,7 +1176,7 @@ public class JMkvpropedit {
 			rbNoForcedAudio[nAudio] = new JRadioButton("No");
 			rbNoForcedAudio[nAudio].setBounds(143, 57, 46, 23);
 			if (!isWindows())
-				rbNoForcedAudio[nAudio].setBounds(194, 57, 46, 23);
+				rbNoForcedAudio[nAudio].setBounds(194, 57, 55, 23);
 			rbNoForcedAudio[nAudio].setEnabled(false);
 			subPnlAudio[nAudio].add(rbNoForcedAudio[nAudio]);
 			
@@ -1452,7 +1452,7 @@ public class JMkvpropedit {
 			rbNoDefSubtitle[nSubtitle] = new JRadioButton("No");
 			rbNoDefSubtitle[nSubtitle].setBounds(143, 32, 46, 23);
 			if (!isWindows())
-				rbNoDefSubtitle[nSubtitle].setBounds(194, 32, 46, 23);
+				rbNoDefSubtitle[nSubtitle].setBounds(194, 32, 55, 23);
 			rbNoDefSubtitle[nSubtitle].setEnabled(false);
 			subPnlSubtitle[nSubtitle].add(rbNoDefSubtitle[nSubtitle]);
 			
@@ -1478,7 +1478,7 @@ public class JMkvpropedit {
 			rbNoForcedSubtitle[nSubtitle] = new JRadioButton("No");
 			rbNoForcedSubtitle[nSubtitle].setBounds(143, 57, 46, 23);
 			if (!isWindows())
-				rbNoForcedSubtitle[nSubtitle].setBounds(194, 57, 46, 23);
+				rbNoForcedSubtitle[nSubtitle].setBounds(194, 57, 55, 23);
 			rbNoForcedSubtitle[nSubtitle].setEnabled(false);
 			subPnlSubtitle[nSubtitle].add(rbNoForcedSubtitle[nSubtitle]);
 			
