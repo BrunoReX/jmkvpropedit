@@ -2119,7 +2119,7 @@ public class JMkvpropedit {
 					
 					for (int i = 0; i < cmdLineBatch.size(); i++) {
 						File optFile = new File("options.txt");
-						PrintWriter optFilePW = new PrintWriter(new BufferedWriter(new FileWriter(optFile)));
+						PrintWriter optFilePW = new PrintWriter(optFile, "UTF-8");
 						String[] optFileContents = Commandline.translateCommandline(cmdLineBatchOpt.get(i));
 						
 						if (!optFile.exists()) {
