@@ -202,11 +202,15 @@ public class JMkvpropedit {
 		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.5"); /* Version */
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
+		if (isMac())
+			frmJMkvpropedit.setBounds(100, 100, 777, 460);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmJMkvpropedit.getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 733, 360);
+		if (isMac())
+			tabbedPane.setBounds(10, 11, 750, 373);
 		frmJMkvpropedit.getContentPane().add(tabbedPane);
 		
 		JPanel pnlInput = new JPanel();
@@ -439,14 +443,20 @@ public class JMkvpropedit {
 		
 		btnProcessFiles = new JButton("Process files");
 		btnProcessFiles.setBounds(151, 382, 150, 23);
-		if (!isWindows())
+		if (isMac()) {
+			btnProcessFiles.setBounds(94, 394, 235, 23);
+		} else if (!isWindows()) {
 			btnProcessFiles.setBounds(94, 382, 235, 23);
+		}
 		frmJMkvpropedit.getContentPane().add(btnProcessFiles);
 		
 		btnGenerateCmdLine = new JButton("Generate command line");
 		btnGenerateCmdLine.setBounds(452, 382, 150, 23);
-		if (!isWindows())
+		if (isMac()) {
+			btnGenerateCmdLine.setBounds(423, 394, 235, 23);
+		} else if (!isWindows()) {
 			btnGenerateCmdLine.setBounds(423, 382, 235, 23);
+		}
 		frmJMkvpropedit.getContentPane().add(btnGenerateCmdLine);
 		
 		frmJMkvpropedit.addWindowListener(new WindowAdapter() {
@@ -2388,6 +2398,15 @@ public class JMkvpropedit {
 		String OS = System.getProperty("os.name");
 		
 		if (OS.startsWith("Windows"))
+			return true;
+		else
+			return false;
+	}
+	
+	private boolean isMac() {
+		String OS = System.getProperty("os.name");
+		
+		if (OS.startsWith("Mac"))
 			return true;
 		else
 			return false;
