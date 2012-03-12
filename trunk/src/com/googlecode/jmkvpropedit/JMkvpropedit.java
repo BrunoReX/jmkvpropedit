@@ -203,7 +203,7 @@ public class JMkvpropedit {
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
 		if (isMac())
-			frmJMkvpropedit.setBounds(100, 100, 777, 460);
+			frmJMkvpropedit.setBounds(100, 100, 770, 460);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmJMkvpropedit.getContentPane().setLayout(null);
 		
