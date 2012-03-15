@@ -749,9 +749,12 @@ public class JMkvpropedit {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				chooser.setDialogTitle("Select mkvpropedit executable");
 				chooser.setMultiSelectionEnabled(false);
-				FileFilter filter = new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
 				chooser.resetChoosableFileFilters();
-				chooser.setFileFilter(filter);
+				
+				if (isWindows()) {
+					FileFilter filter = new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
+					chooser.setFileFilter(filter);
+				}
 				
 				int open = chooser.showOpenDialog(frmJMkvpropedit);
 				
