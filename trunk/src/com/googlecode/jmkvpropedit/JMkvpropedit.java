@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -152,7 +151,6 @@ public class JMkvpropedit {
 	private int nSubtitle = 0;
 	
 	MkvLanguage mkvLang = new MkvLanguage();
-	URL imgRes = null;
 	JFileChooser chooser = null;
 	private static ArrayList<String> argsArray = new ArrayList<String>();
 	private File iniFile = new File("JMkvpropedit.ini");
@@ -229,63 +227,56 @@ public class JMkvpropedit {
 		listFiles = new JList(modelFiles);
 		scrollFiles.setViewportView(listFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-add.png");
 		JButton btnAddFiles = new JButton("");
-		btnAddFiles.setIcon(new ImageIcon(imgRes));
+		btnAddFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-add.png")));
 		btnAddFiles.setBounds(696, 21, 22, 23);
 		btnAddFiles.setBorderPainted(false);
 		btnAddFiles.setContentAreaFilled(false);
 		btnAddFiles.setFocusPainted(false);
 		pnlInput.add(btnAddFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
 		JButton btnRemoveFiles = new JButton("");
-		btnRemoveFiles.setIcon(new ImageIcon(imgRes));
+		btnRemoveFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-remove.png")));
 		btnRemoveFiles.setBounds(696, 65, 22, 23);
 		btnRemoveFiles.setBorderPainted(false);
 		btnRemoveFiles.setContentAreaFilled(false);
 		btnRemoveFiles.setFocusPainted(false);
 		pnlInput.add(btnRemoveFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/edit-clear.png");
 		JButton btnClearFiles = new JButton("");
-		btnClearFiles.setIcon(new ImageIcon(imgRes));
+		btnClearFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/edit-clear.png")));
 		btnClearFiles.setBounds(696, 109, 22, 23);
 		btnClearFiles.setBorderPainted(false);
 		btnClearFiles.setContentAreaFilled(false);
 		btnClearFiles.setFocusPainted(false);
 		pnlInput.add(btnClearFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/go-top.png");
 		JButton btnTopFiles = new JButton("");
-		btnTopFiles.setIcon(new ImageIcon(imgRes));
+		btnTopFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/go-top.png")));
 		btnTopFiles.setBounds(696, 153, 22, 23);
 		btnTopFiles.setBorderPainted(false);
 		btnTopFiles.setContentAreaFilled(false);
 		btnTopFiles.setFocusPainted(false);
 		pnlInput.add(btnTopFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/go-up.png");
 		JButton btnUpFiles = new JButton("");
-		btnUpFiles.setIcon(new ImageIcon(imgRes));
+		btnUpFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/go-up.png")));
 		btnUpFiles.setBounds(696, 197, 22, 23);
 		btnUpFiles.setBorderPainted(false);
 		btnUpFiles.setContentAreaFilled(false);
 		btnUpFiles.setFocusPainted(false);
 		pnlInput.add(btnUpFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/go-down.png");
 		JButton btnDownFiles = new JButton("");
-		btnDownFiles.setIcon(new ImageIcon(imgRes));
+		btnDownFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/go-bottom.png")));
 		btnDownFiles.setBounds(696, 241, 22, 23);
 		btnDownFiles.setBorderPainted(false);
 		btnDownFiles.setContentAreaFilled(false);
 		btnDownFiles.setFocusPainted(false);
 		pnlInput.add(btnDownFiles);
 		
-		imgRes = ClassLoader.getSystemResource("res/go-bottom.png");
 		JButton btnBottomFiles = new JButton("");
-		btnBottomFiles.setIcon(new ImageIcon(imgRes));
+		btnBottomFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/go-bottom.png")));
 		btnBottomFiles.setBounds(696, 285, 22, 23);
 		btnBottomFiles.setBorderPainted(false);
 		btnBottomFiles.setContentAreaFilled(false);
@@ -412,18 +403,16 @@ public class JMkvpropedit {
 		cbVideo.setBounds(10, 10, 146, 20);
 		pnlVideo.add(cbVideo);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-add.png");
 		btnAddVideo = new JButton("");
-		btnAddVideo.setIcon(new ImageIcon(imgRes));
+		btnAddVideo.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-add.png")));
 		btnAddVideo.setBounds(166, 10, 22, 20);
 		btnAddVideo.setBorderPainted(false);
 		btnAddVideo.setContentAreaFilled(false);
 		btnAddVideo.setFocusPainted(false);
 		pnlVideo.add(btnAddVideo);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
 		btnRemoveVideo = new JButton("");
-		btnRemoveVideo.setIcon(new ImageIcon(imgRes));
+		btnRemoveVideo.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-remove.png")));
 		btnRemoveVideo.setBounds(190, 10, 22, 20);
 		btnRemoveVideo.setBorderPainted(false);
 		btnRemoveVideo.setContentAreaFilled(false);
@@ -443,18 +432,16 @@ public class JMkvpropedit {
 		cbAudio.setBounds(10, 10, 146, 20);
 		pnlAudio.add(cbAudio);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-add.png");
 		btnAddAudio = new JButton("");
-		btnAddAudio.setIcon(new ImageIcon(imgRes));
+		btnAddAudio.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-add.png")));
 		btnAddAudio.setBounds(166, 10, 22, 20);
 		btnAddAudio.setBorderPainted(false);
 		btnAddAudio.setContentAreaFilled(false);
 		btnAddAudio.setFocusPainted(false);
 		pnlAudio.add(btnAddAudio);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
 		btnRemoveAudio = new JButton("");
-		btnRemoveAudio.setIcon(new ImageIcon(imgRes));
+		btnRemoveAudio.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-remove.png")));
 		btnRemoveAudio.setBounds(190, 10, 22, 20);
 		btnRemoveAudio.setBorderPainted(false);
 		btnRemoveAudio.setContentAreaFilled(false);
@@ -474,18 +461,16 @@ public class JMkvpropedit {
 		cbSubtitle.setBounds(10, 10, 146, 20);
 		pnlSubtitle.add(cbSubtitle);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-add.png");
 		btnAddSubtitle = new JButton("");
-		btnAddSubtitle.setIcon(new ImageIcon(imgRes));
+		btnAddSubtitle.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-add.png")));
 		btnAddSubtitle.setBounds(166, 10, 22, 20);
 		btnAddSubtitle.setBorderPainted(false);
 		btnAddSubtitle.setContentAreaFilled(false);
 		btnAddSubtitle.setFocusPainted(false);
 		pnlSubtitle.add(btnAddSubtitle);
 		
-		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
 		btnRemoveSubtitle = new JButton("");
-		btnRemoveSubtitle.setIcon(new ImageIcon(imgRes));
+		btnRemoveSubtitle.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-remove.png")));
 		btnRemoveSubtitle.setBounds(190, 10, 22, 20);
 		btnRemoveSubtitle.setBorderPainted(false);
 		btnRemoveSubtitle.setContentAreaFilled(false);
