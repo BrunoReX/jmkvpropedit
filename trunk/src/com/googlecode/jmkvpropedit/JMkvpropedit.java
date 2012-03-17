@@ -203,7 +203,7 @@ public class JMkvpropedit {
 	 */
 	private void initialize() {
 		frmJMkvpropedit = new JFrame();
-		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.5.1"); /* Version */
+		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.6"); /* Version */
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
 		if (isMac())
