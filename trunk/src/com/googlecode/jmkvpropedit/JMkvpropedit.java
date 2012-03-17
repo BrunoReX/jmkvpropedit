@@ -27,9 +27,7 @@ package com.googlecode.jmkvpropedit;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -137,6 +135,12 @@ public class JMkvpropedit {
 	private JComboBox cbVideo;
 	private JComboBox cbAudio;
 	private JComboBox cbSubtitle;
+	private JButton btnAddVideo;
+	private JButton btnRemoveVideo;
+	private JButton btnAddAudio;
+	private JButton btnRemoveAudio;
+	private JButton btnAddSubtitle;
+	private JButton btnRemoveSubtitle;
 	private JLayeredPane lyrdPnlVideo;
 	private JLayeredPane lyrdPnlAudio;
 	private JLayeredPane lyrdPnlSubtitle;
@@ -409,13 +413,23 @@ public class JMkvpropedit {
 		pnlVideo.add(cbVideo);
 		
 		imgRes = ClassLoader.getSystemResource("res/list-add.png");
-		final JButton btnAddVideo = new JButton("");
+		btnAddVideo = new JButton("");
 		btnAddVideo.setIcon(new ImageIcon(imgRes));
 		btnAddVideo.setBounds(166, 10, 22, 20);
 		btnAddVideo.setBorderPainted(false);
 		btnAddVideo.setContentAreaFilled(false);
 		btnAddVideo.setFocusPainted(false);
 		pnlVideo.add(btnAddVideo);
+		
+		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
+		btnRemoveVideo = new JButton("");
+		btnRemoveVideo.setIcon(new ImageIcon(imgRes));
+		btnRemoveVideo.setBounds(190, 10, 22, 20);
+		btnRemoveVideo.setBorderPainted(false);
+		btnRemoveVideo.setContentAreaFilled(false);
+		btnRemoveVideo.setFocusPainted(false);
+		btnRemoveVideo.setEnabled(false);
+		pnlVideo.add(btnRemoveVideo);
 		
 		lyrdPnlVideo = new JLayeredPane();
 		lyrdPnlVideo.setBounds(0, 38, 728, 294);
@@ -429,13 +443,24 @@ public class JMkvpropedit {
 		cbAudio.setBounds(10, 10, 146, 20);
 		pnlAudio.add(cbAudio);
 		
-		final JButton btnAddAudio = new JButton("");
+		imgRes = ClassLoader.getSystemResource("res/list-add.png");
+		btnAddAudio = new JButton("");
 		btnAddAudio.setIcon(new ImageIcon(imgRes));
 		btnAddAudio.setBounds(166, 10, 22, 20);
 		btnAddAudio.setBorderPainted(false);
 		btnAddAudio.setContentAreaFilled(false);
 		btnAddAudio.setFocusPainted(false);
 		pnlAudio.add(btnAddAudio);
+		
+		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
+		btnRemoveAudio = new JButton("");
+		btnRemoveAudio.setIcon(new ImageIcon(imgRes));
+		btnRemoveAudio.setBounds(190, 10, 22, 20);
+		btnRemoveAudio.setBorderPainted(false);
+		btnRemoveAudio.setContentAreaFilled(false);
+		btnRemoveAudio.setFocusPainted(false);
+		btnRemoveAudio.setEnabled(false);
+		pnlAudio.add(btnRemoveAudio);
 		
 		lyrdPnlAudio = new JLayeredPane();
 		lyrdPnlAudio.setBounds(0, 38, 728, 294);
@@ -449,13 +474,24 @@ public class JMkvpropedit {
 		cbSubtitle.setBounds(10, 10, 146, 20);
 		pnlSubtitle.add(cbSubtitle);
 		
-		final JButton btnAddSubtitle = new JButton("");
+		imgRes = ClassLoader.getSystemResource("res/list-add.png");
+		btnAddSubtitle = new JButton("");
 		btnAddSubtitle.setIcon(new ImageIcon(imgRes));
 		btnAddSubtitle.setBounds(166, 10, 22, 20);
 		btnAddSubtitle.setBorderPainted(false);
 		btnAddSubtitle.setContentAreaFilled(false);
 		btnAddSubtitle.setFocusPainted(false);
 		pnlSubtitle.add(btnAddSubtitle);
+		
+		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
+		btnRemoveSubtitle = new JButton("");
+		btnRemoveSubtitle.setIcon(new ImageIcon(imgRes));
+		btnRemoveSubtitle.setBounds(190, 10, 22, 20);
+		btnRemoveSubtitle.setBorderPainted(false);
+		btnRemoveSubtitle.setContentAreaFilled(false);
+		btnRemoveSubtitle.setFocusPainted(false);
+		btnRemoveSubtitle.setEnabled(false);
+		pnlSubtitle.add(btnRemoveSubtitle);
 		
 		lyrdPnlSubtitle = new JLayeredPane();
 		lyrdPnlSubtitle.setBounds(0, 38, 728, 294);
@@ -822,6 +858,27 @@ public class JMkvpropedit {
 				if (cbVideo.getItemCount() == maxStreams) {
 					btnAddVideo.setEnabled(false);
 				}
+				
+				if (!btnRemoveVideo.isEnabled()) {
+					btnRemoveVideo.setEnabled(true);
+				}
+			}
+		});
+		
+		btnRemoveVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cbVideo.getSelectedIndex() > 0) {
+					cbVideo.removeItemAt(cbVideo.getItemCount()-1);
+					nVideo--;
+				}
+				
+				if (cbVideo.getItemCount() < maxStreams && !btnAddVideo.isEnabled()) {
+					btnAddVideo.setEnabled(true);
+				}
+				
+				if (cbVideo.getItemCount() == 1) {
+					btnRemoveVideo.setEnabled(false);
+				}
 			}
 		});
 		
@@ -839,6 +896,27 @@ public class JMkvpropedit {
 				if (cbAudio.getItemCount() == maxStreams) {
 					btnAddAudio.setEnabled(false);
 				}
+				
+				if (!btnRemoveAudio.isEnabled()) {
+					btnRemoveAudio.setEnabled(true);
+				}
+			}
+		});
+		
+		btnRemoveAudio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cbAudio.getSelectedIndex() > 0) {
+					cbAudio.removeItemAt(cbAudio.getItemCount()-1);
+					nAudio--;
+				}
+				
+				if (cbAudio.getItemCount() < maxStreams && !btnAddAudio.isEnabled()) {
+					btnAddAudio.setEnabled(true);
+				}
+				
+				if (cbAudio.getItemCount() == 1) {
+					btnRemoveAudio.setEnabled(false);
+				}
 			}
 		});
 		
@@ -853,8 +931,30 @@ public class JMkvpropedit {
 			public void actionPerformed(ActionEvent e) {
 				addSubtitleTrack();
 				cbSubtitle.setSelectedIndex(cbSubtitle.getItemCount()-1);
+				
 				if (cbSubtitle.getItemCount() == maxStreams) {
 					btnAddSubtitle.setEnabled(false);
+				}
+				
+				if (!btnRemoveSubtitle.isEnabled()) {
+					btnRemoveSubtitle.setEnabled(true);
+				}
+			}
+		});
+		
+		btnRemoveSubtitle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cbSubtitle.getSelectedIndex() > 0) {
+					cbSubtitle.removeItemAt(cbSubtitle.getItemCount()-1);
+					nSubtitle--;
+				}
+				
+				if (cbSubtitle.getItemCount() < maxStreams && !btnAddSubtitle.isEnabled()) {
+					btnAddSubtitle.setEnabled(true);
+				}
+				
+				if (cbSubtitle.getItemCount() == 1) {
+					btnRemoveSubtitle.setEnabled(false);
 				}
 			}
 		});
