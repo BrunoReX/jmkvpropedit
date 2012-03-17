@@ -268,7 +268,7 @@ public class JMkvpropedit {
 		pnlInput.add(btnUpFiles);
 		
 		JButton btnDownFiles = new JButton("");
-		btnDownFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/go-bottom.png")));
+		btnDownFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/go-down.png")));
 		btnDownFiles.setBounds(696, 241, 22, 23);
 		btnDownFiles.setBorderPainted(false);
 		btnDownFiles.setContentAreaFilled(false);
