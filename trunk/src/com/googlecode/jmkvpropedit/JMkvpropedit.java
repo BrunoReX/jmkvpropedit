@@ -230,7 +230,8 @@ public class JMkvpropedit {
 		btnAddFiles.setIcon(new ImageIcon(imgRes));
 		btnAddFiles.setBounds(696, 21, 22, 23);
 		btnAddFiles.setBorderPainted(false);
-		btnAddFiles.setContentAreaFilled(false); 
+		btnAddFiles.setContentAreaFilled(false);
+		btnAddFiles.setFocusPainted(false);
 		pnlInput.add(btnAddFiles);
 		
 		imgRes = ClassLoader.getSystemResource("res/list-remove.png");
@@ -238,7 +239,8 @@ public class JMkvpropedit {
 		btnRemoveFiles.setIcon(new ImageIcon(imgRes));
 		btnRemoveFiles.setBounds(696, 65, 22, 23);
 		btnRemoveFiles.setBorderPainted(false);
-		btnRemoveFiles.setContentAreaFilled(false); 
+		btnRemoveFiles.setContentAreaFilled(false);
+		btnRemoveFiles.setFocusPainted(false);
 		pnlInput.add(btnRemoveFiles);
 		
 		imgRes = ClassLoader.getSystemResource("res/edit-clear.png");
@@ -246,7 +248,8 @@ public class JMkvpropedit {
 		btnClearFiles.setIcon(new ImageIcon(imgRes));
 		btnClearFiles.setBounds(696, 109, 22, 23);
 		btnClearFiles.setBorderPainted(false);
-		btnClearFiles.setContentAreaFilled(false); 
+		btnClearFiles.setContentAreaFilled(false);
+		btnClearFiles.setFocusPainted(false);
 		pnlInput.add(btnClearFiles);
 		
 		imgRes = ClassLoader.getSystemResource("res/go-top.png");
@@ -254,7 +257,8 @@ public class JMkvpropedit {
 		btnTopFiles.setIcon(new ImageIcon(imgRes));
 		btnTopFiles.setBounds(696, 153, 22, 23);
 		btnTopFiles.setBorderPainted(false);
-		btnTopFiles.setContentAreaFilled(false); 
+		btnTopFiles.setContentAreaFilled(false);
+		btnTopFiles.setFocusPainted(false);
 		pnlInput.add(btnTopFiles);
 		
 		imgRes = ClassLoader.getSystemResource("res/go-up.png");
@@ -262,7 +266,8 @@ public class JMkvpropedit {
 		btnUpFiles.setIcon(new ImageIcon(imgRes));
 		btnUpFiles.setBounds(696, 197, 22, 23);
 		btnUpFiles.setBorderPainted(false);
-		btnUpFiles.setContentAreaFilled(false); 
+		btnUpFiles.setContentAreaFilled(false);
+		btnUpFiles.setFocusPainted(false);
 		pnlInput.add(btnUpFiles);
 		
 		imgRes = ClassLoader.getSystemResource("res/go-down.png");
@@ -270,7 +275,8 @@ public class JMkvpropedit {
 		btnDownFiles.setIcon(new ImageIcon(imgRes));
 		btnDownFiles.setBounds(696, 241, 22, 23);
 		btnDownFiles.setBorderPainted(false);
-		btnDownFiles.setContentAreaFilled(false); 
+		btnDownFiles.setContentAreaFilled(false);
+		btnDownFiles.setFocusPainted(false);
 		pnlInput.add(btnDownFiles);
 		
 		imgRes = ClassLoader.getSystemResource("res/go-bottom.png");
@@ -278,7 +284,8 @@ public class JMkvpropedit {
 		btnBottomFiles.setIcon(new ImageIcon(imgRes));
 		btnBottomFiles.setBounds(696, 285, 22, 23);
 		btnBottomFiles.setBorderPainted(false);
-		btnBottomFiles.setContentAreaFilled(false); 
+		btnBottomFiles.setContentAreaFilled(false);
+		btnBottomFiles.setFocusPainted(false);
 		pnlInput.add(btnBottomFiles);
 		
 		chooser = new JFileChooser();
@@ -406,7 +413,8 @@ public class JMkvpropedit {
 		btnAddVideo.setIcon(new ImageIcon(imgRes));
 		btnAddVideo.setBounds(166, 10, 22, 20);
 		btnAddVideo.setBorderPainted(false);
-		btnAddVideo.setContentAreaFilled(false); 
+		btnAddVideo.setContentAreaFilled(false);
+		btnAddVideo.setFocusPainted(false);
 		pnlVideo.add(btnAddVideo);
 		
 		lyrdPnlVideo = new JLayeredPane();
@@ -425,7 +433,8 @@ public class JMkvpropedit {
 		btnAddAudio.setIcon(new ImageIcon(imgRes));
 		btnAddAudio.setBounds(166, 10, 22, 20);
 		btnAddAudio.setBorderPainted(false);
-		btnAddAudio.setContentAreaFilled(false); 
+		btnAddAudio.setContentAreaFilled(false);
+		btnAddAudio.setFocusPainted(false);
 		pnlAudio.add(btnAddAudio);
 		
 		lyrdPnlAudio = new JLayeredPane();
@@ -444,7 +453,8 @@ public class JMkvpropedit {
 		btnAddSubtitle.setIcon(new ImageIcon(imgRes));
 		btnAddSubtitle.setBounds(166, 10, 22, 20);
 		btnAddSubtitle.setBorderPainted(false);
-		btnAddSubtitle.setContentAreaFilled(false); 
+		btnAddSubtitle.setContentAreaFilled(false);
+		btnAddSubtitle.setFocusPainted(false);
 		pnlSubtitle.add(btnAddSubtitle);
 		
 		lyrdPnlSubtitle = new JLayeredPane();
