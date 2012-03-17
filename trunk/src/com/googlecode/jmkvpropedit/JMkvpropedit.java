@@ -723,7 +723,7 @@ public class JMkvpropedit {
 				for (int i = idx.length-1; i > -1; i--) {
 					int pos = idx[i];
 					
-					if (pos < modelFiles.getSize()-1 && listFiles.getMaxSelectionIndex() != modelFiles.getSize()-1) {
+					if (pos < modelFiles.getSize()) {
 						String temp = (String)modelFiles.remove(pos);
 						modelFiles.add(modelFiles.getSize()-j, temp);
 						j++;
