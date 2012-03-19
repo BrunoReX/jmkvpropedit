@@ -31,8 +31,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
@@ -204,14 +202,14 @@ public class JMkvpropedit {
 		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.6"); /* Version */
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
-		if (isMac())
+		if (Utils.isMac())
 			frmJMkvpropedit.setBounds(100, 100, 770, 460);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmJMkvpropedit.getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 733, 360);
-		if (isMac())
+		if (Utils.isMac())
 			tabbedPane.setBounds(10, 11, 750, 373);
 		frmJMkvpropedit.getContentPane().add(tabbedPane);
 		
@@ -294,14 +292,14 @@ public class JMkvpropedit {
 		
 		chbTitleGeneral = new JCheckBox("Title");
 		chbTitleGeneral.setBounds(6, 7, 45, 23);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			chbTitleGeneral.setBounds(6, 7, 66, 23);
 		pnlGeneral.add(chbTitleGeneral);
 		
 		txtTitleGeneral = new JTextField();
 		txtTitleGeneral.setEnabled(false);
 		txtTitleGeneral.setBounds(57, 8, 661, 20);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			txtTitleGeneral.setBounds(78, 8, 640, 20);
 		pnlGeneral.add(txtTitleGeneral);
 		txtTitleGeneral.setColumns(10);
@@ -314,7 +312,7 @@ public class JMkvpropedit {
 		final JLabel lblNumbStartGeneral = new JLabel("Start");
 		lblNumbStartGeneral.setEnabled(false);
 		lblNumbStartGeneral.setBounds(191, 40, 31, 14);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			lblNumbStartGeneral.setBounds(191, 40, 45, 14);
 		pnlGeneral.add(lblNumbStartGeneral);
 		
@@ -322,7 +320,7 @@ public class JMkvpropedit {
 		txtNumbStartGeneral.setEnabled(false);
 		txtNumbStartGeneral.setText("1");
 		txtNumbStartGeneral.setBounds(220, 38, 70, 20);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			txtNumbStartGeneral.setBounds(232, 38, 70, 20);
 		pnlGeneral.add(txtNumbStartGeneral);
 		txtNumbStartGeneral.setColumns(10);
@@ -330,7 +328,7 @@ public class JMkvpropedit {
 		final JLabel lblNumbPadGeneral = new JLabel("Padding");
 		lblNumbPadGeneral.setEnabled(false);
 		lblNumbPadGeneral.setBounds(322, 40, 45, 14);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			lblNumbPadGeneral.setBounds(337, 40, 64, 14);
 		pnlGeneral.add(lblNumbPadGeneral);
 		
@@ -338,7 +336,7 @@ public class JMkvpropedit {
 		txtNumbPadGeneral.setEnabled(false);
 		txtNumbPadGeneral.setText("1");
 		txtNumbPadGeneral.setBounds(366, 38, 70, 20);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			txtNumbPadGeneral.setBounds(402, 38, 70, 20);
 		pnlGeneral.add(txtNumbPadGeneral);
 		txtNumbPadGeneral.setColumns(10);
@@ -358,21 +356,21 @@ public class JMkvpropedit {
 		
 		chbExtraCmdGeneral = new JCheckBox("Extra parameters");
 		chbExtraCmdGeneral.setBounds(6, 140, 114, 23);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			chbExtraCmdGeneral.setBounds(6, 140, 150, 23);
 		pnlGeneral.add(chbExtraCmdGeneral);
 		
 		txtExtraCmdGeneral = new JTextField();
 		txtExtraCmdGeneral.setEnabled(false);
 		txtExtraCmdGeneral.setBounds(126, 141, 592, 20);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			txtExtraCmdGeneral.setBounds(166, 141, 552, 20);
 		pnlGeneral.add(txtExtraCmdGeneral);
 		txtExtraCmdGeneral.setColumns(10);
 		
 		txtMkvPropExe = new JTextField();
 		txtMkvPropExe.setText("mkvpropedit.exe");
-		if (!isWindows())
+		if (!Utils.isWindows())
 			txtMkvPropExe.setText("/usr/bin/mkvpropedit");
 		txtMkvPropExe.setEditable(false);
 		txtMkvPropExe.setBounds(10, 272, 708, 20);
@@ -391,7 +389,7 @@ public class JMkvpropedit {
 		
 		JButton btnBrowseMkvPropExe = new JButton("Browse...");
 		btnBrowseMkvPropExe.setBounds(618, 295, 100, 23);
-		if (!isWindows())
+		if (!Utils.isWindows())
 			btnBrowseMkvPropExe.setBounds(583, 295, 135, 23);
 		pnlGeneral.add(btnBrowseMkvPropExe);
 		
@@ -494,18 +492,18 @@ public class JMkvpropedit {
 		
 		btnProcessFiles = new JButton("Process files");
 		btnProcessFiles.setBounds(151, 382, 150, 23);
-		if (isMac()) {
+		if (Utils.isMac()) {
 			btnProcessFiles.setBounds(94, 394, 235, 23);
-		} else if (!isWindows()) {
+		} else if (!Utils.isWindows()) {
 			btnProcessFiles.setBounds(94, 382, 235, 23);
 		}
 		frmJMkvpropedit.getContentPane().add(btnProcessFiles);
 		
 		btnGenerateCmdLine = new JButton("Generate command line");
 		btnGenerateCmdLine.setBounds(452, 382, 150, 23);
-		if (isMac()) {
+		if (Utils.isMac()) {
 			btnGenerateCmdLine.setBounds(423, 394, 235, 23);
-		} else if (!isWindows()) {
+		} else if (!Utils.isWindows()) {
 			btnGenerateCmdLine.setBounds(423, 382, 235, 23);
 		}
 		frmJMkvpropedit.getContentPane().add(btnGenerateCmdLine);
@@ -802,7 +800,7 @@ public class JMkvpropedit {
 				chooser.setMultiSelectionEnabled(false);
 				chooser.resetChoosableFileFilters();
 				
-				if (isWindows()) {
+				if (Utils.isWindows()) {
 					FileFilter filter = new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
 					chooser.setFileFilter(filter);
 				}
@@ -817,7 +815,7 @@ public class JMkvpropedit {
 		
 		cbMkvPropExeDef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (isWindows()) {
+				if (Utils.isWindows()) {
 					txtMkvPropExe.setText("mkvpropedit.exe");
 					cbMkvPropExeDef.setEnabled(false);
 					defaultIniFile();
@@ -961,21 +959,21 @@ public class JMkvpropedit {
 			chbDefaultVideo[nVideo] = new JCheckBox("Default track");
 			chbDefaultVideo[nVideo].setEnabled(false);
 			chbDefaultVideo[nVideo].setBounds(6, 32, 91, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbDefaultVideo[nVideo].setBounds(6, 32, 120, 23);
 			subPnlVideo[nVideo].add(chbDefaultVideo[nVideo]);
 			
 			rbYesDefVideo[nVideo] = new JRadioButton("Yes");
 			rbYesDefVideo[nVideo].setSelected(true);
 			rbYesDefVideo[nVideo].setBounds(99, 32, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbYesDefVideo[nVideo].setBounds(131, 32, 55, 23);
 			rbYesDefVideo[nVideo].setEnabled(false);
 			subPnlVideo[nVideo].add(rbYesDefVideo[nVideo]);
 			
 			rbNoDefVideo[nVideo] = new JRadioButton("No");
 			rbNoDefVideo[nVideo].setBounds(143, 32, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbNoDefVideo[nVideo].setBounds(194, 32, 55, 23);
 			rbNoDefVideo[nVideo].setEnabled(false);
 			subPnlVideo[nVideo].add(rbNoDefVideo[nVideo]);
@@ -987,21 +985,21 @@ public class JMkvpropedit {
 			chbForcedVideo[nVideo] = new JCheckBox("Forced track");
 			chbForcedVideo[nVideo].setEnabled(false);
 			chbForcedVideo[nVideo].setBounds(6, 57, 85, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbForcedVideo[nVideo].setBounds(6, 57, 120, 23);
 			subPnlVideo[nVideo].add(chbForcedVideo[nVideo]);
 			
 			rbYesForcedVideo[nVideo] = new JRadioButton("Yes");
 			rbYesForcedVideo[nVideo].setSelected(true);
 			rbYesForcedVideo[nVideo].setBounds(99, 57, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbYesForcedVideo[nVideo].setBounds(131, 57, 55, 23);
 			rbYesForcedVideo[nVideo].setEnabled(false);
 			subPnlVideo[nVideo].add(rbYesForcedVideo[nVideo]);
 			
 			rbNoForcedVideo[nVideo] = new JRadioButton("No");
 			rbNoForcedVideo[nVideo].setBounds(143, 57, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbNoForcedVideo[nVideo].setBounds(194, 57, 55, 23);
 			rbNoForcedVideo[nVideo].setEnabled(false);
 			subPnlVideo[nVideo].add(rbNoForcedVideo[nVideo]);
@@ -1013,14 +1011,14 @@ public class JMkvpropedit {
 			chbNameVideo[nVideo] = new JCheckBox("Track name");
 			chbNameVideo[nVideo].setEnabled(false);
 			chbNameVideo[nVideo].setBounds(6, 82, 81, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbNameVideo[nVideo].setBounds(6, 82, 114, 23);
 			subPnlVideo[nVideo].add(chbNameVideo[nVideo]);
 			
 			txtNameVideo[nVideo] = new JTextField();
 			txtNameVideo[nVideo].setEnabled(false);
 			txtNameVideo[nVideo].setBounds(93, 83, 625, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNameVideo[nVideo].setBounds(123, 83, 595, 20);
 			subPnlVideo[nVideo].add(txtNameVideo[nVideo]);
 			txtNameVideo[nVideo].setColumns(10);
@@ -1028,14 +1026,14 @@ public class JMkvpropedit {
 			cbNumbVideo[nVideo] = new JCheckBox("Numbering");
 			cbNumbVideo[nVideo].setEnabled(false);
 			cbNumbVideo[nVideo].setBounds(16, 113, 81, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				cbNumbVideo[nVideo].setBounds(16, 113, 104, 23);
 			subPnlVideo[nVideo].add(cbNumbVideo[nVideo]);
 			
 			lblNumbStartVideo[nVideo] = new JLabel("Start");
 			lblNumbStartVideo[nVideo].setEnabled(false);
 			lblNumbStartVideo[nVideo].setBounds(191, 115, 31, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbStartVideo[nVideo].setBounds(191, 115, 45, 14);
 			subPnlVideo[nVideo].add(lblNumbStartVideo[nVideo]);
 			
@@ -1043,7 +1041,7 @@ public class JMkvpropedit {
 			txtNumbStartVideo[nVideo].setEnabled(false);
 			txtNumbStartVideo[nVideo].setText("1");
 			txtNumbStartVideo[nVideo].setBounds(220, 113, 70, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNumbStartVideo[nVideo].setBounds(232, 113, 70, 20);
 			subPnlVideo[nVideo].add(txtNumbStartVideo[nVideo]);
 			txtNumbStartVideo[nVideo].setColumns(10);
@@ -1051,7 +1049,7 @@ public class JMkvpropedit {
 			lblNumbPadVideo[nVideo] = new JLabel("Padding");
 			lblNumbPadVideo[nVideo].setEnabled(false);
 			lblNumbPadVideo[nVideo].setBounds(322, 115, 45, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbPadVideo[nVideo].setBounds(337, 115, 64, 14);
 			subPnlVideo[nVideo].add(lblNumbPadVideo[nVideo]);
 			
@@ -1059,7 +1057,7 @@ public class JMkvpropedit {
 			txtNumbPadVideo[nVideo].setEnabled(false);
 			txtNumbPadVideo[nVideo].setText("1");
 			txtNumbPadVideo[nVideo].setBounds(366, 113, 70, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNumbPadVideo[nVideo].setBounds(402, 113, 70, 20);
 			subPnlVideo[nVideo].add(txtNumbPadVideo[nVideo]);
 			txtNumbPadVideo[nVideo].setColumns(10);
@@ -1067,21 +1065,21 @@ public class JMkvpropedit {
 			lblNumbExplainVideo[nVideo] = new JLabel("To use it, add {num} to track name (e.g. \"My Video {num}\")");
 			lblNumbExplainVideo[nVideo].setEnabled(false);
 			lblNumbExplainVideo[nVideo].setBounds(33, 143, 473, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbExplainVideo[nVideo].setBounds(33, 143, 473, 14);
 			subPnlVideo[nVideo].add(lblNumbExplainVideo[nVideo]);
 			
 			chbLangVideo[nVideo] = new JCheckBox("Language");
 			chbLangVideo[nVideo].setEnabled(false);
 			chbLangVideo[nVideo].setBounds(6, 164, 73, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbLangVideo[nVideo].setBounds(6, 164, 104, 23);
 			subPnlVideo[nVideo].add(chbLangVideo[nVideo]);
 
 			cbLangVideo[nVideo] = new JComboBox();
 			cbLangVideo[nVideo].setEnabled(false);
 			cbLangVideo[nVideo].setBounds(93, 164, 430, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				cbLangVideo[nVideo].setBounds(123, 164, 595, 20);
 			cbLangVideo[nVideo].setModel(new DefaultComboBoxModel(mkvLang.getLangName()));
 			subPnlVideo[nVideo].add(cbLangVideo[nVideo]);
@@ -1092,14 +1090,14 @@ public class JMkvpropedit {
 			chbExtraCmdVideo[nVideo] = new JCheckBox("Extra parameters");
 			chbExtraCmdVideo[nVideo].setEnabled(false);
 			chbExtraCmdVideo[nVideo].setBounds(6, 190, 109, 23);
-			if (!isWindows())	
+			if (!Utils.isWindows())	
 				chbExtraCmdVideo[nVideo].setBounds(6, 190, 153, 23);
 			subPnlVideo[nVideo].add(chbExtraCmdVideo[nVideo]);
 			
 			txtExtraCmdVideo[nVideo] = new JTextField();
 			txtExtraCmdVideo[nVideo].setEnabled(false);
 			txtExtraCmdVideo[nVideo].setBounds(126, 191, 592, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtExtraCmdVideo[nVideo].setBounds(165, 191, 553, 20);
 			subPnlVideo[nVideo].add(txtExtraCmdVideo[nVideo]);
 			txtExtraCmdVideo[nVideo].setColumns(10);
@@ -1263,21 +1261,21 @@ public class JMkvpropedit {
 			chbDefaultAudio[nAudio] = new JCheckBox("Default track");
 			chbDefaultAudio[nAudio].setEnabled(false);
 			chbDefaultAudio[nAudio].setBounds(6, 32, 91, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbDefaultAudio[nAudio].setBounds(6, 32, 120, 23);
 			subPnlAudio[nAudio].add(chbDefaultAudio[nAudio]);
 			
 			rbYesDefAudio[nAudio] = new JRadioButton("Yes");
 			rbYesDefAudio[nAudio].setSelected(true);
 			rbYesDefAudio[nAudio].setBounds(99, 32, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbYesDefAudio[nAudio].setBounds(131, 32, 55, 23);
 			rbYesDefAudio[nAudio].setEnabled(false);
 			subPnlAudio[nAudio].add(rbYesDefAudio[nAudio]);
 			
 			rbNoDefAudio[nAudio] = new JRadioButton("No");
 			rbNoDefAudio[nAudio].setBounds(143, 32, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbNoDefAudio[nAudio].setBounds(194, 32, 55, 23);
 			rbNoDefAudio[nAudio].setEnabled(false);
 			subPnlAudio[nAudio].add(rbNoDefAudio[nAudio]);
@@ -1289,21 +1287,21 @@ public class JMkvpropedit {
 			chbForcedAudio[nAudio] = new JCheckBox("Forced track");
 			chbForcedAudio[nAudio].setEnabled(false);
 			chbForcedAudio[nAudio].setBounds(6, 57, 85, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbForcedAudio[nAudio].setBounds(6, 57, 120, 23);
 			subPnlAudio[nAudio].add(chbForcedAudio[nAudio]);
 			
 			rbYesForcedAudio[nAudio] = new JRadioButton("Yes");
 			rbYesForcedAudio[nAudio].setSelected(true);
 			rbYesForcedAudio[nAudio].setBounds(99, 57, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbYesForcedAudio[nAudio].setBounds(131, 57, 55, 23);
 			rbYesForcedAudio[nAudio].setEnabled(false);
 			subPnlAudio[nAudio].add(rbYesForcedAudio[nAudio]);
 			
 			rbNoForcedAudio[nAudio] = new JRadioButton("No");
 			rbNoForcedAudio[nAudio].setBounds(143, 57, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbNoForcedAudio[nAudio].setBounds(194, 57, 55, 23);
 			rbNoForcedAudio[nAudio].setEnabled(false);
 			subPnlAudio[nAudio].add(rbNoForcedAudio[nAudio]);
@@ -1315,14 +1313,14 @@ public class JMkvpropedit {
 			chbNameAudio[nAudio] = new JCheckBox("Track name");
 			chbNameAudio[nAudio].setEnabled(false);
 			chbNameAudio[nAudio].setBounds(6, 82, 81, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbNameAudio[nAudio].setBounds(6, 82, 114, 23);
 			subPnlAudio[nAudio].add(chbNameAudio[nAudio]);
 			
 			txtNameAudio[nAudio] = new JTextField();
 			txtNameAudio[nAudio].setEnabled(false);
 			txtNameAudio[nAudio].setBounds(93, 83, 625, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNameAudio[nAudio].setBounds(123, 83, 595, 20);
 			subPnlAudio[nAudio].add(txtNameAudio[nAudio]);
 			txtNameAudio[nAudio].setColumns(10);
@@ -1330,14 +1328,14 @@ public class JMkvpropedit {
 			cbNumbAudio[nAudio] = new JCheckBox("Numbering");
 			cbNumbAudio[nAudio].setEnabled(false);
 			cbNumbAudio[nAudio].setBounds(16, 113, 81, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				cbNumbAudio[nAudio].setBounds(16, 113, 104, 23);
 			subPnlAudio[nAudio].add(cbNumbAudio[nAudio]);
 			
 			lblNumbStartAudio[nAudio] = new JLabel("Start");
 			lblNumbStartAudio[nAudio].setEnabled(false);
 			lblNumbStartAudio[nAudio].setBounds(191, 115, 31, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbStartAudio[nAudio].setBounds(191, 115, 45, 14);
 			subPnlAudio[nAudio].add(lblNumbStartAudio[nAudio]);
 			
@@ -1345,7 +1343,7 @@ public class JMkvpropedit {
 			txtNumbStartAudio[nAudio].setEnabled(false);
 			txtNumbStartAudio[nAudio].setText("1");
 			txtNumbStartAudio[nAudio].setBounds(220, 113, 70, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNumbStartAudio[nAudio].setBounds(232, 113, 70, 20);
 			subPnlAudio[nAudio].add(txtNumbStartAudio[nAudio]);
 			txtNumbStartAudio[nAudio].setColumns(10);
@@ -1353,7 +1351,7 @@ public class JMkvpropedit {
 			lblNumbPadAudio[nAudio] = new JLabel("Padding");
 			lblNumbPadAudio[nAudio].setEnabled(false);
 			lblNumbPadAudio[nAudio].setBounds(322, 115, 45, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbPadAudio[nAudio].setBounds(337, 115, 64, 14);
 			subPnlAudio[nAudio].add(lblNumbPadAudio[nAudio]);
 			
@@ -1361,7 +1359,7 @@ public class JMkvpropedit {
 			txtNumbPadAudio[nAudio].setEnabled(false);
 			txtNumbPadAudio[nAudio].setText("1");
 			txtNumbPadAudio[nAudio].setBounds(366, 113, 70, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNumbPadAudio[nAudio].setBounds(402, 113, 70, 20);
 			subPnlAudio[nAudio].add(txtNumbPadAudio[nAudio]);
 			txtNumbPadAudio[nAudio].setColumns(10);
@@ -1369,21 +1367,21 @@ public class JMkvpropedit {
 			lblNumbExplainAudio[nAudio] = new JLabel("To use it, add {num} to track name (e.g. \"My Audio {num}\")");
 			lblNumbExplainAudio[nAudio].setEnabled(false);
 			lblNumbExplainAudio[nAudio].setBounds(33, 143, 473, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbExplainAudio[nAudio].setBounds(33, 143, 473, 14);
 			subPnlAudio[nAudio].add(lblNumbExplainAudio[nAudio]);
 			
 			chbLangAudio[nAudio] = new JCheckBox("Language");
 			chbLangAudio[nAudio].setEnabled(false);
 			chbLangAudio[nAudio].setBounds(6, 164, 73, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbLangAudio[nAudio].setBounds(6, 164, 104, 23);
 			subPnlAudio[nAudio].add(chbLangAudio[nAudio]);
 
 			cbLangAudio[nAudio] = new JComboBox();
 			cbLangAudio[nAudio].setEnabled(false);
 			cbLangAudio[nAudio].setBounds(93, 164, 430, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				cbLangAudio[nAudio].setBounds(123, 164, 595, 20);
 			cbLangAudio[nAudio].setModel(new DefaultComboBoxModel(mkvLang.getLangName()));
 			subPnlAudio[nAudio].add(cbLangAudio[nAudio]);
@@ -1394,14 +1392,14 @@ public class JMkvpropedit {
 			chbExtraCmdAudio[nAudio] = new JCheckBox("Extra parameters");
 			chbExtraCmdAudio[nAudio].setEnabled(false);
 			chbExtraCmdAudio[nAudio].setBounds(6, 190, 109, 23);
-			if (!isWindows())	
+			if (!Utils.isWindows())	
 				chbExtraCmdAudio[nAudio].setBounds(6, 190, 153, 23);
 			subPnlAudio[nAudio].add(chbExtraCmdAudio[nAudio]);
 			
 			txtExtraCmdAudio[nAudio] = new JTextField();
 			txtExtraCmdAudio[nAudio].setEnabled(false);
 			txtExtraCmdAudio[nAudio].setBounds(126, 191, 592, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtExtraCmdAudio[nAudio].setBounds(165, 191, 553, 20);
 			subPnlAudio[nAudio].add(txtExtraCmdAudio[nAudio]);
 			txtExtraCmdAudio[nAudio].setColumns(10);
@@ -1565,21 +1563,21 @@ public class JMkvpropedit {
 			chbDefaultSubtitle[nSubtitle] = new JCheckBox("Default track");
 			chbDefaultSubtitle[nSubtitle].setEnabled(false);
 			chbDefaultSubtitle[nSubtitle].setBounds(6, 32, 91, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbDefaultSubtitle[nSubtitle].setBounds(6, 32, 120, 23);
 			subPnlSubtitle[nSubtitle].add(chbDefaultSubtitle[nSubtitle]);
 			
 			rbYesDefSubtitle[nSubtitle] = new JRadioButton("Yes");
 			rbYesDefSubtitle[nSubtitle].setSelected(true);
 			rbYesDefSubtitle[nSubtitle].setBounds(99, 32, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbYesDefSubtitle[nSubtitle].setBounds(131, 32, 55, 23);
 			rbYesDefSubtitle[nSubtitle].setEnabled(false);
 			subPnlSubtitle[nSubtitle].add(rbYesDefSubtitle[nSubtitle]);
 			
 			rbNoDefSubtitle[nSubtitle] = new JRadioButton("No");
 			rbNoDefSubtitle[nSubtitle].setBounds(143, 32, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbNoDefSubtitle[nSubtitle].setBounds(194, 32, 55, 23);
 			rbNoDefSubtitle[nSubtitle].setEnabled(false);
 			subPnlSubtitle[nSubtitle].add(rbNoDefSubtitle[nSubtitle]);
@@ -1591,21 +1589,21 @@ public class JMkvpropedit {
 			chbForcedSubtitle[nSubtitle] = new JCheckBox("Forced track");
 			chbForcedSubtitle[nSubtitle].setEnabled(false);
 			chbForcedSubtitle[nSubtitle].setBounds(6, 57, 85, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbForcedSubtitle[nSubtitle].setBounds(6, 57, 120, 23);
 			subPnlSubtitle[nSubtitle].add(chbForcedSubtitle[nSubtitle]);
 			
 			rbYesForcedSubtitle[nSubtitle] = new JRadioButton("Yes");
 			rbYesForcedSubtitle[nSubtitle].setSelected(true);
 			rbYesForcedSubtitle[nSubtitle].setBounds(99, 57, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbYesForcedSubtitle[nSubtitle].setBounds(131, 57, 55, 23);
 			rbYesForcedSubtitle[nSubtitle].setEnabled(false);
 			subPnlSubtitle[nSubtitle].add(rbYesForcedSubtitle[nSubtitle]);
 			
 			rbNoForcedSubtitle[nSubtitle] = new JRadioButton("No");
 			rbNoForcedSubtitle[nSubtitle].setBounds(143, 57, 46, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				rbNoForcedSubtitle[nSubtitle].setBounds(194, 57, 55, 23);
 			rbNoForcedSubtitle[nSubtitle].setEnabled(false);
 			subPnlSubtitle[nSubtitle].add(rbNoForcedSubtitle[nSubtitle]);
@@ -1617,14 +1615,14 @@ public class JMkvpropedit {
 			chbNameSubtitle[nSubtitle] = new JCheckBox("Track name");
 			chbNameSubtitle[nSubtitle].setEnabled(false);
 			chbNameSubtitle[nSubtitle].setBounds(6, 82, 81, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbNameSubtitle[nSubtitle].setBounds(6, 82, 114, 23);
 			subPnlSubtitle[nSubtitle].add(chbNameSubtitle[nSubtitle]);
 			
 			txtNameSubtitle[nSubtitle] = new JTextField();
 			txtNameSubtitle[nSubtitle].setEnabled(false);
 			txtNameSubtitle[nSubtitle].setBounds(93, 83, 625, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNameSubtitle[nSubtitle].setBounds(123, 83, 595, 20);
 			subPnlSubtitle[nSubtitle].add(txtNameSubtitle[nSubtitle]);
 			txtNameSubtitle[nSubtitle].setColumns(10);
@@ -1632,14 +1630,14 @@ public class JMkvpropedit {
 			cbNumbSubtitle[nSubtitle] = new JCheckBox("Numbering");
 			cbNumbSubtitle[nSubtitle].setEnabled(false);
 			cbNumbSubtitle[nSubtitle].setBounds(16, 113, 81, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				cbNumbSubtitle[nSubtitle].setBounds(16, 113, 104, 23);
 			subPnlSubtitle[nSubtitle].add(cbNumbSubtitle[nSubtitle]);
 			
 			lblNumbStartSubtitle[nSubtitle] = new JLabel("Start");
 			lblNumbStartSubtitle[nSubtitle].setEnabled(false);
 			lblNumbStartSubtitle[nSubtitle].setBounds(191, 115, 31, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbStartSubtitle[nSubtitle].setBounds(191, 115, 45, 14);
 			subPnlSubtitle[nSubtitle].add(lblNumbStartSubtitle[nSubtitle]);
 			
@@ -1647,7 +1645,7 @@ public class JMkvpropedit {
 			txtNumbStartSubtitle[nSubtitle].setEnabled(false);
 			txtNumbStartSubtitle[nSubtitle].setText("1");
 			txtNumbStartSubtitle[nSubtitle].setBounds(220, 113, 70, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNumbStartSubtitle[nSubtitle].setBounds(232, 113, 70, 20);
 			subPnlSubtitle[nSubtitle].add(txtNumbStartSubtitle[nSubtitle]);
 			txtNumbStartSubtitle[nSubtitle].setColumns(10);
@@ -1655,7 +1653,7 @@ public class JMkvpropedit {
 			lblNumbPadSubtitle[nSubtitle] = new JLabel("Padding");
 			lblNumbPadSubtitle[nSubtitle].setEnabled(false);
 			lblNumbPadSubtitle[nSubtitle].setBounds(322, 115, 45, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbPadSubtitle[nSubtitle].setBounds(337, 115, 64, 14);
 			subPnlSubtitle[nSubtitle].add(lblNumbPadSubtitle[nSubtitle]);
 			
@@ -1663,7 +1661,7 @@ public class JMkvpropedit {
 			txtNumbPadSubtitle[nSubtitle].setEnabled(false);
 			txtNumbPadSubtitle[nSubtitle].setText("1");
 			txtNumbPadSubtitle[nSubtitle].setBounds(366, 113, 70, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtNumbPadSubtitle[nSubtitle].setBounds(402, 113, 70, 20);
 			subPnlSubtitle[nSubtitle].add(txtNumbPadSubtitle[nSubtitle]);
 			txtNumbPadSubtitle[nSubtitle].setColumns(10);
@@ -1671,21 +1669,21 @@ public class JMkvpropedit {
 			lblNumbExplainSubtitle[nSubtitle] = new JLabel("To use it, add {num} to track name (e.g. \"My Subtitle {num}\")");
 			lblNumbExplainSubtitle[nSubtitle].setEnabled(false);
 			lblNumbExplainSubtitle[nSubtitle].setBounds(33, 143, 473, 14);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				lblNumbExplainSubtitle[nSubtitle].setBounds(33, 143, 473, 14);
 			subPnlSubtitle[nSubtitle].add(lblNumbExplainSubtitle[nSubtitle]);
 			
 			chbLangSubtitle[nSubtitle] = new JCheckBox("Language");
 			chbLangSubtitle[nSubtitle].setEnabled(false);
 			chbLangSubtitle[nSubtitle].setBounds(6, 164, 73, 23);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				chbLangSubtitle[nSubtitle].setBounds(6, 164, 104, 23);
 			subPnlSubtitle[nSubtitle].add(chbLangSubtitle[nSubtitle]);
 
 			cbLangSubtitle[nSubtitle] = new JComboBox();
 			cbLangSubtitle[nSubtitle].setEnabled(false);
 			cbLangSubtitle[nSubtitle].setBounds(93, 164, 430, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				cbLangSubtitle[nSubtitle].setBounds(123, 164, 595, 20);
 			cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel(mkvLang.getLangName()));
 			subPnlSubtitle[nSubtitle].add(cbLangSubtitle[nSubtitle]);
@@ -1696,14 +1694,14 @@ public class JMkvpropedit {
 			chbExtraCmdSubtitle[nSubtitle] = new JCheckBox("Extra parameters");
 			chbExtraCmdSubtitle[nSubtitle].setEnabled(false);
 			chbExtraCmdSubtitle[nSubtitle].setBounds(6, 190, 109, 23);
-			if (!isWindows())	
+			if (!Utils.isWindows())	
 				chbExtraCmdSubtitle[nSubtitle].setBounds(6, 190, 153, 23);
 			subPnlSubtitle[nSubtitle].add(chbExtraCmdSubtitle[nSubtitle]);
 			
 			txtExtraCmdSubtitle[nSubtitle] = new JTextField();
 			txtExtraCmdSubtitle[nSubtitle].setEnabled(false);
 			txtExtraCmdSubtitle[nSubtitle].setBounds(126, 191, 592, 20);
-			if (!isWindows())
+			if (!Utils.isWindows())
 				txtExtraCmdSubtitle[nSubtitle].setBounds(165, 191, 553, 20);
 			subPnlSubtitle[nSubtitle].add(txtExtraCmdSubtitle[nSubtitle]);
 			txtExtraCmdSubtitle[nSubtitle].setColumns(10);
@@ -1887,20 +1885,20 @@ public class JMkvpropedit {
 					pad = Integer.parseInt(txtNumbPadGeneral.getText());
 					
 					String newTitle = txtTitleGeneral.getText();
-					newTitle = newTitle.replace("{num}", padNumber(pad).format(start));
+					newTitle = newTitle.replace("{num}", Utils.padNumber(pad).format(start));
 					start++;
 					
-					cmdLineGeneral[i] += " --set title=\"" + escapeNameCmdLine(newTitle) + "\"";
-					cmdLineGeneralOpt[i] += " --set title=\"" + escapeName(newTitle) + "\"";
+					cmdLineGeneral[i] += " --set title=\"" + Utils.escapeNameCmdLine(newTitle) + "\"";
+					cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(newTitle) + "\"";
 				} else {
-					cmdLineGeneral[i] += " --set title=\"" + escapeNameCmdLine(txtTitleGeneral.getText()) + "\"";
-					cmdLineGeneralOpt[i] += " --set title=\"" + escapeName(txtTitleGeneral.getText()) + "\"";
+					cmdLineGeneral[i] += " --set title=\"" + Utils.escapeNameCmdLine(txtTitleGeneral.getText()) + "\"";
+					cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(txtTitleGeneral.getText()) + "\"";
 				}
 			}
 
 			if (chbExtraCmdGeneral.isSelected() && !txtExtraCmdGeneral.getText().trim().isEmpty()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
-				cmdLineGeneralOpt[i] += " " + escapeBackslashes(txtExtraCmdGeneral.getText());
+				cmdLineGeneralOpt[i] += " " + Utils.escapeBackslashes(txtExtraCmdGeneral.getText());
 			}
 		}
 		
@@ -1961,8 +1959,8 @@ public class JMkvpropedit {
 					}
 					
 					if (chbNameVideo[j].isSelected()) {					
-						tmpCmdLineVideo[j] += " --set name=\"" + escapeNameCmdLine(txtNameVideo[j].getText()) + "\"";
-						tmpCmdLineVideoOpt[j] += " --set name=\"" + escapeName(txtNameVideo[j].getText()) + "\"";
+						tmpCmdLineVideo[j] += " --set name=\"" + Utils.escapeNameCmdLine(txtNameVideo[j].getText()) + "\"";
+						tmpCmdLineVideoOpt[j] += " --set name=\"" + Utils.escapeName(txtNameVideo[j].getText()) + "\"";
 						editCount++;
 					}
 					
@@ -1975,7 +1973,7 @@ public class JMkvpropedit {
 					
 					if (chbExtraCmdVideo[j].isSelected() && !txtExtraCmdVideo[j].getText().trim().isEmpty()) {
 						tmpCmdLineVideo[j] += " " + txtExtraCmdVideo[j].getText();
-						tmpCmdLineVideoOpt[j] += " " + escapeBackslashes(txtExtraCmdVideo[j].getText());
+						tmpCmdLineVideoOpt[j] += " " + Utils.escapeBackslashes(txtExtraCmdVideo[j].getText());
 						editCount++;
 					}
 					
@@ -1996,8 +1994,8 @@ public class JMkvpropedit {
 				String tmpText2 = tmpCmdLineVideoOpt[i];
 				
 				if (cbNumbVideo[i].isSelected() && chbEditVideo[i].isSelected()) {
-					tmpText = tmpText.replace("{num}", padNumber(numPadVideo[i]).format(numStartVideo[i]));
-					tmpText2 = tmpText.replace("{num}", padNumber(numPadVideo[i]).format(numStartVideo[i]));
+					tmpText = tmpText.replace("{num}", Utils.padNumber(numPadVideo[i]).format(numStartVideo[i]));
+					tmpText2 = tmpText.replace("{num}", Utils.padNumber(numPadVideo[i]).format(numStartVideo[i]));
 					numStartVideo[i]++;
 				}
 				cmdLineVideo[j] += tmpText;
@@ -2061,8 +2059,8 @@ public class JMkvpropedit {
 					}
 					
 					if (chbNameAudio[j].isSelected()) {					
-						tmpCmdLineAudio[j] += " --set name=\"" + escapeNameCmdLine(txtNameAudio[j].getText()) + "\"";
-						tmpCmdLineAudioOpt[j] += " --set name=\"" + escapeName(txtNameAudio[j].getText()) + "\"";
+						tmpCmdLineAudio[j] += " --set name=\"" + Utils.escapeNameCmdLine(txtNameAudio[j].getText()) + "\"";
+						tmpCmdLineAudioOpt[j] += " --set name=\"" + Utils.escapeName(txtNameAudio[j].getText()) + "\"";
 						editCount++;
 					}
 					
@@ -2075,7 +2073,7 @@ public class JMkvpropedit {
 					
 					if (chbExtraCmdAudio[j].isSelected() && !txtExtraCmdAudio[j].getText().trim().isEmpty()) {
 						tmpCmdLineAudio[j] += " " + txtExtraCmdAudio[j].getText();
-						tmpCmdLineAudioOpt[j] += " " + escapeBackslashes(txtExtraCmdAudio[j].getText());
+						tmpCmdLineAudioOpt[j] += " " + Utils.escapeBackslashes(txtExtraCmdAudio[j].getText());
 						editCount++;
 					}
 					
@@ -2096,8 +2094,8 @@ public class JMkvpropedit {
 				String tmpText2 = tmpCmdLineAudioOpt[i];
 				
 				if (cbNumbAudio[i].isSelected() && chbEditAudio[i].isSelected()) {
-					tmpText = tmpText.replace("{num}", padNumber(numPadAudio[i]).format(numStartAudio[i]));
-					tmpText2 = tmpText.replace("{num}", padNumber(numPadAudio[i]).format(numStartAudio[i]));
+					tmpText = tmpText.replace("{num}", Utils.padNumber(numPadAudio[i]).format(numStartAudio[i]));
+					tmpText2 = tmpText.replace("{num}", Utils.padNumber(numPadAudio[i]).format(numStartAudio[i]));
 					numStartAudio[i]++;
 				}
 				cmdLineAudio[j] += tmpText;
@@ -2161,8 +2159,8 @@ public class JMkvpropedit {
 					}
 					
 					if (chbNameSubtitle[j].isSelected()) {					
-						tmpCmdLineSubtitle[j] += " --set name=\"" + escapeNameCmdLine(txtNameSubtitle[j].getText()) + "\"";
-						tmpCmdLineSubtitleOpt[j] += " --set name=\"" + escapeName(txtNameSubtitle[j].getText()) + "\"";
+						tmpCmdLineSubtitle[j] += " --set name=\"" + Utils.escapeNameCmdLine(txtNameSubtitle[j].getText()) + "\"";
+						tmpCmdLineSubtitleOpt[j] += " --set name=\"" + Utils.escapeName(txtNameSubtitle[j].getText()) + "\"";
 						editCount++;
 					}
 					
@@ -2175,7 +2173,7 @@ public class JMkvpropedit {
 					
 					if (chbExtraCmdSubtitle[j].isSelected() && !txtExtraCmdSubtitle[j].getText().trim().isEmpty()) {
 						tmpCmdLineSubtitle[j] += " " + txtExtraCmdSubtitle[j].getText();
-						tmpCmdLineSubtitleOpt[j] += " " + escapeBackslashes(txtExtraCmdSubtitle[j].getText());
+						tmpCmdLineSubtitleOpt[j] += " " + Utils.escapeBackslashes(txtExtraCmdSubtitle[j].getText());
 						editCount++;
 					}
 					
@@ -2196,8 +2194,8 @@ public class JMkvpropedit {
 				String tmpText2 = tmpCmdLineSubtitleOpt[i];
 				
 				if (cbNumbSubtitle[i].isSelected() && chbEditSubtitle[i].isSelected()) {
-					tmpText = tmpText.replace("{num}", padNumber(numPadSubtitle[i]).format(numStartSubtitle[i]));
-					tmpText2 = tmpText.replace("{num}", padNumber(numPadSubtitle[i]).format(numStartSubtitle[i]));
+					tmpText = tmpText.replace("{num}", Utils.padNumber(numPadSubtitle[i]).format(numStartSubtitle[i]));
+					tmpText2 = tmpText.replace("{num}", Utils.padNumber(numPadSubtitle[i]).format(numStartSubtitle[i]));
 					numStartSubtitle[i]++;
 				}
 				cmdLineSubtitle[j] += tmpText;
@@ -2222,11 +2220,11 @@ public class JMkvpropedit {
 				String cmdLineAll = cmdLineGeneral[i] + cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
 				String cmdLineAllOpt = cmdLineGeneralOpt[i] + cmdLineVideoOpt[i] + cmdLineAudioOpt[i] + cmdLineSubtitleOpt[i];
 				
-				if (isWindows()) {
+				if (Utils.isWindows()) {
 					cmdLineBatch.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
-					cmdLineBatchOpt.add("\"" + escapePath((String) modelFiles.get(i)) + "\"" + cmdLineAllOpt);
+					cmdLineBatchOpt.add("\"" + Utils.escapePath((String) modelFiles.get(i)) + "\"" + cmdLineAllOpt);
 				} else {
-					cmdLineBatch.add(escapePath(txtMkvPropExe.getText()) + " " + escapePath((String) modelFiles.get(i)) + cmdLineAll);
+					cmdLineBatch.add(Utils.escapePath(txtMkvPropExe.getText()) + " " + Utils.escapePath((String) modelFiles.get(i)) + cmdLineAll);
 					cmdLineBatchOpt.add("\"" + (String) modelFiles.get(i) + "\"" + cmdLineAllOpt);
 				}
 			}
@@ -2261,10 +2259,10 @@ public class JMkvpropedit {
 						optFilePW.flush();
 						optFilePW.close();
 						
-						if (isWindows()) {
+						if (Utils.isWindows()) {
 							proc = rt.exec("\"" + txtMkvPropExe.getText() + "\" @options.txt");
 						} else {
-							proc = rt.exec(escapePath(txtMkvPropExe.getText()) + " @options.txt");
+							proc = rt.exec(Utils.escapePath(txtMkvPropExe.getText()) + " @options.txt");
 						}
 						
 						txtOutput.append("File: " + modelFiles.get(i) + "\n");
@@ -2332,10 +2330,10 @@ public class JMkvpropedit {
 				if (exePath != null) {
 					File exeFile = new File(exePath);
 					if (exeFile.exists()) {
-						if (exeFile.toString().equals("mkvpropedit.exe") && isWindows()) {
+						if (exeFile.toString().equals("mkvpropedit.exe") && Utils.isWindows()) {
 							cbMkvPropExeDef.setSelected(true);
 							cbMkvPropExeDef.setEnabled(false);
-						} else if (exeFile.toString().equals("/usr/bin/mkvpropedit") && !isWindows()) {
+						} else if (exeFile.toString().equals("/usr/bin/mkvpropedit") && !Utils.isWindows()) {
 							cbMkvPropExeDef.setSelected(true);
 							cbMkvPropExeDef.setEnabled(false);
 						} else {
@@ -2344,7 +2342,7 @@ public class JMkvpropedit {
 							cbMkvPropExeDef.setEnabled(true);
 						}
 					} else {
-						if (isWindows())
+						if (Utils.isWindows())
 							txtMkvPropExe.setText("mvkpropedit.exe");
 						else
 							txtMkvPropExe.setText("/usr/bin/mkvpropedit");
@@ -2358,7 +2356,7 @@ public class JMkvpropedit {
 			} catch (IOException e) {
 
 			}
-		} else if (isWindows()) {
+		} else if (Utils.isWindows()) {
 			String exePath = getMkvPropExeFromReg();
 			
 			if (exePath != null) {
@@ -2409,7 +2407,7 @@ public class JMkvpropedit {
 		
 		try {
 			ini = new Ini(iniFile);
-			if (isWindows())
+			if (Utils.isWindows())
 				ini.put("General", "mkvpropedit", "mkvpropedit.exe");
 			else
 				ini.put("General", "mkvpropedit", "/usr/bin/mkvpropedit");
@@ -2451,88 +2449,4 @@ public class JMkvpropedit {
 	
 	/* End of INI configuration file operations */
 	
-
-	/* Start of escaping functions */
-	
-	private String escapeName (String name) {
-		if (!name.isEmpty()) {
-			name = name.replace("\\","\\\\");
-			name = name.replace(" ", "\\s");
-			name = name.replace("\"","\\2");
-			name = name.replace(":","\\c");
-			name = name.replace("#","\\h");
-		}
-		
-		return name;
-	}
-	
-	private String escapeNameCmdLine (String name) {
-		name = name.replace("\"", "\\\"");
-		
-		return name;
-	}
-	
-	private String escapeBackslashes (String extra) {
-		extra = extra.replace("\\", "\\\\");
-		
-		return extra;
-	}
-	
-	private String escapePath (String path) {
-		if (isWindows()) {
-			path = path.replace("\\", "\\\\");
-		} else {
-			path = path.replace("\\", "\\\\");
-			path = path.replace(" ", "\\ ");
-			path = path.replace("[", "\\[");
-			path = path.replace("]", "\\]");
-			path = path.replace("{", "\\{");
-			path = path.replace("}", "\\}");
-			path = path.replace("<", "\\<");
-			path = path.replace(">", "\\>");
-			path = path.replace("\'", "\\\'");
-			path = path.replace("\"", "\\\"");
-			path = path.replace("&", "\\&");
-			path = path.replace("*", "\\*");
-			path = path.replace("?", "\\?");
-			path = path.replace("|", "\\|");
-			path = path.replace(":", "\\:");
-			path = path.replace(";", "\\;");
-		}
-		
-		return path;
-	}
-	
-	/* End of escaping functions */
-	
-	
-	private NumberFormat padNumber(int pad) {
-		NumberFormat formatter = new DecimalFormat("0");
-		if (pad > 0) {
-			String n = "";
-			for (int i = 0; i < pad; i++) {
-				n += 0;
-			}
-			formatter = new DecimalFormat(n);
-		}
-		return formatter;
-	}
-	
-	private boolean isWindows() {
-		String OS = System.getProperty("os.name");
-		
-		if (OS.startsWith("Windows"))
-			return true;
-		else
-			return false;
-	}
-	
-	private boolean isMac() {
-		String OS = System.getProperty("os.name");
-		
-		if (OS.startsWith("Mac"))
-			return true;
-		else
-			return false;
-	}
 }
