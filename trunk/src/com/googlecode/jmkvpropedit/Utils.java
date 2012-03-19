@@ -98,6 +98,8 @@ public class Utils {
 			path = path.replace("]", "\\]");
 			path = path.replace("{", "\\{");
 			path = path.replace("}", "\\}");
+			path = path.replace("(", "\\(");
+			path = path.replace(")", "\\)");
 			path = path.replace("<", "\\<");
 			path = path.replace(">", "\\>");
 			path = path.replace("\'", "\\\'");
