@@ -132,9 +132,9 @@ public class Utils {
 		return formatter;
 	}
 	
-	public static void showRCMenu(JTextArea text,
-								  MouseEvent e,
-								  boolean copyOnly) {
+	private static void showRCMenu(JTextArea text,
+								   MouseEvent e,
+								   boolean copyOnly) {
 		
 		JPopupMenu rightClickMenu = new JPopupMenu();
 		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
@@ -181,9 +181,22 @@ public class Utils {
 		rightClickMenu.show(text, e.getX(), e.getY());
 	}
 	
-	public static void showRCMenu(JTextField text,
-			  					  MouseEvent e,
-			  					  boolean copyOnly) {
+	public static void addRCMenuMouseListener(final JTextArea text,
+											  final boolean copyOnly) {
+		text.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (e.isMetaDown() && text.isEnabled()) {
+				text.requestFocus();
+				showRCMenu(text, e, copyOnly);
+			}
+		}
+		});
+	}
+	
+	private static void showRCMenu(JTextField text,
+			  					   MouseEvent e,
+			  					   boolean copyOnly) {
 		JPopupMenu rightClickMenu = new JPopupMenu();
 		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
 		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
@@ -227,5 +240,18 @@ public class Utils {
 		}
 		
 		rightClickMenu.show(text, e.getX(), e.getY());
+	}
+	
+	public static void addRCMenuMouseListener(final JTextField text,
+											  final boolean copyOnly) {
+		text.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.isMetaDown() && text.isEnabled()) {
+					text.requestFocus();
+					showRCMenu(text, e, copyOnly);
+				}
+			}
+		});
 	}
 }

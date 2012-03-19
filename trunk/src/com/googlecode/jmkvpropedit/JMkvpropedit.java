@@ -567,22 +567,13 @@ public class JMkvpropedit {
 		
 		/* Start of mouse events for right-click menu */
 		
-		txtOutput.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (e.isMetaDown()) {
-					txtOutput.requestFocus();
-					Utils.showRCMenu(txtOutput, e, true);
-				}
-			}
-		});
-		
-		addRCMenuMouseListener(txtTitleGeneral, false);
-		addRCMenuMouseListener(txtNumbStartGeneral, false);
-		addRCMenuMouseListener(txtNumbPadGeneral, false);
-		addRCMenuMouseListener(txtChapterFile, true);
-		addRCMenuMouseListener(txtExtraCmdGeneral, false);
-		addRCMenuMouseListener(txtMkvPropExe, true);
+		Utils.addRCMenuMouseListener(txtOutput, false);
+		Utils.addRCMenuMouseListener(txtTitleGeneral, false);
+		Utils.addRCMenuMouseListener(txtNumbStartGeneral, false);
+		Utils.addRCMenuMouseListener(txtNumbPadGeneral, false);
+		Utils.addRCMenuMouseListener(txtChapterFile, true);
+		Utils.addRCMenuMouseListener(txtExtraCmdGeneral, false);
+		Utils.addRCMenuMouseListener(txtMkvPropExe, true);
 		
 		/* End of mouse events for right-click menu */
 		
@@ -1195,10 +1186,10 @@ public class JMkvpropedit {
 			
 			/* Start of mouse events for right-click menu */
 			
-			addRCMenuMouseListener(txtNameVideo[nVideo], false);
-			addRCMenuMouseListener(txtNumbStartVideo[nVideo], false);
-			addRCMenuMouseListener(txtNumbPadVideo[nVideo], false);
-			addRCMenuMouseListener(txtExtraCmdVideo[nVideo], false);
+			Utils.addRCMenuMouseListener(txtNameVideo[nVideo], false);
+			Utils.addRCMenuMouseListener(txtNumbStartVideo[nVideo], false);
+			Utils.addRCMenuMouseListener(txtNumbPadVideo[nVideo], false);
+			Utils.addRCMenuMouseListener(txtExtraCmdVideo[nVideo], false);
 			
 			/* End of mouse events for right-click menu */
 
@@ -1506,10 +1497,10 @@ public class JMkvpropedit {
 			
 			/* Start of mouse events for right-click menu */
 			
-			addRCMenuMouseListener(txtNameAudio[nAudio], false);
-			addRCMenuMouseListener(txtNumbStartAudio[nAudio], false);
-			addRCMenuMouseListener(txtNumbPadAudio[nAudio], false);
-			addRCMenuMouseListener(txtExtraCmdAudio[nAudio], false);
+			Utils.addRCMenuMouseListener(txtNameAudio[nAudio], false);
+			Utils.addRCMenuMouseListener(txtNumbStartAudio[nAudio], false);
+			Utils.addRCMenuMouseListener(txtNumbPadAudio[nAudio], false);
+			Utils.addRCMenuMouseListener(txtExtraCmdAudio[nAudio], false);
 			
 			/* End of mouse events for right-click menu */
 
@@ -1817,10 +1808,10 @@ public class JMkvpropedit {
 			
 			/* Start of mouse events for right-click menu */
 			
-			addRCMenuMouseListener(txtNameSubtitle[nSubtitle], false);
-			addRCMenuMouseListener(txtNumbStartSubtitle[nSubtitle], false);
-			addRCMenuMouseListener(txtNumbPadSubtitle[nSubtitle], false);
-			addRCMenuMouseListener(txtExtraCmdSubtitle[nSubtitle], false);
+			Utils.addRCMenuMouseListener(txtNameSubtitle[nSubtitle], false);
+			Utils.addRCMenuMouseListener(txtNumbStartSubtitle[nSubtitle], false);
+			Utils.addRCMenuMouseListener(txtNumbPadSubtitle[nSubtitle], false);
+			Utils.addRCMenuMouseListener(txtExtraCmdSubtitle[nSubtitle], false);
 			
 			/* End of mouse events for right-click menu */
 
@@ -2584,17 +2575,5 @@ public class JMkvpropedit {
 	}
 	
 	/* End of INI configuration file operations */
-	
-	
-	public void addRCMenuMouseListener(final JTextField text, final boolean copyOnly) {
-		text.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (e.isMetaDown() && text.isEnabled()) {
-					text.requestFocus();
-					Utils.showRCMenu(text, e, copyOnly);
-				}
-			}
-		});
-	}
+
 }
