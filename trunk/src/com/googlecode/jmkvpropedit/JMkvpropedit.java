@@ -119,7 +119,10 @@ public class JMkvpropedit {
 	private JCheckBox cbNumbGeneral;
 	private JTextField txtNumbStartGeneral;
 	private JTextField txtNumbPadGeneral;
-	private JCheckBox chbRemoveChapters;
+	private JCheckBox chbChapters;
+	private JComboBox cbChapters;
+	private JButton btnBrowseChapter;
+	private JTextField txtChapterFile;
 	private JCheckBox chbRemoveTags;
 	private JCheckBox chbExtraCmdGeneral;
 	private JTextField txtExtraCmdGeneral;
@@ -346,25 +349,42 @@ public class JMkvpropedit {
 		lblNumbExplainGeneral.setBounds(33, 67, 473, 14);
 		pnlGeneral.add(lblNumbExplainGeneral);
 		
-		chbRemoveChapters = new JCheckBox("Remove chapters");
-		chbRemoveChapters.setBounds(6, 88, 150, 23);
-		pnlGeneral.add(chbRemoveChapters);
+		chbChapters = new JCheckBox("Chapters");
+		chbChapters.setBounds(6, 88, 89, 23);
+		pnlGeneral.add(chbChapters);
+		
+		cbChapters = new JComboBox();
+		cbChapters.setEnabled(false);
+		cbChapters.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:"}));
+		cbChapters.setBounds(35, 114, 121, 20);
+		pnlGeneral.add(cbChapters);
+		
+		txtChapterFile = new JTextField();
+		txtChapterFile.setEditable(false);
+		txtChapterFile.setBounds(166, 114, 442, 20);
+		pnlGeneral.add(txtChapterFile);
+		txtChapterFile.setColumns(10);
+		
+		btnBrowseChapter = new JButton("Browse...");
+		btnBrowseChapter.setEnabled(false);
+		btnBrowseChapter.setBounds(618, 112, 100, 23);
+		pnlGeneral.add(btnBrowseChapter);
 		
 		chbRemoveTags = new JCheckBox("Remove tags");
-		chbRemoveTags.setBounds(6, 114, 150, 23);
+		chbRemoveTags.setBounds(6, 141, 150, 23);
 		pnlGeneral.add(chbRemoveTags);
 		
 		chbExtraCmdGeneral = new JCheckBox("Extra parameters");
-		chbExtraCmdGeneral.setBounds(6, 140, 114, 23);
+		chbExtraCmdGeneral.setBounds(6, 167, 114, 23);
 		if (!Utils.isWindows())
-			chbExtraCmdGeneral.setBounds(6, 140, 150, 23);
+			chbExtraCmdGeneral.setBounds(6, 167, 150, 23);
 		pnlGeneral.add(chbExtraCmdGeneral);
 		
 		txtExtraCmdGeneral = new JTextField();
 		txtExtraCmdGeneral.setEnabled(false);
-		txtExtraCmdGeneral.setBounds(126, 141, 592, 20);
+		txtExtraCmdGeneral.setBounds(126, 168, 592, 20);
 		if (!Utils.isWindows())
-			txtExtraCmdGeneral.setBounds(166, 141, 552, 20);
+			txtExtraCmdGeneral.setBounds(166, 168, 552, 20);
 		pnlGeneral.add(txtExtraCmdGeneral);
 		txtExtraCmdGeneral.setColumns(10);
 		
@@ -782,6 +802,54 @@ public class JMkvpropedit {
 						txtNumbPadGeneral.setText("1");
 				} catch (NumberFormatException e1) {
 					txtNumbPadGeneral.setText("1");
+				}
+			}
+		});
+		
+		chbChapters.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean state = cbChapters.isEnabled();
+				cbChapters.setEnabled(!state);
+				
+				if (cbChapters.getSelectedIndex() == 1 && chbChapters.isSelected()) {
+					txtChapterFile.setEnabled(!state);
+					btnBrowseChapter.setEnabled(!state);
+				} else if (!chbChapters.isSelected()) {
+					txtChapterFile.setEnabled(false);
+					btnBrowseChapter.setEnabled(false);
+				}
+			}
+		});
+		
+		cbChapters.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switch (cbChapters.getSelectedIndex()) {
+					case 0:
+						txtChapterFile.setEnabled(false);
+						btnBrowseChapter.setEnabled(false);
+						break;
+					case 1:
+						txtChapterFile.setEnabled(true);
+						btnBrowseChapter.setEnabled(true);
+						break;
+				}
+			}
+		});
+		
+		btnBrowseChapter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setDialogTitle("Select chapter file");
+				chooser.setMultiSelectionEnabled(false);
+				chooser.resetChoosableFileFilters();
+				FileFilter filter = new FileNameExtensionFilter("Chapter files (*.xml)", "xml");
+				chooser.setFileFilter(filter);
+				
+				int open = chooser.showOpenDialog(frmJMkvpropedit);
+				
+				if (open == JFileChooser.APPROVE_OPTION) {
+					if (chooser.getSelectedFile().exists())
+						txtChapterFile.setText(chooser.getSelectedFile().toString());
 				}
 			}
 		});
@@ -1870,9 +1938,27 @@ public class JMkvpropedit {
 				cmdLineGeneralOpt[i] += " --tags all:";
 			}
 			
-			if (chbRemoveChapters.isSelected()) {
-				cmdLineGeneral[i] += " --chapters \"\"";
-				cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
+			if (chbChapters.isSelected()) {
+				switch (cbChapters.getSelectedIndex()) {
+					case 0:
+						cmdLineGeneral[i] += " --chapters \"\"";
+						cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
+						break;
+					case 1:
+						if (txtChapterFile.getText().trim().isEmpty()) {
+							cmdLineGeneral[i] += " --chapters \"\"";
+							cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
+						} else {
+							if (Utils.isWindows()) {
+								cmdLineGeneral[i] += " --chapters \"" + txtChapterFile.getText() + "\"";
+								cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapePath(txtChapterFile.getText()) + "\"";
+							} else {
+								cmdLineGeneral[i] += " --chapters " + Utils.escapePath(txtChapterFile.getText());
+								cmdLineGeneralOpt[i] += " --chapters \"" + txtChapterFile.getText() + "\"";
+							}
+						}
+						break;
+				}
 			}
 			
 			if (chbTitleGeneral.isSelected()) {	
