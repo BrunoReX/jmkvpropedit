@@ -25,8 +25,10 @@
 
 package com.googlecode.jmkvpropedit;
 
-import java.text.NumberFormat;
-import java.text.DecimalFormat;
+import java.awt.event.*;
+import java.text.*;
+import javax.swing.*;
+import javax.swing.text.*;
 
 public class Utils {
 		
@@ -130,4 +132,100 @@ public class Utils {
 		return formatter;
 	}
 	
+	public static void showRCMenu(JTextArea text,
+								  MouseEvent e,
+								  boolean copyOnly) {
+		
+		JPopupMenu rightClickMenu = new JPopupMenu();
+		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
+		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
+		JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
+		JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
+
+		copyMenuItem.setText("Copy");
+		rightClickMenu.add(copyMenuItem);
+		
+		if (!copyOnly) { 
+			cutMenuItem.setText("Cut");
+			rightClickMenu.add(cutMenuItem);
+			
+			pasteMenuItem.setText("Paste");
+			rightClickMenu.add(pasteMenuItem);
+		}
+		
+		rightClickMenu.addSeparator();
+		
+		selectAllMenuItem.setText("Select All");
+		rightClickMenu.add(selectAllMenuItem);
+		
+		if (text.getText().isEmpty()) {
+			copyMenuItem.setEnabled(false);
+			selectAllMenuItem.setEnabled(false);
+			if (!copyOnly) cutMenuItem.setEnabled(false);
+		}
+
+		if (text.getSelectionStart() == text.getSelectionEnd()) {
+			copyMenuItem.setEnabled(false);
+			if (!copyOnly) cutMenuItem.setEnabled(false);
+		}
+		
+		if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
+			selectAllMenuItem.setEnabled(false);
+		}
+		
+		if (!text.isEditable() && !copyOnly) {
+			cutMenuItem.setEnabled(false);
+			pasteMenuItem.setEnabled(false);
+		}
+		
+		rightClickMenu.show(text, e.getX(), e.getY());
+	}
+	
+	public static void showRCMenu(JTextField text,
+			  					  MouseEvent e,
+			  					  boolean copyOnly) {
+		JPopupMenu rightClickMenu = new JPopupMenu();
+		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
+		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
+		JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
+		JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
+		
+		copyMenuItem.setText("Copy");
+		rightClickMenu.add(copyMenuItem);
+		
+		if (!copyOnly) { 
+			cutMenuItem.setText("Cut");
+			rightClickMenu.add(cutMenuItem);
+			
+			pasteMenuItem.setText("Paste");
+			rightClickMenu.add(pasteMenuItem);
+		}
+		
+		rightClickMenu.addSeparator();
+		
+		selectAllMenuItem.setText("Select All");
+		rightClickMenu.add(selectAllMenuItem);
+		
+		if (text.getText().isEmpty()) {
+			copyMenuItem.setEnabled(false);
+			selectAllMenuItem.setEnabled(false);
+			if (!copyOnly) cutMenuItem.setEnabled(false);
+		}
+		
+		if (text.getSelectionStart() == text.getSelectionEnd()) {
+			copyMenuItem.setEnabled(false);
+			if (!copyOnly) cutMenuItem.setEnabled(false);
+		}
+		
+		if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
+			selectAllMenuItem.setEnabled(false);
+		}
+		
+		if (!text.isEditable() && !copyOnly) {
+			cutMenuItem.setEnabled(false);
+			pasteMenuItem.setEnabled(false);
+		}
+		
+		rightClickMenu.show(text, e.getX(), e.getY());
+	}
 }
