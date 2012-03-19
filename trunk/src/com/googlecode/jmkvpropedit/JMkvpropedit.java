@@ -1900,7 +1900,7 @@ public class JMkvpropedit {
 
 			if (chbExtraCmdGeneral.isSelected() && !txtExtraCmdGeneral.getText().trim().isEmpty()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
-				cmdLineGeneralOpt[i] += " " + txtExtraCmdGeneral.getText();
+				cmdLineGeneralOpt[i] += " " + escapeBackslashes(txtExtraCmdGeneral.getText());
 			}
 		}
 		
@@ -1975,7 +1975,7 @@ public class JMkvpropedit {
 					
 					if (chbExtraCmdVideo[j].isSelected() && !txtExtraCmdVideo[j].getText().trim().isEmpty()) {
 						tmpCmdLineVideo[j] += " " + txtExtraCmdVideo[j].getText();
-						tmpCmdLineVideoOpt[j] += " " + txtExtraCmdVideo[j].getText();
+						tmpCmdLineVideoOpt[j] += " " + escapeBackslashes(txtExtraCmdVideo[j].getText());
 						editCount++;
 					}
 					
@@ -2075,7 +2075,7 @@ public class JMkvpropedit {
 					
 					if (chbExtraCmdAudio[j].isSelected() && !txtExtraCmdAudio[j].getText().trim().isEmpty()) {
 						tmpCmdLineAudio[j] += " " + txtExtraCmdAudio[j].getText();
-						tmpCmdLineAudioOpt[j] += " " + txtExtraCmdAudio[j].getText();
+						tmpCmdLineAudioOpt[j] += " " + escapeBackslashes(txtExtraCmdAudio[j].getText());
 						editCount++;
 					}
 					
@@ -2175,7 +2175,7 @@ public class JMkvpropedit {
 					
 					if (chbExtraCmdSubtitle[j].isSelected() && !txtExtraCmdSubtitle[j].getText().trim().isEmpty()) {
 						tmpCmdLineSubtitle[j] += " " + txtExtraCmdSubtitle[j].getText();
-						tmpCmdLineSubtitleOpt[j] += " " + txtExtraCmdSubtitle[j].getText();
+						tmpCmdLineSubtitleOpt[j] += " " + escapeBackslashes(txtExtraCmdSubtitle[j].getText());
 						editCount++;
 					}
 					
@@ -2470,6 +2470,12 @@ public class JMkvpropedit {
 		name = name.replace("\"", "\\\"");
 		
 		return name;
+	}
+	
+	private String escapeBackslashes (String extra) {
+		extra = extra.replace("\\", "\\\\");
+		
+		return extra;
 	}
 	
 	private String escapePath (String path) {
