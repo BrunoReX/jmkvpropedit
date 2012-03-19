@@ -361,6 +361,7 @@ public class JMkvpropedit {
 		
 		txtChapterFile = new JTextField();
 		txtChapterFile.setEditable(false);
+		txtChapterFile.setEnabled(false);
 		txtChapterFile.setBounds(166, 114, 442, 20);
 		pnlGeneral.add(txtChapterFile);
 		txtChapterFile.setColumns(10);
