@@ -593,6 +593,7 @@ public class JMkvpropedit {
 		Utils.addRCMenuMouseListener(txtNumbStartGeneral);
 		Utils.addRCMenuMouseListener(txtNumbPadGeneral);
 		Utils.addRCMenuMouseListener(txtChapterFile);
+		Utils.addRCMenuMouseListener(txtTagFile);
 		Utils.addRCMenuMouseListener(txtExtraCmdGeneral);
 		Utils.addRCMenuMouseListener(txtMkvPropExe);
 		
