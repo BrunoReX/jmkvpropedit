@@ -1,4 +1,4 @@
-JMkvpropedit v1.0.7
+JMkvpropedit v1.0.8
 
 A batch GUI for mkvpropedit (part of MKVToolNix) written in Java.
 It should work on Windows, Linux and other *nixes (not tested).
