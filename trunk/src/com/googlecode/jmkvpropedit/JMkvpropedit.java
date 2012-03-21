@@ -567,13 +567,13 @@ public class JMkvpropedit {
 		
 		/* Start of mouse events for right-click menu */
 		
-		Utils.addRCMenuMouseListener(txtOutput, false);
-		Utils.addRCMenuMouseListener(txtTitleGeneral, false);
-		Utils.addRCMenuMouseListener(txtNumbStartGeneral, false);
-		Utils.addRCMenuMouseListener(txtNumbPadGeneral, false);
-		Utils.addRCMenuMouseListener(txtChapterFile, true);
-		Utils.addRCMenuMouseListener(txtExtraCmdGeneral, false);
-		Utils.addRCMenuMouseListener(txtMkvPropExe, true);
+		Utils.addRCMenuMouseListener(txtOutput);
+		Utils.addRCMenuMouseListener(txtTitleGeneral);
+		Utils.addRCMenuMouseListener(txtNumbStartGeneral);
+		Utils.addRCMenuMouseListener(txtNumbPadGeneral);
+		Utils.addRCMenuMouseListener(txtChapterFile);
+		Utils.addRCMenuMouseListener(txtExtraCmdGeneral);
+		Utils.addRCMenuMouseListener(txtMkvPropExe);
 		
 		/* End of mouse events for right-click menu */
 		
@@ -1186,10 +1186,10 @@ public class JMkvpropedit {
 			
 			/* Start of mouse events for right-click menu */
 			
-			Utils.addRCMenuMouseListener(txtNameVideo[nVideo], false);
-			Utils.addRCMenuMouseListener(txtNumbStartVideo[nVideo], false);
-			Utils.addRCMenuMouseListener(txtNumbPadVideo[nVideo], false);
-			Utils.addRCMenuMouseListener(txtExtraCmdVideo[nVideo], false);
+			Utils.addRCMenuMouseListener(txtNameVideo[nVideo]);
+			Utils.addRCMenuMouseListener(txtNumbStartVideo[nVideo]);
+			Utils.addRCMenuMouseListener(txtNumbPadVideo[nVideo]);
+			Utils.addRCMenuMouseListener(txtExtraCmdVideo[nVideo]);
 			
 			/* End of mouse events for right-click menu */
 
@@ -1497,10 +1497,10 @@ public class JMkvpropedit {
 			
 			/* Start of mouse events for right-click menu */
 			
-			Utils.addRCMenuMouseListener(txtNameAudio[nAudio], false);
-			Utils.addRCMenuMouseListener(txtNumbStartAudio[nAudio], false);
-			Utils.addRCMenuMouseListener(txtNumbPadAudio[nAudio], false);
-			Utils.addRCMenuMouseListener(txtExtraCmdAudio[nAudio], false);
+			Utils.addRCMenuMouseListener(txtNameAudio[nAudio]);
+			Utils.addRCMenuMouseListener(txtNumbStartAudio[nAudio]);
+			Utils.addRCMenuMouseListener(txtNumbPadAudio[nAudio]);
+			Utils.addRCMenuMouseListener(txtExtraCmdAudio[nAudio]);
 			
 			/* End of mouse events for right-click menu */
 
@@ -1808,10 +1808,10 @@ public class JMkvpropedit {
 			
 			/* Start of mouse events for right-click menu */
 			
-			Utils.addRCMenuMouseListener(txtNameSubtitle[nSubtitle], false);
-			Utils.addRCMenuMouseListener(txtNumbStartSubtitle[nSubtitle], false);
-			Utils.addRCMenuMouseListener(txtNumbPadSubtitle[nSubtitle], false);
-			Utils.addRCMenuMouseListener(txtExtraCmdSubtitle[nSubtitle], false);
+			Utils.addRCMenuMouseListener(txtNameSubtitle[nSubtitle]);
+			Utils.addRCMenuMouseListener(txtNumbStartSubtitle[nSubtitle]);
+			Utils.addRCMenuMouseListener(txtNumbPadSubtitle[nSubtitle]);
+			Utils.addRCMenuMouseListener(txtExtraCmdSubtitle[nSubtitle]);
 			
 			/* End of mouse events for right-click menu */
 

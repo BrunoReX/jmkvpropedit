@@ -120,6 +120,117 @@ public class Utils {
 	/* End of escaping functions */
 	
 	
+	/* Start of right-click menu code */
+	
+	private static void showRCMenu(JTextArea text, MouseEvent e) {
+		JPopupMenu rightClickMenu = new JPopupMenu();
+		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
+		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
+		JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
+		JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
+		
+		copyMenuItem.setText("Copy");
+		cutMenuItem.setText("Cut");
+		pasteMenuItem.setText("Paste");
+		selectAllMenuItem.setText("Select All");
+
+		rightClickMenu.add(copyMenuItem);
+		rightClickMenu.add(cutMenuItem);
+		rightClickMenu.add(pasteMenuItem);
+		rightClickMenu.addSeparator();
+		rightClickMenu.add(selectAllMenuItem);
+		
+		if (text.getText().isEmpty()) {
+			copyMenuItem.setEnabled(false);
+			selectAllMenuItem.setEnabled(false);
+			cutMenuItem.setEnabled(false);
+		}
+		
+		if (text.getSelectionStart() == text.getSelectionEnd()) {
+			copyMenuItem.setEnabled(false);
+			cutMenuItem.setEnabled(false);
+		}
+		
+		if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
+			selectAllMenuItem.setEnabled(false);
+		}
+		
+		if (!text.isEditable()) {
+			cutMenuItem.setEnabled(false);
+			pasteMenuItem.setEnabled(false);
+		}
+		
+		rightClickMenu.show(text, e.getX(), e.getY());
+	}
+	
+	public static void addRCMenuMouseListener(final JTextArea text) {
+		text.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.isMetaDown() && text.isEnabled()) {
+					text.requestFocus();
+					showRCMenu(text, e);
+				}
+			}
+		});
+	}
+
+	private static void showRCMenu(JTextField text, MouseEvent e) {
+		JPopupMenu rightClickMenu = new JPopupMenu();
+		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
+		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
+		JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
+		JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
+		
+		copyMenuItem.setText("Copy");
+		cutMenuItem.setText("Cut");
+		pasteMenuItem.setText("Paste");
+		selectAllMenuItem.setText("Select All");
+
+		rightClickMenu.add(copyMenuItem);
+		rightClickMenu.add(cutMenuItem);
+		rightClickMenu.add(pasteMenuItem);
+		rightClickMenu.addSeparator();
+		rightClickMenu.add(selectAllMenuItem);
+		
+		if (text.getText().isEmpty()) {
+			copyMenuItem.setEnabled(false);
+			selectAllMenuItem.setEnabled(false);
+			cutMenuItem.setEnabled(false);
+		}
+		
+		if (text.getSelectionStart() == text.getSelectionEnd()) {
+			copyMenuItem.setEnabled(false);
+			cutMenuItem.setEnabled(false);
+		}
+		
+		if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
+			selectAllMenuItem.setEnabled(false);
+		}
+		
+		if (!text.isEditable()) {
+			cutMenuItem.setEnabled(false);
+			pasteMenuItem.setEnabled(false);
+		}
+		
+		rightClickMenu.show(text, e.getX(), e.getY());
+	}
+	
+	public static void addRCMenuMouseListener(final JTextField text) {
+		text.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.isMetaDown() && text.isEnabled()) {
+					text.requestFocus();
+					showRCMenu(text, e);
+				}
+			}
+		});
+	}
+	
+	/* End of right-click menu code */
+	
+	
 	public static NumberFormat padNumber(int pad) {
 		NumberFormat formatter = new DecimalFormat("0");
 		if (pad > 0) {
@@ -130,128 +241,5 @@ public class Utils {
 			formatter = new DecimalFormat(n);
 		}
 		return formatter;
-	}
-	
-	private static void showRCMenu(JTextArea text,
-								   MouseEvent e,
-								   boolean copyOnly) {
-		
-		JPopupMenu rightClickMenu = new JPopupMenu();
-		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
-		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
-		JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
-		JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
-
-		copyMenuItem.setText("Copy");
-		rightClickMenu.add(copyMenuItem);
-		
-		if (!copyOnly) { 
-			cutMenuItem.setText("Cut");
-			rightClickMenu.add(cutMenuItem);
-			
-			pasteMenuItem.setText("Paste");
-			rightClickMenu.add(pasteMenuItem);
-		}
-		
-		rightClickMenu.addSeparator();
-		
-		selectAllMenuItem.setText("Select All");
-		rightClickMenu.add(selectAllMenuItem);
-		
-		if (text.getText().isEmpty()) {
-			copyMenuItem.setEnabled(false);
-			selectAllMenuItem.setEnabled(false);
-			if (!copyOnly) cutMenuItem.setEnabled(false);
-		}
-
-		if (text.getSelectionStart() == text.getSelectionEnd()) {
-			copyMenuItem.setEnabled(false);
-			if (!copyOnly) cutMenuItem.setEnabled(false);
-		}
-		
-		if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
-			selectAllMenuItem.setEnabled(false);
-		}
-		
-		if (!text.isEditable() && !copyOnly) {
-			cutMenuItem.setEnabled(false);
-			pasteMenuItem.setEnabled(false);
-		}
-		
-		rightClickMenu.show(text, e.getX(), e.getY());
-	}
-	
-	public static void addRCMenuMouseListener(final JTextArea text,
-											  final boolean copyOnly) {
-		text.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mousePressed(MouseEvent e) {
-			if (e.isMetaDown() && text.isEnabled()) {
-				text.requestFocus();
-				showRCMenu(text, e, copyOnly);
-			}
-		}
-		});
-	}
-	
-	private static void showRCMenu(JTextField text,
-			  					   MouseEvent e,
-			  					   boolean copyOnly) {
-		JPopupMenu rightClickMenu = new JPopupMenu();
-		JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
-		JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
-		JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
-		JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
-		
-		copyMenuItem.setText("Copy");
-		rightClickMenu.add(copyMenuItem);
-		
-		if (!copyOnly) { 
-			cutMenuItem.setText("Cut");
-			rightClickMenu.add(cutMenuItem);
-			
-			pasteMenuItem.setText("Paste");
-			rightClickMenu.add(pasteMenuItem);
-		}
-		
-		rightClickMenu.addSeparator();
-		
-		selectAllMenuItem.setText("Select All");
-		rightClickMenu.add(selectAllMenuItem);
-		
-		if (text.getText().isEmpty()) {
-			copyMenuItem.setEnabled(false);
-			selectAllMenuItem.setEnabled(false);
-			if (!copyOnly) cutMenuItem.setEnabled(false);
-		}
-		
-		if (text.getSelectionStart() == text.getSelectionEnd()) {
-			copyMenuItem.setEnabled(false);
-			if (!copyOnly) cutMenuItem.setEnabled(false);
-		}
-		
-		if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
-			selectAllMenuItem.setEnabled(false);
-		}
-		
-		if (!text.isEditable() && !copyOnly) {
-			cutMenuItem.setEnabled(false);
-			pasteMenuItem.setEnabled(false);
-		}
-		
-		rightClickMenu.show(text, e.getX(), e.getY());
-	}
-	
-	public static void addRCMenuMouseListener(final JTextField text,
-											  final boolean copyOnly) {
-		text.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (e.isMetaDown() && text.isEnabled()) {
-					text.requestFocus();
-					showRCMenu(text, e, copyOnly);
-				}
-			}
-		});
 	}
 }
