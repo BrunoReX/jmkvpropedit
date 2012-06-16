@@ -40,7 +40,7 @@ import org.ini4j.*;
 public class JMkvpropedit {
 	private JFrame frmJMkvpropedit;
 
-	private static int MAX_STREAMS = 30; // Track number limit for batch mode
+	private static final int MAX_STREAMS = 30; // Track number limit for batch mode
 	Runtime rt = Runtime.getRuntime();
 	private Process proc = null;
 	private SwingWorker<Void, Void> worker = null;
