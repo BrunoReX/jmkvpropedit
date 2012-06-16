@@ -40,79 +40,79 @@ import org.ini4j.*;
 public class JMkvpropedit {
 	private JFrame frmJMkvpropedit;
 
-	private int maxStreams = 30; // Track number limit for batch mode
+	private static int MAX_STREAMS = 30; // Track number limit for batch mode
 	Runtime rt = Runtime.getRuntime();
 	private Process proc = null;
 	private SwingWorker<Void, Void> worker = null;
 	
-	private JPanel[] subPnlVideo = new JPanel[maxStreams];
-	private JCheckBox[] chbEditVideo = new JCheckBox[maxStreams];
-	private JCheckBox[] chbDefaultVideo = new JCheckBox[maxStreams];
-	private JRadioButton[] rbYesDefVideo = new JRadioButton[maxStreams];
-	private JRadioButton[] rbNoDefVideo = new JRadioButton[maxStreams];
-	private ButtonGroup[] bgRbDefVideo = new ButtonGroup[maxStreams];
-	private JCheckBox[] chbForcedVideo = new JCheckBox[maxStreams];
-	private JRadioButton[] rbYesForcedVideo = new JRadioButton[maxStreams];
-	private JRadioButton[] rbNoForcedVideo = new JRadioButton[maxStreams];
-	private ButtonGroup[] bgRbForcedVideo = new ButtonGroup[maxStreams];
-	private JCheckBox[] chbNameVideo = new JCheckBox[maxStreams];
-	private JTextField[] txtNameVideo = new JTextField[maxStreams];
-	private JCheckBox[] cbNumbVideo = new JCheckBox[maxStreams];
-	private JTextField[] txtNumbStartVideo = new JTextField[maxStreams];
-	private JLabel[] lblNumbStartVideo = new JLabel[maxStreams];
-	private JLabel[] lblNumbExplainVideo = new JLabel[maxStreams];
-	private JLabel[] lblNumbPadVideo = new JLabel[maxStreams];
-	private JTextField[] txtNumbPadVideo = new JTextField[maxStreams];
-	private JCheckBox[] chbLangVideo = new JCheckBox[maxStreams];
-	private JComboBox[] cbLangVideo = new JComboBox[maxStreams];
-	private JCheckBox[] chbExtraCmdVideo = new JCheckBox[maxStreams];
-	private JTextField[] txtExtraCmdVideo = new JTextField[maxStreams];	
+	private JPanel[] subPnlVideo = new JPanel[MAX_STREAMS];
+	private JCheckBox[] chbEditVideo = new JCheckBox[MAX_STREAMS];
+	private JCheckBox[] chbDefaultVideo = new JCheckBox[MAX_STREAMS];
+	private JRadioButton[] rbYesDefVideo = new JRadioButton[MAX_STREAMS];
+	private JRadioButton[] rbNoDefVideo = new JRadioButton[MAX_STREAMS];
+	private ButtonGroup[] bgRbDefVideo = new ButtonGroup[MAX_STREAMS];
+	private JCheckBox[] chbForcedVideo = new JCheckBox[MAX_STREAMS];
+	private JRadioButton[] rbYesForcedVideo = new JRadioButton[MAX_STREAMS];
+	private JRadioButton[] rbNoForcedVideo = new JRadioButton[MAX_STREAMS];
+	private ButtonGroup[] bgRbForcedVideo = new ButtonGroup[MAX_STREAMS];
+	private JCheckBox[] chbNameVideo = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtNameVideo = new JTextField[MAX_STREAMS];
+	private JCheckBox[] cbNumbVideo = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtNumbStartVideo = new JTextField[MAX_STREAMS];
+	private JLabel[] lblNumbStartVideo = new JLabel[MAX_STREAMS];
+	private JLabel[] lblNumbExplainVideo = new JLabel[MAX_STREAMS];
+	private JLabel[] lblNumbPadVideo = new JLabel[MAX_STREAMS];
+	private JTextField[] txtNumbPadVideo = new JTextField[MAX_STREAMS];
+	private JCheckBox[] chbLangVideo = new JCheckBox[MAX_STREAMS];
+	private JComboBox[] cbLangVideo = new JComboBox[MAX_STREAMS];
+	private JCheckBox[] chbExtraCmdVideo = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtExtraCmdVideo = new JTextField[MAX_STREAMS];	
 
-	private JPanel[] subPnlAudio = new JPanel[maxStreams];
-	private JCheckBox[] chbEditAudio = new JCheckBox[maxStreams];
-	private JCheckBox[] chbDefaultAudio = new JCheckBox[maxStreams];
-	private JRadioButton[] rbYesDefAudio = new JRadioButton[maxStreams];
-	private JRadioButton[] rbNoDefAudio = new JRadioButton[maxStreams];
-	private ButtonGroup[] bgRbDefAudio = new ButtonGroup[maxStreams];
-	private JCheckBox[] chbForcedAudio = new JCheckBox[maxStreams];
-	private JRadioButton[] rbYesForcedAudio = new JRadioButton[maxStreams];
-	private JRadioButton[] rbNoForcedAudio = new JRadioButton[maxStreams];
-	private ButtonGroup[] bgRbForcedAudio = new ButtonGroup[maxStreams];
-	private JCheckBox[] chbNameAudio = new JCheckBox[maxStreams];
-	private JTextField[] txtNameAudio = new JTextField[maxStreams];
-	private JCheckBox[] cbNumbAudio = new JCheckBox[maxStreams];
-	private JTextField[] txtNumbStartAudio = new JTextField[maxStreams];
-	private JLabel[] lblNumbStartAudio = new JLabel[maxStreams];
-	private JLabel[] lblNumbExplainAudio = new JLabel[maxStreams];
-	private JLabel[] lblNumbPadAudio = new JLabel[maxStreams];
-	private JTextField[] txtNumbPadAudio = new JTextField[maxStreams];
-	private JCheckBox[] chbLangAudio = new JCheckBox[maxStreams];
-	private JComboBox[] cbLangAudio = new JComboBox[maxStreams];
-	private JCheckBox[] chbExtraCmdAudio = new JCheckBox[maxStreams];
-	private JTextField[] txtExtraCmdAudio = new JTextField[maxStreams];
+	private JPanel[] subPnlAudio = new JPanel[MAX_STREAMS];
+	private JCheckBox[] chbEditAudio = new JCheckBox[MAX_STREAMS];
+	private JCheckBox[] chbDefaultAudio = new JCheckBox[MAX_STREAMS];
+	private JRadioButton[] rbYesDefAudio = new JRadioButton[MAX_STREAMS];
+	private JRadioButton[] rbNoDefAudio = new JRadioButton[MAX_STREAMS];
+	private ButtonGroup[] bgRbDefAudio = new ButtonGroup[MAX_STREAMS];
+	private JCheckBox[] chbForcedAudio = new JCheckBox[MAX_STREAMS];
+	private JRadioButton[] rbYesForcedAudio = new JRadioButton[MAX_STREAMS];
+	private JRadioButton[] rbNoForcedAudio = new JRadioButton[MAX_STREAMS];
+	private ButtonGroup[] bgRbForcedAudio = new ButtonGroup[MAX_STREAMS];
+	private JCheckBox[] chbNameAudio = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtNameAudio = new JTextField[MAX_STREAMS];
+	private JCheckBox[] cbNumbAudio = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtNumbStartAudio = new JTextField[MAX_STREAMS];
+	private JLabel[] lblNumbStartAudio = new JLabel[MAX_STREAMS];
+	private JLabel[] lblNumbExplainAudio = new JLabel[MAX_STREAMS];
+	private JLabel[] lblNumbPadAudio = new JLabel[MAX_STREAMS];
+	private JTextField[] txtNumbPadAudio = new JTextField[MAX_STREAMS];
+	private JCheckBox[] chbLangAudio = new JCheckBox[MAX_STREAMS];
+	private JComboBox[] cbLangAudio = new JComboBox[MAX_STREAMS];
+	private JCheckBox[] chbExtraCmdAudio = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtExtraCmdAudio = new JTextField[MAX_STREAMS];
 
-	private JPanel[] subPnlSubtitle = new JPanel[maxStreams];
-	private JCheckBox[] chbEditSubtitle = new JCheckBox[maxStreams];
-	private JCheckBox[] chbDefaultSubtitle = new JCheckBox[maxStreams];
-	private JRadioButton[] rbYesDefSubtitle = new JRadioButton[maxStreams];
-	private JRadioButton[] rbNoDefSubtitle = new JRadioButton[maxStreams];
-	private ButtonGroup[] bgRbDefSubtitle = new ButtonGroup[maxStreams];
-	private JCheckBox[] chbForcedSubtitle = new JCheckBox[maxStreams];
-	private JRadioButton[] rbYesForcedSubtitle = new JRadioButton[maxStreams];
-	private JRadioButton[] rbNoForcedSubtitle = new JRadioButton[maxStreams];
-	private ButtonGroup[] bgRbForcedSubtitle = new ButtonGroup[maxStreams];
-	private JCheckBox[] chbNameSubtitle = new JCheckBox[maxStreams];
-	private JTextField[] txtNameSubtitle = new JTextField[maxStreams];
-	private JCheckBox[] cbNumbSubtitle = new JCheckBox[maxStreams];
-	private JTextField[] txtNumbStartSubtitle = new JTextField[maxStreams];
-	private JLabel[] lblNumbStartSubtitle = new JLabel[maxStreams];
-	private JLabel[] lblNumbExplainSubtitle = new JLabel[maxStreams];
-	private JLabel[] lblNumbPadSubtitle = new JLabel[maxStreams];
-	private JTextField[] txtNumbPadSubtitle = new JTextField[maxStreams];
-	private JCheckBox[] chbLangSubtitle = new JCheckBox[maxStreams];
-	private JComboBox[] cbLangSubtitle = new JComboBox[maxStreams];
-	private JCheckBox[] chbExtraCmdSubtitle = new JCheckBox[maxStreams];
-	private JTextField[] txtExtraCmdSubtitle = new JTextField[maxStreams];
+	private JPanel[] subPnlSubtitle = new JPanel[MAX_STREAMS];
+	private JCheckBox[] chbEditSubtitle = new JCheckBox[MAX_STREAMS];
+	private JCheckBox[] chbDefaultSubtitle = new JCheckBox[MAX_STREAMS];
+	private JRadioButton[] rbYesDefSubtitle = new JRadioButton[MAX_STREAMS];
+	private JRadioButton[] rbNoDefSubtitle = new JRadioButton[MAX_STREAMS];
+	private ButtonGroup[] bgRbDefSubtitle = new ButtonGroup[MAX_STREAMS];
+	private JCheckBox[] chbForcedSubtitle = new JCheckBox[MAX_STREAMS];
+	private JRadioButton[] rbYesForcedSubtitle = new JRadioButton[MAX_STREAMS];
+	private JRadioButton[] rbNoForcedSubtitle = new JRadioButton[MAX_STREAMS];
+	private ButtonGroup[] bgRbForcedSubtitle = new ButtonGroup[MAX_STREAMS];
+	private JCheckBox[] chbNameSubtitle = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtNameSubtitle = new JTextField[MAX_STREAMS];
+	private JCheckBox[] cbNumbSubtitle = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtNumbStartSubtitle = new JTextField[MAX_STREAMS];
+	private JLabel[] lblNumbStartSubtitle = new JLabel[MAX_STREAMS];
+	private JLabel[] lblNumbExplainSubtitle = new JLabel[MAX_STREAMS];
+	private JLabel[] lblNumbPadSubtitle = new JLabel[MAX_STREAMS];
+	private JTextField[] txtNumbPadSubtitle = new JTextField[MAX_STREAMS];
+	private JCheckBox[] chbLangSubtitle = new JCheckBox[MAX_STREAMS];
+	private JComboBox[] cbLangSubtitle = new JComboBox[MAX_STREAMS];
+	private JCheckBox[] chbExtraCmdSubtitle = new JCheckBox[MAX_STREAMS];
+	private JTextField[] txtExtraCmdSubtitle = new JTextField[MAX_STREAMS];
 	
 	private JCheckBox chbTitleGeneral;
 	private JTextField txtTitleGeneral;
@@ -990,7 +990,7 @@ public class JMkvpropedit {
 			public void actionPerformed(ActionEvent e) {
 				addVideoTrack();
 				cbVideo.setSelectedIndex(cbVideo.getItemCount()-1);
-				if (cbVideo.getItemCount() == maxStreams) {
+				if (cbVideo.getItemCount() == MAX_STREAMS) {
 					btnAddVideo.setEnabled(false);
 				}
 				
@@ -1007,7 +1007,7 @@ public class JMkvpropedit {
 					nVideo--;
 				}
 				
-				if (cbVideo.getItemCount() < maxStreams && !btnAddVideo.isEnabled()) {
+				if (cbVideo.getItemCount() < MAX_STREAMS && !btnAddVideo.isEnabled()) {
 					btnAddVideo.setEnabled(true);
 				}
 				
@@ -1028,7 +1028,7 @@ public class JMkvpropedit {
 			public void actionPerformed(ActionEvent e) {
 				addAudioTrack();
 				cbAudio.setSelectedIndex(cbAudio.getItemCount()-1);
-				if (cbAudio.getItemCount() == maxStreams) {
+				if (cbAudio.getItemCount() == MAX_STREAMS) {
 					btnAddAudio.setEnabled(false);
 				}
 				
@@ -1045,7 +1045,7 @@ public class JMkvpropedit {
 					nAudio--;
 				}
 				
-				if (cbAudio.getItemCount() < maxStreams && !btnAddAudio.isEnabled()) {
+				if (cbAudio.getItemCount() < MAX_STREAMS && !btnAddAudio.isEnabled()) {
 					btnAddAudio.setEnabled(true);
 				}
 				
@@ -1067,7 +1067,7 @@ public class JMkvpropedit {
 				addSubtitleTrack();
 				cbSubtitle.setSelectedIndex(cbSubtitle.getItemCount()-1);
 				
-				if (cbSubtitle.getItemCount() == maxStreams) {
+				if (cbSubtitle.getItemCount() == MAX_STREAMS) {
 					btnAddSubtitle.setEnabled(false);
 				}
 				
@@ -1084,7 +1084,7 @@ public class JMkvpropedit {
 					nSubtitle--;
 				}
 				
-				if (cbSubtitle.getItemCount() < maxStreams && !btnAddSubtitle.isEnabled()) {
+				if (cbSubtitle.getItemCount() < MAX_STREAMS && !btnAddSubtitle.isEnabled()) {
 					btnAddSubtitle.setEnabled(true);
 				}
 				
@@ -1098,7 +1098,7 @@ public class JMkvpropedit {
 	/* Start of track addition operations */
 	
 	private void addVideoTrack() {
-		if (nVideo < maxStreams) {
+		if (nVideo < MAX_STREAMS) {
 			subPnlVideo[nVideo] = new JPanel();		
 			subPnlVideo[nVideo].setBounds(0, 0, 728, 294);
 			lyrdPnlVideo.add(subPnlVideo[nVideo]);
@@ -1409,7 +1409,7 @@ public class JMkvpropedit {
 	}
 
 	private void addAudioTrack() {
-		if (nAudio < maxStreams) {
+		if (nAudio < MAX_STREAMS) {
 			subPnlAudio[nAudio] = new JPanel();		
 			subPnlAudio[nAudio].setBounds(0, 0, 728, 294);
 			lyrdPnlAudio.add(subPnlAudio[nAudio]);
@@ -1720,7 +1720,7 @@ public class JMkvpropedit {
 	}
 	
 	private void addSubtitleTrack() {
-		if (nSubtitle < maxStreams) {
+		if (nSubtitle < MAX_STREAMS) {
 			subPnlSubtitle[nSubtitle] = new JPanel();		
 			subPnlSubtitle[nSubtitle].setBounds(0, 0, 728, 294);
 			lyrdPnlSubtitle.add(subPnlSubtitle[nSubtitle]);
