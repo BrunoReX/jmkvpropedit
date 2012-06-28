@@ -189,4 +189,10 @@ public class Utils {
 		}
 		return formatter;
 	}
+	
+	public static String getFileNameWithoutExt(String file) {
+		int dotIndex = file.lastIndexOf(".");
+		
+		return file.substring(0, dotIndex);
+	}
 }
