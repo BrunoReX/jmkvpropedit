@@ -205,7 +205,7 @@ public class JMkvpropedit {
 	 */
 	private void initialize() {
 		frmJMkvpropedit = new JFrame();
-		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.8"); /* Version */
+		frmJMkvpropedit.setTitle("JMkvpropedit 1.0.9"); /* Version */
 		frmJMkvpropedit.setResizable(false);
 		frmJMkvpropedit.setBounds(100, 100, 759, 444);
 		if (Utils.isMac())
@@ -358,7 +358,7 @@ public class JMkvpropedit {
 		
 		cbChapters = new JComboBox();
 		cbChapters.setEnabled(false);
-		cbChapters.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:"}));
+		cbChapters.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:", "Match file"}));
 		cbChapters.setBounds(35, 114, 121, 20);
 		pnlGeneral.add(cbChapters);
 		
@@ -379,7 +379,7 @@ public class JMkvpropedit {
 		pnlGeneral.add(chbTags);
 		
 		cbTags = new JComboBox();
-		cbTags.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:"}));
+		cbTags.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:", "Match file"}));
 		cbTags.setEnabled(false);
 		cbTags.setBounds(33, 169, 121, 20);
 		pnlGeneral.add(cbTags);
@@ -2064,6 +2064,17 @@ public class JMkvpropedit {
 							}
 						}
 						break;
+					case 2:
+						String tagFile = Utils.getFileNameWithoutExt((String) modelFiles.get(i))+".xml";
+						
+						if (Utils.isWindows()) {
+							cmdLineGeneral[i] += " --tags all:\"" + tagFile + "\"";
+							cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapePath(tagFile) + "\"";
+						} else {
+							cmdLineGeneral[i] += " --tags all:" + Utils.escapePath(tagFile);
+							cmdLineGeneralOpt[i] += " --tags all:\"" + tagFile + "\"";
+						}
+						break;
 				}
 			}
 			
@@ -2085,6 +2096,17 @@ public class JMkvpropedit {
 								cmdLineGeneral[i] += " --chapters " + Utils.escapePath(txtChapterFile.getText());
 								cmdLineGeneralOpt[i] += " --chapters \"" + txtChapterFile.getText() + "\"";
 							}
+						}
+						break;
+					case 2:
+						String chapFile = Utils.getFileNameWithoutExt((String) modelFiles.get(i))+".xml";
+						
+						if (Utils.isWindows()) {
+							cmdLineGeneral[i] += " --chapters \"" + chapFile + "\"";
+							cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapePath(chapFile) + "\"";
+						} else {
+							cmdLineGeneral[i] += " --chapters " + Utils.escapePath(chapFile);
+							cmdLineGeneralOpt[i] += " --chapters \"" + chapFile + "\"";
 						}
 						break;
 				}
