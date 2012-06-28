@@ -859,15 +859,12 @@ public class JMkvpropedit {
 		
 		cbChapters.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch (cbChapters.getSelectedIndex()) {
-					case 0:
-						txtChapterFile.setEnabled(false);
-						btnBrowseChapter.setEnabled(false);
-						break;
-					case 1:
-						txtChapterFile.setEnabled(true);
-						btnBrowseChapter.setEnabled(true);
-						break;
+				if (cbChapters.getSelectedIndex() != 1) {
+					txtChapterFile.setEnabled(false);
+					btnBrowseChapter.setEnabled(false);
+				} else {
+					txtChapterFile.setEnabled(true);
+					btnBrowseChapter.setEnabled(true);
 				}
 			}
 		});
@@ -907,15 +904,12 @@ public class JMkvpropedit {
 		
 		cbTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch (cbTags.getSelectedIndex()) {
-					case 0:
-						txtTagFile.setEnabled(false);
-						btnBrowseTag.setEnabled(false);
-						break;
-					case 1:
-						txtTagFile.setEnabled(true);
-						btnBrowseTag.setEnabled(true);
-						break;
+				if (cbTags.getSelectedIndex() != 1) {
+					txtTagFile.setEnabled(false);
+					btnBrowseTag.setEnabled(false);
+				} else {
+					txtTagFile.setEnabled(true);
+					btnBrowseTag.setEnabled(true);
 				}
 			}
 		});
