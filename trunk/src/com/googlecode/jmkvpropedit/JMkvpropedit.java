@@ -58,6 +58,9 @@ public class JMkvpropedit {
 			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
 	
 	
+	private String[] cmdLineGeneral = null;
+	private String[] cmdLineGeneralOpt = null;
+	
 	private String[] cmdLineVideo = null;
 	private String[] cmdLineVideoOpt = null;
 	private int nVideo = 0;
@@ -114,9 +117,6 @@ public class JMkvpropedit {
 	private JTextField txtExtraCmdGeneral;
 	private JTextField txtMkvPropExe;
 	private JCheckBox chbMkvPropExeDef;
-	
-	private String[] cmdLineGeneral = null;
-	private String[] cmdLineGeneralOpt = null;
 
 	
 	// Video tab controls
