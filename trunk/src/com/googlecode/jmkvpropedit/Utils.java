@@ -178,8 +178,9 @@ public class Utils {
 	/* End of right-click menu code */
 	
 	
-	public static NumberFormat padNumber(int pad) {
+	public static String padNumber(int pad, int number) {
 		NumberFormat formatter = new DecimalFormat("0");
+		
 		if (pad > 0) {
 			String n = "";
 			for (int i = 0; i < pad; i++) {
@@ -187,7 +188,8 @@ public class Utils {
 			}
 			formatter = new DecimalFormat(n);
 		}
-		return formatter;
+		
+		return formatter.format(number);
 	}
 	
 	public static String getFileNameWithoutExt(String file) {
