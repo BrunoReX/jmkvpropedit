@@ -588,6 +588,12 @@ public class JMkvpropedit {
 		pnlGeneral.add(txtMkvPropExe, gbc_txtMkvPropExe);
 		txtMkvPropExe.setColumns(10);
 		
+		if (Utils.isWindows()) {
+			txtMkvPropExe.setText("mkvpropedit.exe");
+		} else {
+			txtMkvPropExe.setText("/usr/bin/mkvpropedit");
+		}
+		
 		JPanel pnlMkvPropExeControls = new JPanel();
 		GridBagConstraints gbc_pnlMkvPropExeControls = new GridBagConstraints();
 		gbc_pnlMkvPropExeControls.fill = GridBagConstraints.HORIZONTAL;
