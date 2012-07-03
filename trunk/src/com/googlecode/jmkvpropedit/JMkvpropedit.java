@@ -29,6 +29,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -41,15 +42,16 @@ public class JMkvpropedit {
 	
 	private static final String VERSION_NUMBER = "1.1";
 	private static final int MAX_STREAMS = 30;
-
+	private static String[] argsArray;
+	
 	private static final Runtime rt = Runtime.getRuntime();
 	private static Process proc = null;
 	private static SwingWorker<Void, Void> worker = null;
 	
-	private JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
 	private static final File iniFile = new File("JMkvpropedit.ini");
-	private static ArrayList<String> argsArray = new ArrayList<String>();
 	private static final MkvLanguage mkvLang = new MkvLanguage();
+	
+	private JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
 	
 	private static final FileFilter EXE_EXT_FILTER =
 			new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
@@ -223,10 +225,7 @@ public class JMkvpropedit {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					for (String arg : args) {
-						argsArray.add(arg);
-					}
-					
+					argsArray = args;
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					JMkvpropedit window = new JMkvpropedit();
 					window.frmJMkvpropedit.setVisible(true);
@@ -578,7 +577,7 @@ public class JMkvpropedit {
 		gbc_lblMkvPropExe.gridy = 9;
 		pnlGeneral.add(lblMkvPropExe, gbc_lblMkvPropExe);
 		
-		txtMkvPropExe = new JTextField();
+		txtMkvPropExe = new JTextField("mkvpropedit");
 		txtMkvPropExe.setEditable(false);
 		GridBagConstraints gbc_txtMkvPropExe = new GridBagConstraints();
 		gbc_txtMkvPropExe.insets = new Insets(0, 0, 5, 0);
@@ -587,12 +586,6 @@ public class JMkvpropedit {
 		gbc_txtMkvPropExe.gridy = 9;
 		pnlGeneral.add(txtMkvPropExe, gbc_txtMkvPropExe);
 		txtMkvPropExe.setColumns(10);
-		
-		if (Utils.isWindows()) {
-			txtMkvPropExe.setText("mkvpropedit.exe");
-		} else {
-			txtMkvPropExe.setText("/usr/bin/mkvpropedit");
-		}
 		
 		JPanel pnlMkvPropExeControls = new JPanel();
 		GridBagConstraints gbc_pnlMkvPropExeControls = new GridBagConstraints();
@@ -608,6 +601,8 @@ public class JMkvpropedit {
 		pnlMkvPropExeControls.setLayout(gbl_pnlMkvPropExeControls);
 		
 		chbMkvPropExeDef = new JCheckBox("Use default");
+		chbMkvPropExeDef.setSelected(true);
+		chbMkvPropExeDef.setEnabled(false);
 		GridBagConstraints gbc_chckbxUseDefault = new GridBagConstraints();
 		gbc_chckbxUseDefault.anchor = GridBagConstraints.WEST;
 		gbc_chckbxUseDefault.insets = new Insets(0, 0, 0, 5);
@@ -1133,15 +1128,9 @@ public class JMkvpropedit {
 
 		chbMkvPropExeDef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Utils.isWindows()) {
-					txtMkvPropExe.setText("mkvpropedit.exe");
-					chbMkvPropExeDef.setEnabled(false);
-					defaultIniFile();
-				} else {
-					txtMkvPropExe.setText("/usr/bin/mkvpropedit");
-					chbMkvPropExeDef.setEnabled(false);
-					defaultIniFile();
-				}
+				txtMkvPropExe.setText("mkvpropedit");
+				chbMkvPropExeDef.setEnabled(false);
+				defaultIniFile();
 			}
 		});
 		
@@ -1159,7 +1148,9 @@ public class JMkvpropedit {
 				int open = chooser.showOpenDialog(frmJMkvpropedit);
 				
 				if (open == JFileChooser.APPROVE_OPTION) {
-					saveIniFile(chooser.getSelectedFile());
+					if (chooser.getSelectedFile().exists()) {
+						saveIniFile(chooser.getSelectedFile());
+					}
 				}
 			}
 		});
@@ -1303,18 +1294,10 @@ public class JMkvpropedit {
 		
 		btnProcessFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File mkvPropExe = new File(txtMkvPropExe.getText());
-				
 				if (modelFiles.getSize() == 0) {
 					JOptionPane.showMessageDialog(frmJMkvpropedit,
 							"The file list is empty!",
 							"Empty list",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!mkvPropExe.exists()) {
-					JOptionPane.showMessageDialog(frmJMkvpropedit,
-							"Mkvpropedit executable not found!" +
-							"\nPlease set the right path for it or copy it to the working folder (default setting).",
-							"Mkvpropedit not found",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					setCmdLine();
@@ -1324,7 +1307,15 @@ public class JMkvpropedit {
 								"Nothing to do!",
 								"",	JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						executeBatch();
+						if (isExecutableInPath(txtMkvPropExe.getText())) {
+							executeBatch();
+						} else {
+							JOptionPane.showMessageDialog(frmJMkvpropedit,
+									"Mkvpropedit executable not found!" +
+									"\nPlease make sure it is installed and included in the system path.\n" +
+									"Alternatively, you can manually set the path or copy its executable to the working folder.",
+									"", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 				
@@ -2937,8 +2928,8 @@ public class JMkvpropedit {
 		 worker.execute();
 	}
 	
-	private void parseFiles(ArrayList<String> argsArray) {
-		if (argsArray.size() > 0) {
+	private void parseFiles(String[] argsArray) {
+		if (argsArray.length > 0) {
 			File f = null;
 			
 			for (String arg : argsArray) {
@@ -2955,6 +2946,32 @@ public class JMkvpropedit {
 		}
 	}
 	
+	private boolean found = true;
+	private boolean isExecutableInPath(final String exe) {
+		worker = new SwingWorker<Void, Void>() {
+			@Override
+			public Void doInBackground() {
+				try {
+					proc = rt.exec(exe);
+					InputStream in = proc.getInputStream();
+		            proc.waitFor();
+					in.close();
+					found = true;
+				} catch (IOException e) {
+					found = false;
+				} catch (InterruptedException e) {
+				}
+				
+				return null;
+			}
+		};
+		
+		worker.execute();
+		while (!worker.isDone()) { }
+
+		return found;
+	}
+	
 	/* End of command line methods */
 	
 	
@@ -2969,28 +2986,13 @@ public class JMkvpropedit {
 				String exePath = ini.get("General", "mkvpropedit");
 				
 				if (exePath != null) {
-					File exeFile = new File(exePath);
-					
-					if (exeFile.exists()) {
-						if (exeFile.toString().equals("mkvpropedit.exe") && Utils.isWindows()) {
-							chbMkvPropExeDef.setSelected(true);
-							chbMkvPropExeDef.setEnabled(false);
-						} else if (exeFile.toString().equals("/usr/bin/mkvpropedit") && !Utils.isWindows()) {
-							chbMkvPropExeDef.setSelected(true);
-							chbMkvPropExeDef.setEnabled(false);
-						} else {
-							txtMkvPropExe.setText(exePath);
-							chbMkvPropExeDef.setSelected(false);
-							chbMkvPropExeDef.setEnabled(true);
-						}
-					} else {
-						if (Utils.isWindows())
-							txtMkvPropExe.setText("mvkpropedit.exe");
-						else
-							txtMkvPropExe.setText("/usr/bin/mkvpropedit");
-						
+					if (exePath.equals("mkvpropedit")) {
 						chbMkvPropExeDef.setSelected(true);
 						chbMkvPropExeDef.setEnabled(false);
+					} else {
+						txtMkvPropExe.setText(exePath);
+						chbMkvPropExeDef.setSelected(false);
+						chbMkvPropExeDef.setEnabled(true);
 					}
 				}
 			} catch (InvalidFileFormatException e) {
@@ -3011,26 +3013,24 @@ public class JMkvpropedit {
 	}
 	
 	private void saveIniFile(File exeFile) {
-		if (exeFile.exists()) {
-			Ini ini = null;
+		Ini ini = null;
+		
+		txtMkvPropExe.setText(exeFile.toString());
+		chbMkvPropExeDef.setSelected(false);
+		chbMkvPropExeDef.setEnabled(true);
+		
+		try {
+			if (!iniFile.exists()) {
+				iniFile.createNewFile();
+			}
 			
-			txtMkvPropExe.setText(exeFile.toString());
-			chbMkvPropExeDef.setSelected(false);
-			chbMkvPropExeDef.setEnabled(true);
-			
-			try {
-				if (!iniFile.exists()) {
-					iniFile.createNewFile();
-				}
-				
-				ini = new Ini(iniFile);
-				ini.put("General", "mkvpropedit", exeFile.toString());
-				ini.store();
-			}
-			catch (InvalidFileFormatException e1) {
-			}
-			catch (IOException e1) {		
-			}
+			ini = new Ini(iniFile);
+			ini.put("General", "mkvpropedit", exeFile.toString());
+			ini.store();
+		}
+		catch (InvalidFileFormatException e1) {
+		}
+		catch (IOException e1) {		
 		}
 	}
 	
@@ -3044,11 +3044,7 @@ public class JMkvpropedit {
 			
 			ini = new Ini(iniFile);
 			
-			if (Utils.isWindows()) {
-				ini.put("General", "mkvpropedit", "mkvpropedit.exe");
-			} else {
-				ini.put("General", "mkvpropedit", "/usr/bin/mkvpropedit");
-			}
+			ini.put("General", "mkvpropedit", "mkvpropedit");
 			
 			ini.store();
 		}
@@ -3082,6 +3078,8 @@ public class JMkvpropedit {
 			
 			if (tmpExe.exists()) {
 				exePath = tmpExe.toString();
+			} else {
+				exePath = null;
 			}
 		}
 		
