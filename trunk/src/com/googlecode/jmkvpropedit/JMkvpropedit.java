@@ -59,6 +59,9 @@ public class JMkvpropedit {
 	private static final FileFilter MATROSKA_EXT_FILTER =
 			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
 	
+	private static final FileFilter XML_EXT_FILTER =
+			new FileNameExtensionFilter("XML files (*.xml)", "xml");
+	
 	
 	private String[] cmdLineGeneral = null;
 	private String[] cmdLineGeneralOpt = null;
@@ -1078,6 +1081,24 @@ public class JMkvpropedit {
 				
 			}
 		});
+
+		btnBrowseChapters.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setDialogTitle("Select chapters file");
+				chooser.setMultiSelectionEnabled(false);
+				chooser.resetChoosableFileFilters();
+				chooser.setFileFilter(XML_EXT_FILTER);
+				
+				int open = chooser.showOpenDialog(frmJMkvpropedit);
+				
+				if (open == JFileChooser.APPROVE_OPTION) {
+					if (chooser.getSelectedFile().exists()) {
+						txtChapters.setText(chooser.getSelectedFile().toString());
+					}
+				}
+			}
+		});
 		
 		chbTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1118,6 +1139,24 @@ public class JMkvpropedit {
 				
 			}
 		});
+		
+		btnBrowseTags.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setDialogTitle("Select tags file");
+				chooser.setMultiSelectionEnabled(false);
+				chooser.resetChoosableFileFilters();
+				chooser.setFileFilter(XML_EXT_FILTER);
+				
+				int open = chooser.showOpenDialog(frmJMkvpropedit);
+				
+				if (open == JFileChooser.APPROVE_OPTION) {
+					if (chooser.getSelectedFile().exists()) {
+						txtTags.setText(chooser.getSelectedFile().toString());
+					}
+				}
+			}
+		});	
 		
 		chbExtraCmdGeneral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
