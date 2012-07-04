@@ -27,9 +27,10 @@ package com.googlecode.jmkvpropedit;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -44,8 +45,8 @@ public class JMkvpropedit {
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
-	private static final Runtime rt = Runtime.getRuntime();
 	private static Process proc = null;
+	private static ProcessBuilder pb = new ProcessBuilder();
 	private static SwingWorker<Void, Void> worker = null;
 	
 	private static final File iniFile = new File("JMkvpropedit.ini");
@@ -2924,20 +2925,16 @@ public class JMkvpropedit {
 						optFilePW.flush();
 						optFilePW.close();
 						
-						if (Utils.isWindows()) {
-							proc = rt.exec("\"" + txtMkvPropExe.getText() + "\" @options.txt");
-						} else {
-							proc = rt.exec(Utils.escapePath(txtMkvPropExe.getText()) + " @options.txt");
-						}
+						pb.command(txtMkvPropExe.getText(), "@options.txt");
+						pb.redirectErrorStream(true);
 						
 						txtOutput.append("File: " + modelFiles.get(i) + "\n");
 						txtOutput.append("Command line: " + cmdLineBatch.get(i) + "\n\n");
 						
+						proc = pb.start();
 						StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), txtOutput);
-						StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), txtOutput);
-						
 						outputGobbler.start();
-						errorGobbler.start();
+						
 						proc.waitFor();
 						
 						optFile.delete();
@@ -2991,10 +2988,14 @@ public class JMkvpropedit {
 			@Override
 			public Void doInBackground() {
 				try {
-					proc = rt.exec(exe);
-					InputStream in = proc.getInputStream();
-		            proc.waitFor();
+					pb.command(exe);
+					pb.redirectErrorStream(true);
+					proc = pb.start();
+					
+					BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+					proc.waitFor();
 					in.close();
+					
 					found = true;
 				} catch (IOException e) {
 					found = false;
