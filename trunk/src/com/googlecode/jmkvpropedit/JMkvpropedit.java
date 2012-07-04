@@ -41,7 +41,7 @@ import org.ini4j.*;
 
 public class JMkvpropedit {
 	
-	private static final String VERSION_NUMBER = "1.1";
+	private static final String VERSION_NUMBER = "1.1.1";
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
