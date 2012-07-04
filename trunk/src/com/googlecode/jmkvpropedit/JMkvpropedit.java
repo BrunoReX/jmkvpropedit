@@ -1082,7 +1082,7 @@ public class JMkvpropedit {
 				
 			}
 		});
-
+		
 		btnBrowseChapters.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -1157,7 +1157,7 @@ public class JMkvpropedit {
 					}
 				}
 			}
-		});	
+		});		
 		
 		chbExtraCmdGeneral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2476,10 +2476,10 @@ public class JMkvpropedit {
 						} else {
 							if (Utils.isWindows()) {
 								cmdLineGeneral[i] += " --tags all:\"" + txtTags.getText() + "\"";
-								cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapePath(txtTags.getText()) + "\"";
+								cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapeName(txtTags.getText()) + "\"";
 							} else {
-								cmdLineGeneral[i] += " --tags all:" + Utils.escapePath(txtTags.getText());
-								cmdLineGeneralOpt[i] += " --tags all:\"" + txtTags.getText() + "\"";
+								cmdLineGeneral[i] += " --tags all:\"" + Utils.escapeQuotes(txtTags.getText()) + "\"";
+								cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapeName(txtTags.getText()) + "\"";
 							}
 						}
 						break;
@@ -2489,10 +2489,10 @@ public class JMkvpropedit {
 						
 						if (Utils.isWindows()) {
 							cmdLineGeneral[i] += " --tags all:\"" + tmpTags + "\"";
-							cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapePath(tmpTags) + "\"";
+							cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapeName(tmpTags) + "\"";
 						} else {
-							cmdLineGeneral[i] += " --tags all:" + Utils.escapePath(tmpTags);
-							cmdLineGeneralOpt[i] += " --tags all:\"" + tmpTags + "\"";
+							cmdLineGeneral[i] += " --tags all:\"" + Utils.escapeQuotes(tmpTags) + "\"";
+							cmdLineGeneralOpt[i] += " --tags all:\"" + Utils.escapeName(tmpTags) + "\"";
 						}
 						break;
 				}
@@ -2511,10 +2511,10 @@ public class JMkvpropedit {
 						} else {
 							if (Utils.isWindows()) {
 								cmdLineGeneral[i] += " --chapters \"" + txtChapters.getText() + "\"";
-								cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapePath(txtChapters.getText()) + "\"";
+								cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapeName(txtChapters.getText()) + "\"";
 							} else {
-								cmdLineGeneral[i] += " --chapters " + Utils.escapePath(txtChapters.getText());
-								cmdLineGeneralOpt[i] += " --chapters \"" + txtChapters.getText() + "\"";
+								cmdLineGeneral[i] += " --chapters \"" + Utils.escapeQuotes(txtChapters.getText()) + "\"";
+								cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapeName(txtChapters.getText()) + "\"";
 							}
 						}
 						break;
@@ -2524,10 +2524,10 @@ public class JMkvpropedit {
 						
 						if (Utils.isWindows()) {
 							cmdLineGeneral[i] += " --chapters \"" + tmpChaps + "\"";
-							cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapePath(tmpChaps) + "\"";
+							cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapeName(tmpChaps) + "\"";
 						} else {
-							cmdLineGeneral[i] += " --chapters " + Utils.escapePath(tmpChaps);
-							cmdLineGeneralOpt[i] += " --chapters \"" + tmpChaps + "\"";
+							cmdLineGeneral[i] += " --chapters \"" + Utils.escapeQuotes(tmpChaps) + "\"";
+							cmdLineGeneralOpt[i] += " --chapters \"" + Utils.escapeName(tmpChaps) + "\"";
 						}
 						break;
 				}
@@ -2546,17 +2546,17 @@ public class JMkvpropedit {
 					newTitle = newTitle.replace("{num}", Utils.padNumber(pad, start));
 					start++;
 					
-					cmdLineGeneral[i] += " --set title=\"" + Utils.escapeNameCmdLine(newTitle) + "\"";
+					cmdLineGeneral[i] += " --set title=\"" + Utils.escapeQuotes(newTitle) + "\"";
 					cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(newTitle) + "\"";
 				} else {
-					cmdLineGeneral[i] += " --set title=\"" + Utils.escapeNameCmdLine(txtTitleGeneral.getText()) + "\"";
+					cmdLineGeneral[i] += " --set title=\"" + Utils.escapeQuotes(txtTitleGeneral.getText()) + "\"";
 					cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(txtTitleGeneral.getText()) + "\"";
 				}
 			}
 
 			if (chbExtraCmdGeneral.isSelected() && !txtExtraCmdGeneral.getText().trim().isEmpty()) {
 				cmdLineGeneral[i] += " " + txtExtraCmdGeneral.getText();
-				cmdLineGeneralOpt[i] += " " + Utils.escapeBackslashes(txtExtraCmdGeneral.getText());
+				cmdLineGeneralOpt[i] += " " + Utils.escapeName(txtExtraCmdGeneral.getText());
 			}
 		}
 		
@@ -2619,7 +2619,7 @@ public class JMkvpropedit {
 					}
 					
 					if (chbNameVideo[j].isSelected()) {					
-						tmpCmdLineVideo[j] += " --set name=\"" + Utils.escapeNameCmdLine(txtNameVideo[j].getText()) + "\"";
+						tmpCmdLineVideo[j] += " --set name=\"" + Utils.escapeQuotes(txtNameVideo[j].getText()) + "\"";
 						tmpCmdLineVideoOpt[j] += " --set name=\"" + Utils.escapeName(txtNameVideo[j].getText()) + "\"";
 						editCount++;
 					}
@@ -2722,7 +2722,7 @@ public class JMkvpropedit {
 					}
 					
 					if (chbNameAudio[j].isSelected()) {					
-						tmpCmdLineAudio[j] += " --set name=\"" + Utils.escapeNameCmdLine(txtNameAudio[j].getText()) + "\"";
+						tmpCmdLineAudio[j] += " --set name=\"" + Utils.escapeQuotes(txtNameAudio[j].getText()) + "\"";
 						tmpCmdLineAudioOpt[j] += " --set name=\"" + Utils.escapeName(txtNameAudio[j].getText()) + "\"";
 						editCount++;
 					}
@@ -2825,7 +2825,7 @@ public class JMkvpropedit {
 					}
 					
 					if (chbNameSubtitle[j].isSelected()) {					
-						tmpCmdLineSubtitle[j] += " --set name=\"" + Utils.escapeNameCmdLine(txtNameSubtitle[j].getText()) + "\"";
+						tmpCmdLineSubtitle[j] += " --set name=\"" + Utils.escapeQuotes(txtNameSubtitle[j].getText()) + "\"";
 						tmpCmdLineSubtitleOpt[j] += " --set name=\"" + Utils.escapeName(txtNameSubtitle[j].getText()) + "\"";
 						editCount++;
 					}
@@ -2889,10 +2889,12 @@ public class JMkvpropedit {
 				
 				if (Utils.isWindows()) {
 					cmdLineBatch.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
-					cmdLineBatchOpt.add("\"" + Utils.escapePath((String) modelFiles.get(i)) + "\"" + cmdLineAllOpt);
+					cmdLineBatchOpt.add("\"" + Utils.escapeName((String) modelFiles.get(i)) + "\"" + cmdLineAllOpt);
 				} else {
-					cmdLineBatch.add(Utils.escapePath(txtMkvPropExe.getText()) + " " + Utils.escapePath((String) modelFiles.get(i)) + cmdLineAll);
-					cmdLineBatchOpt.add("\"" + (String) modelFiles.get(i) + "\"" + cmdLineAllOpt);
+					cmdLineBatch.add("\"" + Utils.escapeQuotes(txtMkvPropExe.getText()) + "\" "
+									 + "\"" + Utils.escapeQuotes((String) modelFiles.get(i)) + "\"" + cmdLineAll);
+					
+					cmdLineBatchOpt.add("\"" + Utils.escapeName((String) modelFiles.get(i)) + "\"" + cmdLineAllOpt);
 				}
 			}
 		}
@@ -2932,6 +2934,7 @@ public class JMkvpropedit {
 						txtOutput.append("Command line: " + cmdLineBatch.get(i) + "\n\n");
 						
 						proc = pb.start();
+						
 						StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), txtOutput);
 						outputGobbler.start();
 						

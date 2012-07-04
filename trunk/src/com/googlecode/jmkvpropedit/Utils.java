@@ -66,7 +66,7 @@ public class Utils {
 	
 	/* Start of escaping functions */
 	
-	public static String escapeName (String name) {
+	public static String escapeName(String name) {
 		if (!name.isEmpty()) {
 			name = name.replace("\\","\\\\");
 			name = name.replace(" ", "\\s");
@@ -78,43 +78,16 @@ public class Utils {
 		return name;
 	}
 	
-	public static String escapeNameCmdLine (String name) {
-		name = name.replace("\"", "\\\"");
-		
-		return name;
-	}
-	
-	public static String escapeBackslashes (String text) {
-		text = text.replace("\\", "\\\\");
+	public static String escapeQuotes(String text) {
+		text = text.replace("\"", "\\\"");
 		
 		return text;
 	}
 	
-	public static String escapePath (String path) {
-		if (Utils.isWindows()) {
-			path = path.replace("\\", "\\\\");
-		} else {
-			path = path.replace("\\", "\\\\");
-			path = path.replace(" ", "\\ ");
-			path = path.replace("[", "\\[");
-			path = path.replace("]", "\\]");
-			path = path.replace("{", "\\{");
-			path = path.replace("}", "\\}");
-			path = path.replace("(", "\\(");
-			path = path.replace(")", "\\)");
-			path = path.replace("<", "\\<");
-			path = path.replace(">", "\\>");
-			path = path.replace("\'", "\\\'");
-			path = path.replace("\"", "\\\"");
-			path = path.replace("&", "\\&");
-			path = path.replace("*", "\\*");
-			path = path.replace("?", "\\?");
-			path = path.replace("|", "\\|");
-			path = path.replace(":", "\\:");
-			path = path.replace(";", "\\;");
-		}
+	public static String escapeBackslashes(String text) {
+		text = text.replace("\\", "\\\\");
 		
-		return path;
+		return text;
 	}
 	
 	/* End of escaping functions */
