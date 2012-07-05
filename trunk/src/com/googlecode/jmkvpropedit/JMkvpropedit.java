@@ -52,7 +52,31 @@ public class JMkvpropedit {
 	private static final File iniFile = new File("JMkvpropedit.ini");
 	private static final MkvLanguage mkvLang = new MkvLanguage();
 	
-	private JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
+	private JFileChooser chooser = new JFileChooser(System.getProperty("user.home")) {
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public int showOpenDialog(Component parent) {
+			super.setSelectedFile(new File(""));
+			
+			return super.showOpenDialog(parent);
+		}
+		
+		@Override 
+		public void approveSelection() {
+			if (!super.isMultiSelectionEnabled() || super.getSelectedFiles().length == 1) {
+	            if (!this.getSelectedFile().exists()) {
+	            	JOptionPane.showMessageDialog(frmJMkvpropedit,
+	            			"File not found!",
+	            			"", JOptionPane.WARNING_MESSAGE);
+	                return;
+	            }
+			}
+            
+            super.approveSelection();
+	    }
+	};
+	
 	
 	private static final FileFilter EXE_EXT_FILTER =
 			new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
@@ -870,7 +894,7 @@ public class JMkvpropedit {
 				File[] files = null;
 				
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setDialogTitle("Select Matroska file to edit");
+				chooser.setDialogTitle("Select Matroska file(s) to edit");
 				chooser.setMultiSelectionEnabled(true);
 				chooser.resetChoosableFileFilters();
 				chooser.setFileFilter(MATROSKA_EXT_FILTER);
@@ -881,7 +905,7 @@ public class JMkvpropedit {
 					files = chooser.getSelectedFiles();
 					for (int i = 0; i < files.length; i++) {
 							try {
-								if (!modelFiles.contains(files[i].getCanonicalPath())) {
+								if (!modelFiles.contains(files[i].getCanonicalPath()) && files[i].exists()) {
 									modelFiles.add(modelFiles.getSize(), files[i].getCanonicalPath());
 								}
 							} catch (IOException e1) {
