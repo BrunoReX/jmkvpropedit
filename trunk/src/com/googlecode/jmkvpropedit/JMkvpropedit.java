@@ -29,6 +29,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -66,9 +67,6 @@ public class JMkvpropedit {
 		public void approveSelection() {
 			if (!super.isMultiSelectionEnabled() || super.getSelectedFiles().length == 1) {
 	            if (!this.getSelectedFile().exists()) {
-	            	JOptionPane.showMessageDialog(frmJMkvpropedit,
-	            			"File not found!",
-	            			"", JOptionPane.WARNING_MESSAGE);
 	                return;
 	            }
 			}
