@@ -81,6 +81,9 @@ public class JMkvpropedit {
 	private static final FileFilter MATROSKA_EXT_FILTER =
 			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
 	
+	private static final FileFilter TXT_EXT_FILTER =
+			new FileNameExtensionFilter("Plain text files (*.txt)", "txt");	
+	
 	private static final FileFilter XML_EXT_FILTER =
 			new FileNameExtensionFilter("XML files (*.xml)", "xml");
 	
@@ -1110,6 +1113,7 @@ public class JMkvpropedit {
 				chooser.setDialogTitle("Select chapters file");
 				chooser.setMultiSelectionEnabled(false);
 				chooser.resetChoosableFileFilters();
+				chooser.setFileFilter(TXT_EXT_FILTER);
 				chooser.setFileFilter(XML_EXT_FILTER);
 				
 				int open = chooser.showOpenDialog(frmJMkvpropedit);
@@ -1168,6 +1172,7 @@ public class JMkvpropedit {
 				chooser.setDialogTitle("Select tags file");
 				chooser.setMultiSelectionEnabled(false);
 				chooser.resetChoosableFileFilters();
+				chooser.setFileFilter(TXT_EXT_FILTER);
 				chooser.setFileFilter(XML_EXT_FILTER);
 				
 				int open = chooser.showOpenDialog(frmJMkvpropedit);
