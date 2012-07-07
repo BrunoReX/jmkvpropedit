@@ -2510,7 +2510,7 @@ public class JMkvpropedit {
 						}
 						break;
 					case 2:
-						String tmpTags = Utils.getFileNameWithoutExt((String) modelFiles.get(i)) +
+						String tmpTags = Utils.getPathWithoutExt((String) modelFiles.get(i)) +
 										 txtTags.getText() + ".xml";
 						
 						if (Utils.isWindows()) {
@@ -2545,7 +2545,7 @@ public class JMkvpropedit {
 						}
 						break;
 					case 2:
-						String tmpChaps = Utils.getFileNameWithoutExt((String) modelFiles.get(i)) +
+						String tmpChaps = Utils.getPathWithoutExt((String) modelFiles.get(i)) +
 										  txtChapters.getText() + ".xml";
 						
 						if (Utils.isWindows()) {

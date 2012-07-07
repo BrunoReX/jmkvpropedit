@@ -165,7 +165,7 @@ public class Utils {
 		return formatter.format(number);
 	}
 	
-	public static String getFileNameWithoutExt(String file) {
+	public static String getPathWithoutExt(String file) {
 		int dotIndex = file.lastIndexOf(".");
 		
 		return file.substring(0, dotIndex);
