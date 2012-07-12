@@ -105,8 +105,8 @@ public class JMkvpropedit {
 	
 	private ArrayList<String> cmdLineBatch = null;
 	private ArrayList<String> cmdLineBatchOpt = null;
-
-
+	
+	
 	// Window controls
 	private JFrame frmJMkvpropedit;
 	private JTabbedPane pnlTabs;
@@ -138,11 +138,13 @@ public class JMkvpropedit {
 	private JCheckBox chbChapters;
 	private JComboBox cbChapters;
 	private JButton btnBrowseChapters;
+	private JComboBox cbExtChapters;
 	private JTextField txtChapters;
 	private JCheckBox chbTags;
 	private JComboBox cbTags;
 	private JTextField txtTags;
 	private JButton btnBrowseTags;
+	private JComboBox cbExtTags;
 	private JCheckBox chbExtraCmdGeneral;
 	private JTextField txtExtraCmdGeneral;
 	private JTextField txtMkvPropExe;
@@ -244,7 +246,7 @@ public class JMkvpropedit {
 	
 	// Output tab controls
 	private JTextArea txtOutput;
-	
+
 	
 	/**
 	 * Launch the application.
@@ -485,38 +487,54 @@ public class JMkvpropedit {
 		gbc_cbChapters.gridy = 3;
 		pnlGeneral.add(cbChapters, gbc_cbChapters);
 		
+		Component verticalStrut7 = Box.createVerticalStrut(35);
+		GridBagConstraints gbc_verticalStrut7 = new GridBagConstraints();
+		gbc_verticalStrut7.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut7.gridx = 0;
+		gbc_verticalStrut7.gridy = 4;
+		pnlGeneral.add(verticalStrut7, gbc_verticalStrut7);
+		
 		JPanel pnlChapControlsGeneral = new JPanel();
 		GridBagConstraints gbc_pnlChapControlsGeneral = new GridBagConstraints();
+		gbc_pnlChapControlsGeneral.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlChapControlsGeneral.fill = GridBagConstraints.BOTH;
 		gbc_pnlChapControlsGeneral.gridx = 1;
 		gbc_pnlChapControlsGeneral.gridy = 4;
 		pnlGeneral.add(pnlChapControlsGeneral, gbc_pnlChapControlsGeneral);
 		GridBagLayout gbl_pnlChapControlsGeneral = new GridBagLayout();
-		gbl_pnlChapControlsGeneral.columnWidths = new int[]{0, 0, 0};
+		gbl_pnlChapControlsGeneral.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_pnlChapControlsGeneral.rowHeights = new int[]{0, 0};
-		gbl_pnlChapControlsGeneral.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlChapControlsGeneral.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlChapControlsGeneral.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlChapControlsGeneral.setLayout(gbl_pnlChapControlsGeneral);
 		
 		txtChapters = new JTextField();
-		txtChapters.setEnabled(false);
-		txtChapters.setEditable(false);
+		txtChapters.setVisible(false);
 		GridBagConstraints gbc_txtChapters = new GridBagConstraints();
-		gbc_txtChapters.fill = GridBagConstraints.BOTH;
-		gbc_txtChapters.insets = new Insets(0, 0, 10, 5);
+		gbc_txtChapters.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtChapters.insets = new Insets(0, 0, 8, 5);
 		gbc_txtChapters.gridx = 0;
 		gbc_txtChapters.gridy = 0;
 		pnlChapControlsGeneral.add(txtChapters, gbc_txtChapters);
 		txtChapters.setColumns(10);
 		
 		btnBrowseChapters = new JButton("Browse...");
-		btnBrowseChapters.setEnabled(false);
+		btnBrowseChapters.setVisible(false);
 		GridBagConstraints gbc_btnBrowseChapters = new GridBagConstraints();
-		gbc_btnBrowseChapters.insets = new Insets(0, 0, 10, 0);
+		gbc_btnBrowseChapters.insets = new Insets(0, 5, 10, 5);
 		gbc_btnBrowseChapters.anchor = GridBagConstraints.EAST;
 		gbc_btnBrowseChapters.gridx = 1;
 		gbc_btnBrowseChapters.gridy = 0;
 		pnlChapControlsGeneral.add(btnBrowseChapters, gbc_btnBrowseChapters);
+		
+		cbExtChapters = new JComboBox();
+		cbExtChapters.setVisible(false);
+		cbExtChapters.setModel(new DefaultComboBoxModel(new String[] {".xml", ".txt"}));
+		GridBagConstraints gbc_cbExtChapters = new GridBagConstraints();
+		gbc_cbExtChapters.insets = new Insets(0, 0, 8, 0);
+		gbc_cbExtChapters.gridx = 2;
+		gbc_cbExtChapters.gridy = 0;
+		pnlChapControlsGeneral.add(cbExtChapters, gbc_cbExtChapters);
 		
 		chbTags = new JCheckBox("Tags:");
 		GridBagConstraints gbc_chbTags = new GridBagConstraints();
@@ -537,40 +555,54 @@ public class JMkvpropedit {
 		gbc_cbTags.gridy = 5;
 		pnlGeneral.add(cbTags, gbc_cbTags);
 		
+		Component verticalStrut8 = Box.createVerticalStrut(35);
+		GridBagConstraints gbc_verticalStrut8 = new GridBagConstraints();
+		gbc_verticalStrut8.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut8.gridx = 0;
+		gbc_verticalStrut8.gridy = 6;
+		pnlGeneral.add(verticalStrut8, gbc_verticalStrut8);
+		
 		JPanel pnlTagControlsGeneral = new JPanel();
 		GridBagConstraints gbc_pnlTagControlsGeneral = new GridBagConstraints();
-		gbc_pnlTagControlsGeneral.anchor = GridBagConstraints.NORTH;
 		gbc_pnlTagControlsGeneral.insets = new Insets(0, 0, 5, 0);
-		gbc_pnlTagControlsGeneral.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pnlTagControlsGeneral.fill = GridBagConstraints.BOTH;
 		gbc_pnlTagControlsGeneral.gridx = 1;
 		gbc_pnlTagControlsGeneral.gridy = 6;
 		pnlGeneral.add(pnlTagControlsGeneral, gbc_pnlTagControlsGeneral);
 		GridBagLayout gbl_pnlTagControlsGeneral = new GridBagLayout();
-		gbl_pnlTagControlsGeneral.columnWidths = new int[]{0, 0, 0};
+		gbl_pnlTagControlsGeneral.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_pnlTagControlsGeneral.rowHeights = new int[]{0, 0};
-		gbl_pnlTagControlsGeneral.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlTagControlsGeneral.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlTagControlsGeneral.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlTagControlsGeneral.setLayout(gbl_pnlTagControlsGeneral);
 		
 		txtTags = new JTextField();
-		txtTags.setEnabled(false);
-		txtTags.setEditable(false);
+		txtTags.setVisible(false);
 		txtTags.setColumns(10);
 		GridBagConstraints gbc_txtTags = new GridBagConstraints();
-		gbc_txtTags.fill = GridBagConstraints.BOTH;
-		gbc_txtTags.insets = new Insets(0, 0, 10, 5);
+		gbc_txtTags.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtTags.insets = new Insets(0, 0, 8, 5);
 		gbc_txtTags.gridx = 0;
 		gbc_txtTags.gridy = 0;
 		pnlTagControlsGeneral.add(txtTags, gbc_txtTags);
 		
 		btnBrowseTags = new JButton("Browse...");
-		btnBrowseTags.setEnabled(false);
+		btnBrowseTags.setVisible(false);
 		GridBagConstraints gbc_btnBrowseTags = new GridBagConstraints();
-		gbc_btnBrowseTags.insets = new Insets(0, 0, 10, 0);
+		gbc_btnBrowseTags.insets = new Insets(0, 5, 10, 5);
 		gbc_btnBrowseTags.anchor = GridBagConstraints.EAST;
 		gbc_btnBrowseTags.gridx = 1;
 		gbc_btnBrowseTags.gridy = 0;
 		pnlTagControlsGeneral.add(btnBrowseTags, gbc_btnBrowseTags);
+		
+		cbExtTags = new JComboBox();
+		cbExtTags.setVisible(false);
+		cbExtTags.setModel(new DefaultComboBoxModel(new String[] {".xml", ".txt"}));
+		GridBagConstraints gbc_cbExtTags = new GridBagConstraints();
+		gbc_cbExtTags.insets = new Insets(0, 0, 8, 0);
+		gbc_cbExtTags.gridx = 2;
+		gbc_cbExtTags.gridy = 0;
+		pnlTagControlsGeneral.add(cbExtTags, gbc_cbExtTags);
 		
 		chbExtraCmdGeneral = new JCheckBox("Extra parameters:");
 		GridBagConstraints gbc_chbExtraCmdGeneral = new GridBagConstraints();
@@ -818,7 +850,7 @@ public class JMkvpropedit {
 
 		
 		/* Start of mouse events for right-click menu */
-		
+
 		Utils.addRCMenuMouseListener(txtTitleGeneral);
 		Utils.addRCMenuMouseListener(txtNumbStartGeneral);
 		Utils.addRCMenuMouseListener(txtNumbPadGeneral);
@@ -1072,15 +1104,25 @@ public class JMkvpropedit {
 				boolean state = cbChapters.isEnabled();
 				cbChapters.setEnabled(!state);
 				
-				if (cbChapters.getSelectedIndex() == 1 && chbChapters.isSelected()) {
+				if (cbChapters.getSelectedIndex() == 1) {
+					txtChapters.setEditable(false);
+					txtChapters.setVisible(true);
 					txtChapters.setEnabled(!state);
+					btnBrowseChapters.setVisible(true);
 					btnBrowseChapters.setEnabled(!state);
-				} else if (cbChapters.getSelectedIndex() == 2 && chbChapters.isSelected()) {
+					cbExtChapters.setVisible(false);
+				} else if (cbChapters.getSelectedIndex() == 2) {
+					txtChapters.setEditable(true);
+					txtChapters.setVisible(true);
 					txtChapters.setEnabled(!state);
-					btnBrowseChapters.setEnabled(state);
+					btnBrowseChapters.setVisible(false);
+					btnBrowseChapters.setEnabled(!state);
+					cbExtChapters.setVisible(true);
+					cbExtChapters.setEnabled(!state);
 				} else if (!chbChapters.isSelected()) {
-					txtChapters.setEnabled(false);
-					btnBrowseChapters.setEnabled(false);
+					txtChapters.setVisible(false);
+					btnBrowseChapters.setVisible(false);
+					cbExtChapters.setVisible(false);
 				}
 			}
 		});
@@ -1088,22 +1130,22 @@ public class JMkvpropedit {
 		cbChapters.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				if (cbChapters.getSelectedIndex() == 0) {
-					txtChapters.setText("");
-					txtChapters.setEnabled(false);
-					txtChapters.setEditable(false);
-					btnBrowseChapters.setEnabled(false);
+					txtChapters.setVisible(false);
+					btnBrowseChapters.setVisible(false);
+					cbExtChapters.setVisible(false);
 				} else if (cbChapters.getSelectedIndex() == 1) {
 					txtChapters.setText("");
-					txtChapters.setEnabled(false);
 					txtChapters.setEditable(false);
-					btnBrowseChapters.setEnabled(true);
+					txtChapters.setVisible(true);
+					btnBrowseChapters.setVisible(true);
+					cbExtChapters.setVisible(false);
 				} else {
 					txtChapters.setText("-chapters");
-					txtChapters.setEnabled(true);
 					txtChapters.setEditable(true);
-					btnBrowseChapters.setEnabled(false);
+					txtChapters.setVisible(true);
+					btnBrowseChapters.setVisible(false);
+					cbExtChapters.setVisible(true);					
 				}
-				
 			}
 		});
 		
@@ -1131,38 +1173,48 @@ public class JMkvpropedit {
 				boolean state = cbTags.isEnabled();
 				cbTags.setEnabled(!state);
 				
-				if (cbTags.getSelectedIndex() == 1 && chbTags.isSelected()) {
+				if (cbTags.getSelectedIndex() == 1) {
+					txtTags.setEditable(false);
+					txtTags.setVisible(true);
 					txtTags.setEnabled(!state);
+					btnBrowseTags.setVisible(true);
 					btnBrowseTags.setEnabled(!state);
-				} else if (cbTags.getSelectedIndex() == 2 && chbTags.isSelected()) {
+					cbExtTags.setVisible(false);
+				} else if (cbTags.getSelectedIndex() == 2) {
+					txtTags.setEditable(true);
+					txtTags.setVisible(true);
 					txtTags.setEnabled(!state);
-					btnBrowseTags.setEnabled(state);
+					btnBrowseTags.setVisible(false);
+					btnBrowseTags.setEnabled(!state);
+					cbExtTags.setVisible(true);
+					cbExtTags.setEnabled(!state);
 				} else if (!chbTags.isSelected()) {
-					txtTags.setEnabled(false);
-					btnBrowseTags.setEnabled(false);
+					txtTags.setVisible(false);
+					btnBrowseTags.setVisible(false);
+					cbExtTags.setVisible(false);
 				}
 			}
 		});
 		
 		cbTags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
 				if (cbTags.getSelectedIndex() == 0) {
-					txtTags.setText("");
-					txtTags.setEnabled(false);
-					txtTags.setEditable(false);
-					btnBrowseTags.setEnabled(false);
+					txtTags.setVisible(false);
+					btnBrowseTags.setVisible(false);
+					cbExtTags.setVisible(false);
 				} else if (cbTags.getSelectedIndex() == 1) {
 					txtTags.setText("");
-					txtTags.setEnabled(false);
 					txtTags.setEditable(false);
-					btnBrowseTags.setEnabled(true);
+					txtTags.setVisible(true);
+					btnBrowseTags.setVisible(true);
+					cbExtTags.setVisible(false);
 				} else {
 					txtTags.setText("-tags");
-					txtTags.setEnabled(true);
 					txtTags.setEditable(true);
-					btnBrowseTags.setEnabled(false);
+					txtTags.setVisible(true);
+					btnBrowseTags.setVisible(false);
+					cbExtTags.setVisible(true);					
 				}
-				
 			}
 		});
 		
@@ -2511,7 +2563,7 @@ public class JMkvpropedit {
 						break;
 					case 2:
 						String tmpTags = Utils.getPathWithoutExt((String) modelFiles.get(i)) +
-										 txtTags.getText() + ".xml";
+										 txtTags.getText() + "." + cbExtTags.getSelectedItem();
 						
 						if (Utils.isWindows()) {
 							cmdLineGeneral[i] += " --tags all:\"" + tmpTags + "\"";
@@ -2546,7 +2598,7 @@ public class JMkvpropedit {
 						break;
 					case 2:
 						String tmpChaps = Utils.getPathWithoutExt((String) modelFiles.get(i)) +
-										  txtChapters.getText() + ".xml";
+										  txtChapters.getText() + "." + cbExtChapters.getSelectedItem();
 						
 						if (Utils.isWindows()) {
 							cmdLineGeneral[i] += " --chapters \"" + tmpChaps + "\"";
