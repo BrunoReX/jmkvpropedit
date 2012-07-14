@@ -2563,7 +2563,7 @@ public class JMkvpropedit {
 						break;
 					case 2:
 						String tmpTags = Utils.getPathWithoutExt((String) modelFiles.get(i)) +
-										 txtTags.getText() + "." + cbExtTags.getSelectedItem();
+										 txtTags.getText() + cbExtTags.getSelectedItem();
 						
 						if (Utils.isWindows()) {
 							cmdLineGeneral[i] += " --tags all:\"" + tmpTags + "\"";
@@ -2598,7 +2598,7 @@ public class JMkvpropedit {
 						break;
 					case 2:
 						String tmpChaps = Utils.getPathWithoutExt((String) modelFiles.get(i)) +
-										  txtChapters.getText() + "." + cbExtChapters.getSelectedItem();
+										  txtChapters.getText() + cbExtChapters.getSelectedItem();
 						
 						if (Utils.isWindows()) {
 							cmdLineGeneral[i] += " --chapters \"" + tmpChaps + "\"";
