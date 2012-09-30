@@ -50,7 +50,7 @@ public class JMkvpropedit {
 	private static SwingWorker<Void, Void> worker = null;
 	
 	private static final File iniFile = new File("JMkvpropedit.ini");
-	private static final MkvLanguage mkvLang = new MkvLanguage();
+	private static final MkvStrings mkvStrings = new MkvStrings();
 	
 	private JFileChooser chooser = new JFileChooser(System.getProperty("user.home")) {
 		private static final long serialVersionUID = 1L;
@@ -1639,8 +1639,8 @@ public class JMkvpropedit {
 			
 			cbLangVideo[nVideo] = new JComboBox();
 			cbLangVideo[nVideo].setEnabled(false);
-			cbLangVideo[nVideo].setModel(new DefaultComboBoxModel(mkvLang.getLangName()));
-			cbLangVideo[nVideo].setSelectedIndex(mkvLang.getAsLangCode().indexOf("und"));
+			cbLangVideo[nVideo].setModel(new DefaultComboBoxModel(mkvStrings.getLangName()));
+			cbLangVideo[nVideo].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
 			GridBagConstraints gbc_cbLangVideo = new GridBagConstraints();
 			gbc_cbLangVideo.insets = new Insets(0, 0, 10, 0);
 			gbc_cbLangVideo.anchor = GridBagConstraints.WEST;
@@ -1990,8 +1990,8 @@ public class JMkvpropedit {
 			
 			cbLangAudio[nAudio] = new JComboBox();
 			cbLangAudio[nAudio].setEnabled(false);
-			cbLangAudio[nAudio].setModel(new DefaultComboBoxModel(mkvLang.getLangName()));
-			cbLangAudio[nAudio].setSelectedIndex(mkvLang.getAsLangCode().indexOf("und"));
+			cbLangAudio[nAudio].setModel(new DefaultComboBoxModel(mkvStrings.getLangName()));
+			cbLangAudio[nAudio].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
 			GridBagConstraints gbc_cbLangAudio = new GridBagConstraints();
 			gbc_cbLangAudio.insets = new Insets(0, 0, 10, 0);
 			gbc_cbLangAudio.anchor = GridBagConstraints.WEST;
@@ -2341,8 +2341,8 @@ public class JMkvpropedit {
 			
 			cbLangSubtitle[nSubtitle] = new JComboBox();
 			cbLangSubtitle[nSubtitle].setEnabled(false);
-			cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel(mkvLang.getLangName()));
-			cbLangSubtitle[nSubtitle].setSelectedIndex(mkvLang.getAsLangCode().indexOf("und"));
+			cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel(mkvStrings.getLangName()));
+			cbLangSubtitle[nSubtitle].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
 			GridBagConstraints gbc_cbLangSubtitle = new GridBagConstraints();
 			gbc_cbLangSubtitle.insets = new Insets(0, 0, 10, 0);
 			gbc_cbLangSubtitle.anchor = GridBagConstraints.WEST;
@@ -2703,7 +2703,7 @@ public class JMkvpropedit {
 					}
 					
 					if (chbLangVideo[j].isSelected()) {
-						String curLangCode = mkvLang.getAsLangCode().get(cbLangVideo[j].getSelectedIndex());
+						String curLangCode = mkvStrings.getLangCodeList().get(cbLangVideo[j].getSelectedIndex());
 						tmpCmdLineVideo[j] += " --set language=\"" + curLangCode + "\"";
 						tmpCmdLineVideoOpt[j] += " --set language=\"" + curLangCode + "\"";
 						editCount++;
@@ -2806,7 +2806,7 @@ public class JMkvpropedit {
 					}
 					
 					if (chbLangAudio[j].isSelected()) {
-						String curLangCode = mkvLang.getAsLangCode().get(cbLangAudio[j].getSelectedIndex());
+						String curLangCode = mkvStrings.getLangCodeList().get(cbLangAudio[j].getSelectedIndex());
 						tmpCmdLineAudio[j] += " --set language=\"" + curLangCode + "\"";
 						tmpCmdLineAudioOpt[j] += " --set language=\"" + curLangCode + "\"";
 						editCount++;
@@ -2909,7 +2909,7 @@ public class JMkvpropedit {
 					}
 					
 					if (chbLangSubtitle[j].isSelected()) {
-						String curLangCode = mkvLang.getAsLangCode().get(cbLangSubtitle[j].getSelectedIndex());
+						String curLangCode = mkvStrings.getLangCodeList().get(cbLangSubtitle[j].getSelectedIndex());
 						tmpCmdLineSubtitle[j] += " --set language=\"" + curLangCode + "\"";
 						tmpCmdLineSubtitleOpt[j] += " --set language=\"" + curLangCode + "\"";
 						editCount++;
