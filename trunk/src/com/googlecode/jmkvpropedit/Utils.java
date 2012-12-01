@@ -25,9 +25,11 @@
 
 package com.googlecode.jmkvpropedit;
 
+import java.awt.Component;
 import java.awt.event.*;
 import java.text.*;
 import javax.swing.*;
+import javax.swing.table.*;
 import javax.swing.text.*;
 
 public class Utils {
@@ -169,5 +171,28 @@ public class Utils {
 		int dotIndex = file.lastIndexOf(".");
 		
 		return file.substring(0, dotIndex);
+	}
+	
+	/**
+	 * http://niravjavadeveloper.blogspot.com/2011/05/resize-jtable-columns.html
+	 */
+	public static void adjustColumnPreferredWidths(JTable table) {
+		// strategy - get max width for cells in column and
+		// make that the preferred width
+		TableColumnModel columnModel = table.getColumnModel();
+		for (int col = 0; col < table.getColumnCount(); col++) {
+
+			int maxwidth = 0;
+			for (int row = 0; row < table.getRowCount(); row++) {
+				TableCellRenderer rend = table.getCellRenderer(row, col);
+				Object value = table.getValueAt(row, col);
+				Component comp = rend.getTableCellRendererComponent(table,
+						value, false, false, row, col);
+				maxwidth = Math.max(comp.getPreferredSize().width, maxwidth);
+			}
+
+			TableColumn column = columnModel.getColumn(col);
+			column.setPreferredWidth(maxwidth);
+		}
 	}
 }

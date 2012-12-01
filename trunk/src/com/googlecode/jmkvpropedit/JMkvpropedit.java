@@ -35,6 +35,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.table.*;
 import javax.swing.filechooser.*;
 import javax.swing.border.EmptyBorder;
 import org.ini4j.*;
@@ -49,7 +50,7 @@ public class JMkvpropedit {
 	private ProcessBuilder pb = new ProcessBuilder();
 	private SwingWorker<Void, Void> worker = null;
 	
-	private static final File iniFile = new File("JMkvpropedit.ini");
+	private File iniFile = new File("JMkvpropedit.ini");
 	private static final MkvStrings mkvStrings = new MkvStrings();
 	
 	private JFileChooser chooser = new JFileChooser(System.getProperty("user.home")) {
@@ -86,6 +87,18 @@ public class JMkvpropedit {
 	
 	private FileFilter XML_EXT_FILTER =
 			new FileNameExtensionFilter("XML files (*.xml)", "xml");
+	
+	
+	private static final String[] COLUMNS_ATTACHMENTS_ADD = { "File", "Description", "MIME Type" };
+	private DefaultTableModel modelAttachmentsAdd = new DefaultTableModel(null, COLUMNS_ATTACHMENTS_ADD) {
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+		
+	};
 	
 	
 	private String[] cmdLineGeneral = null;
@@ -244,6 +257,22 @@ public class JMkvpropedit {
 	private JTextField[] txtExtraCmdSubtitle = new JTextField[MAX_STREAMS];
 	
 	
+	//Attachments tab controls
+	private JTabbedPane pnlAttachments;
+	private JPanel pnlAttachAdd;
+	private JScrollPane scrollAttachAdd;
+	private JTable tblAttachAdd;
+	private JPanel pnlAttachAddControls;
+	private JLabel lblAttachAddFile;
+	private JTextField txtAttachAddFile;
+	private JButton btnBrowseAttachAddFile;
+	private JLabel lblAttachAddDesc;
+	private JTextField txtAttachAddDesc;
+	private JLabel lblAttachAddMime;
+	private JComboBox cbAttachAddMime;
+	private JButton btnAttachAdd;
+	
+	
 	// Output tab controls
 	private JTextArea txtOutput;
 
@@ -285,7 +314,6 @@ public class JMkvpropedit {
 		
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
 		chooser.setFileHidingEnabled(true);
-		chooser.setAcceptAllFileFilterUsed(false);
 		
 		pnlTabs = new JTabbedPane(JTabbedPane.TOP);
 		pnlTabs.setBorder(new EmptyBorder(10, 10, 0, 10));
@@ -826,6 +854,98 @@ public class JMkvpropedit {
 		lytLyrdPnlSubtitle = new CardLayout(0, 0);
 		lyrdPnlSubtitle.setLayout(lytLyrdPnlSubtitle);
 		
+		pnlAttachments = new JTabbedPane(JTabbedPane.TOP);
+		pnlTabs.addTab("Attachments", null, pnlAttachments, null);
+		
+		pnlAttachAdd = new JPanel();
+		pnlAttachments.addTab("Add Attachments", null, pnlAttachAdd, null);
+		pnlAttachAdd.setLayout(new BorderLayout(0, 0));
+		
+		scrollAttachAdd = new JScrollPane();
+		pnlAttachAdd.add(scrollAttachAdd, BorderLayout.CENTER);
+		
+		tblAttachAdd = new JTable();
+		tblAttachAdd.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tblAttachAdd.setAutoscrolls(false);
+		tblAttachAdd.setFillsViewportHeight(true);
+		scrollAttachAdd.setViewportView(tblAttachAdd);
+		
+		pnlAttachAddControls = new JPanel();
+		pnlAttachAddControls.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pnlAttachAdd.add(pnlAttachAddControls, BorderLayout.SOUTH);
+		GridBagLayout gbl_pnlAttachAddControls = new GridBagLayout();
+		gbl_pnlAttachAddControls.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_pnlAttachAddControls.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_pnlAttachAddControls.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlAttachAddControls.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		pnlAttachAddControls.setLayout(gbl_pnlAttachAddControls);
+		
+		lblAttachAddFile = new JLabel("File:");
+		GridBagConstraints gbc_lblAttachAddFile = new GridBagConstraints();
+		gbc_lblAttachAddFile.anchor = GridBagConstraints.WEST;
+		gbc_lblAttachAddFile.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAttachAddFile.gridx = 0;
+		gbc_lblAttachAddFile.gridy = 0;
+		pnlAttachAddControls.add(lblAttachAddFile, gbc_lblAttachAddFile);
+		
+		txtAttachAddFile = new JTextField();
+		txtAttachAddFile.setEditable(false);
+		GridBagConstraints gbc_txtAttachAddFile = new GridBagConstraints();
+		gbc_txtAttachAddFile.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAttachAddFile.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAttachAddFile.gridx = 1;
+		gbc_txtAttachAddFile.gridy = 0;
+		pnlAttachAddControls.add(txtAttachAddFile, gbc_txtAttachAddFile);
+		txtAttachAddFile.setColumns(10);
+		
+		btnBrowseAttachAddFile = new JButton("Browse...");
+		GridBagConstraints gbc_btnBrowseAttachAddFile = new GridBagConstraints();
+		gbc_btnBrowseAttachAddFile.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBrowseAttachAddFile.gridx = 2;
+		gbc_btnBrowseAttachAddFile.gridy = 0;
+		pnlAttachAddControls.add(btnBrowseAttachAddFile, gbc_btnBrowseAttachAddFile);
+		
+		lblAttachAddDesc = new JLabel("Description:");
+		GridBagConstraints gbc_lblAttachAddDesc = new GridBagConstraints();
+		gbc_lblAttachAddDesc.anchor = GridBagConstraints.EAST;
+		gbc_lblAttachAddDesc.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAttachAddDesc.gridx = 0;
+		gbc_lblAttachAddDesc.gridy = 1;
+		pnlAttachAddControls.add(lblAttachAddDesc, gbc_lblAttachAddDesc);
+		
+		txtAttachAddDesc = new JTextField();
+		GridBagConstraints gbc_txtAttachAddDesc = new GridBagConstraints();
+		gbc_txtAttachAddDesc.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAttachAddDesc.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAttachAddDesc.gridx = 1;
+		gbc_txtAttachAddDesc.gridy = 1;
+		pnlAttachAddControls.add(txtAttachAddDesc, gbc_txtAttachAddDesc);
+		txtAttachAddDesc.setColumns(10);
+		
+		lblAttachAddMime = new JLabel("MIME Type:");
+		GridBagConstraints gbc_lblAttachAddMime = new GridBagConstraints();
+		gbc_lblAttachAddMime.anchor = GridBagConstraints.EAST;
+		gbc_lblAttachAddMime.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAttachAddMime.gridx = 0;
+		gbc_lblAttachAddMime.gridy = 2;
+		pnlAttachAddControls.add(lblAttachAddMime, gbc_lblAttachAddMime);
+		
+		cbAttachAddMime = new JComboBox();
+		cbAttachAddMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeType()));
+		GridBagConstraints gbc_cbAttachAddMime = new GridBagConstraints();
+		gbc_cbAttachAddMime.insets = new Insets(0, 0, 5, 5);
+		gbc_cbAttachAddMime.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbAttachAddMime.gridx = 1;
+		gbc_cbAttachAddMime.gridy = 2;
+		pnlAttachAddControls.add(cbAttachAddMime, gbc_cbAttachAddMime);
+		
+		btnAttachAdd = new JButton("Add");
+		GridBagConstraints gbc_btnAttachAdd = new GridBagConstraints();
+		gbc_btnAttachAdd.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAttachAdd.gridx = 0;
+		gbc_btnAttachAdd.gridy = 3;
+		pnlAttachAddControls.add(btnAttachAdd, gbc_btnAttachAdd);
+		
 		JPanel pnlOutput = new JPanel();
 		pnlOutput.setBorder(new EmptyBorder(10, 10, 10, 10));
 		pnlTabs.addTab("Output", null, pnlOutput, null);
@@ -858,6 +978,8 @@ public class JMkvpropedit {
 		Utils.addRCMenuMouseListener(txtTags);
 		Utils.addRCMenuMouseListener(txtExtraCmdGeneral);
 		Utils.addRCMenuMouseListener(txtMkvPropExe);
+		Utils.addRCMenuMouseListener(txtAttachAddFile);
+		Utils.addRCMenuMouseListener(txtAttachAddDesc);
 		Utils.addRCMenuMouseListener(txtOutput);
 		
 		/* End of mouse events for right-click menu */
@@ -867,7 +989,7 @@ public class JMkvpropedit {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				// Resize the window to make sure the components fit
-				frmJMkvpropedit.pack();
+				//frmJMkvpropedit.pack();
 				
 				// Don't allow the window to be resized to a dimension smaller than the original
 				frmJMkvpropedit.setMinimumSize(new Dimension(frmJMkvpropedit.getWidth(), frmJMkvpropedit.getHeight()));
@@ -928,6 +1050,7 @@ public class JMkvpropedit {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				chooser.setDialogTitle("Select Matroska file(s) to edit");
 				chooser.setMultiSelectionEnabled(true);
+				chooser.setAcceptAllFileFilterUsed(false);
 				chooser.resetChoosableFileFilters();
 				chooser.setFileFilter(MATROSKA_EXT_FILTER);
 				
@@ -1154,6 +1277,7 @@ public class JMkvpropedit {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				chooser.setDialogTitle("Select chapters file");
 				chooser.setMultiSelectionEnabled(false);
+				chooser.setAcceptAllFileFilterUsed(false);
 				chooser.resetChoosableFileFilters();
 				chooser.setFileFilter(TXT_EXT_FILTER);
 				chooser.setFileFilter(XML_EXT_FILTER);
@@ -1223,6 +1347,7 @@ public class JMkvpropedit {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				chooser.setDialogTitle("Select tags file");
 				chooser.setMultiSelectionEnabled(false);
+				chooser.setAcceptAllFileFilterUsed(false);
 				chooser.resetChoosableFileFilters();
 				chooser.setFileFilter(TXT_EXT_FILTER);
 				chooser.setFileFilter(XML_EXT_FILTER);
@@ -1257,6 +1382,7 @@ public class JMkvpropedit {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				chooser.setDialogTitle("Select mkvpropedit executable");
 				chooser.setMultiSelectionEnabled(false);
+				chooser.setAcceptAllFileFilterUsed(false);
 				chooser.resetChoosableFileFilters();
 				
 				if (Utils.isWindows()) {
@@ -1407,6 +1533,65 @@ public class JMkvpropedit {
 				}
 				
 				System.gc();
+			}
+		});
+		
+		btnBrowseAttachAddFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setDialogTitle("Select attachment");
+				chooser.setMultiSelectionEnabled(false);
+				chooser.resetChoosableFileFilters();
+				chooser.setAcceptAllFileFilterUsed(true);
+				
+
+				int open = chooser.showOpenDialog(frmJMkvpropedit);
+				
+				if (open == JFileChooser.APPROVE_OPTION) {
+					File f = chooser.getSelectedFile();
+					
+					if (f.exists()) {
+						try {
+							txtAttachAddFile.setText(f.getCanonicalPath());
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		
+		btnAttachAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtAttachAddFile.getText().trim().isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"The file is mandatory for the attachment!",
+							"", JOptionPane.ERROR_MESSAGE);
+					
+					return;
+				}
+				
+				
+				tblAttachAdd.setModel(modelAttachmentsAdd);
+				
+				TableColumnModel columnModel = tblAttachAdd.getColumnModel();
+				
+				// Set minimum width for columns
+				columnModel.getColumn(0).setMinWidth(300);
+				columnModel.getColumn(1).setMinWidth(200);
+				columnModel.getColumn(2).setMinWidth(200);
+				
+				
+				String[] rowData = { 
+						txtAttachAddFile.getText().trim(),
+						txtAttachAddDesc.getText().trim(),
+						cbAttachAddMime.getSelectedItem().toString()
+						};
+				
+				modelAttachmentsAdd.addRow(rowData);
+				
+				Utils.adjustColumnPreferredWidths(tblAttachAdd);
+				tblAttachAdd.revalidate();
 			}
 		});
 		
@@ -3064,6 +3249,7 @@ public class JMkvpropedit {
 	}
 	
 	private boolean found = true;
+	
 	private boolean isExecutableInPath(final String exe) {
 		worker = new SwingWorker<Void, Void>() {
 			@Override

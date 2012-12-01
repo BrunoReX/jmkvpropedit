@@ -1010,7 +1010,8 @@ public class MkvStrings {
 	 * Taken from extern_data.cpp, part of mkvtoolnix by Moritz Bunkus
 	 * 
 	 */
-	private String[] mimeType = {	"application/activemessage",
+	private String[] mimeType = {	"",
+									"application/activemessage",
 									"application/andrew-inset",
 									"application/applefile",
 									"application/atomicmail",
