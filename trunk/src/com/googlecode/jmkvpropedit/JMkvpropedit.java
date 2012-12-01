@@ -49,6 +49,7 @@ public class JMkvpropedit {
 	private Process proc = null;
 	private ProcessBuilder pb = new ProcessBuilder();
 	private SwingWorker<Void, Void> worker = null;
+	private boolean exeFound = true;
 	
 	private File iniFile = new File("JMkvpropedit.ini");
 	private static final MkvStrings mkvStrings = new MkvStrings();
@@ -89,7 +90,7 @@ public class JMkvpropedit {
 			new FileNameExtensionFilter("XML files (*.xml)", "xml");
 	
 	
-	private static final String[] COLUMNS_ATTACHMENTS_ADD = { "File", "Description", "MIME Type" };
+	private static final String[] COLUMNS_ATTACHMENTS_ADD = { "File", "Name", "Description", "MIME Type" };
 	private DefaultTableModel modelAttachmentsAdd = new DefaultTableModel(null, COLUMNS_ATTACHMENTS_ADD) {
 		private static final long serialVersionUID = 1L;
 		
@@ -115,6 +116,9 @@ public class JMkvpropedit {
 	private String[] cmdLineSubtitle = null;
 	private String[] cmdLineSubtitleOpt = null;
 	private int nSubtitle = 0;
+	
+	private String cmdLineAttachmentsAdd = null;
+	private String cmdLineAttachmentsAddOpt = null;
 	
 	private ArrayList<String> cmdLineBatch = null;
 	private ArrayList<String> cmdLineBatchOpt = null;
@@ -266,15 +270,23 @@ public class JMkvpropedit {
 	private JLabel lblAttachAddFile;
 	private JTextField txtAttachAddFile;
 	private JButton btnBrowseAttachAddFile;
+	private JLabel lblAttachAddName;
+	private JTextField txtAttachAddName;
 	private JLabel lblAttachAddDesc;
 	private JTextField txtAttachAddDesc;
 	private JLabel lblAttachAddMime;
 	private JComboBox cbAttachAddMime;
+	private JPanel pnlAttachAddControlsBottom;
 	private JButton btnAttachAdd;
+	private JButton btnAttachRemove;
+	private JButton btnAttachEdit;
+	private JButton btnAttachCancel;
+
 	
 	
 	// Output tab controls
 	private JTextArea txtOutput;
+
 
 	
 	/**
@@ -865,6 +877,8 @@ public class JMkvpropedit {
 		pnlAttachAdd.add(scrollAttachAdd, BorderLayout.CENTER);
 		
 		tblAttachAdd = new JTable();
+		tblAttachAdd.setShowGrid(false);
+		tblAttachAdd.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblAttachAdd.setModel(modelAttachmentsAdd);
 		tblAttachAdd.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblAttachAdd.setAutoscrolls(false);
@@ -876,9 +890,9 @@ public class JMkvpropedit {
 		pnlAttachAdd.add(pnlAttachAddControls, BorderLayout.SOUTH);
 		GridBagLayout gbl_pnlAttachAddControls = new GridBagLayout();
 		gbl_pnlAttachAddControls.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_pnlAttachAddControls.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_pnlAttachAddControls.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_pnlAttachAddControls.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_pnlAttachAddControls.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlAttachAddControls.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		pnlAttachAddControls.setLayout(gbl_pnlAttachAddControls);
 		
 		lblAttachAddFile = new JLabel("File:");
@@ -906,12 +920,29 @@ public class JMkvpropedit {
 		gbc_btnBrowseAttachAddFile.gridy = 0;
 		pnlAttachAddControls.add(btnBrowseAttachAddFile, gbc_btnBrowseAttachAddFile);
 		
+		lblAttachAddName = new JLabel("Name:");
+		GridBagConstraints gbc_lblAttachAddName = new GridBagConstraints();
+		gbc_lblAttachAddName.anchor = GridBagConstraints.WEST;
+		gbc_lblAttachAddName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAttachAddName.gridx = 0;
+		gbc_lblAttachAddName.gridy = 1;
+		pnlAttachAddControls.add(lblAttachAddName, gbc_lblAttachAddName);
+		
+		txtAttachAddName = new JTextField();
+		GridBagConstraints gbc_txtAttachAddName = new GridBagConstraints();
+		gbc_txtAttachAddName.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAttachAddName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAttachAddName.gridx = 1;
+		gbc_txtAttachAddName.gridy = 1;
+		pnlAttachAddControls.add(txtAttachAddName, gbc_txtAttachAddName);
+		txtAttachAddName.setColumns(10);
+		
 		lblAttachAddDesc = new JLabel("Description:");
 		GridBagConstraints gbc_lblAttachAddDesc = new GridBagConstraints();
 		gbc_lblAttachAddDesc.anchor = GridBagConstraints.EAST;
 		gbc_lblAttachAddDesc.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAttachAddDesc.gridx = 0;
-		gbc_lblAttachAddDesc.gridy = 1;
+		gbc_lblAttachAddDesc.gridy = 2;
 		pnlAttachAddControls.add(lblAttachAddDesc, gbc_lblAttachAddDesc);
 		
 		txtAttachAddDesc = new JTextField();
@@ -919,7 +950,7 @@ public class JMkvpropedit {
 		gbc_txtAttachAddDesc.insets = new Insets(0, 0, 5, 5);
 		gbc_txtAttachAddDesc.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtAttachAddDesc.gridx = 1;
-		gbc_txtAttachAddDesc.gridy = 1;
+		gbc_txtAttachAddDesc.gridy = 2;
 		pnlAttachAddControls.add(txtAttachAddDesc, gbc_txtAttachAddDesc);
 		txtAttachAddDesc.setColumns(10);
 		
@@ -928,7 +959,7 @@ public class JMkvpropedit {
 		gbc_lblAttachAddMime.anchor = GridBagConstraints.EAST;
 		gbc_lblAttachAddMime.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAttachAddMime.gridx = 0;
-		gbc_lblAttachAddMime.gridy = 2;
+		gbc_lblAttachAddMime.gridy = 3;
 		pnlAttachAddControls.add(lblAttachAddMime, gbc_lblAttachAddMime);
 		
 		cbAttachAddMime = new JComboBox();
@@ -937,15 +968,53 @@ public class JMkvpropedit {
 		gbc_cbAttachAddMime.insets = new Insets(0, 0, 5, 5);
 		gbc_cbAttachAddMime.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cbAttachAddMime.gridx = 1;
-		gbc_cbAttachAddMime.gridy = 2;
+		gbc_cbAttachAddMime.gridy = 3;
 		pnlAttachAddControls.add(cbAttachAddMime, gbc_cbAttachAddMime);
 		
+		pnlAttachAddControlsBottom = new JPanel();
+		GridBagConstraints gbc_pnlAttachAddControlsBottom = new GridBagConstraints();
+		gbc_pnlAttachAddControlsBottom.insets = new Insets(0, 0, 0, 5);
+		gbc_pnlAttachAddControlsBottom.fill = GridBagConstraints.BOTH;
+		gbc_pnlAttachAddControlsBottom.gridx = 1;
+		gbc_pnlAttachAddControlsBottom.gridy = 4;
+		pnlAttachAddControls.add(pnlAttachAddControlsBottom, gbc_pnlAttachAddControlsBottom);
+		GridBagLayout gbl_pnlAttachAddControlsBottom = new GridBagLayout();
+		gbl_pnlAttachAddControlsBottom.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_pnlAttachAddControlsBottom.rowHeights = new int[]{0, 0};
+		gbl_pnlAttachAddControlsBottom.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlAttachAddControlsBottom.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		pnlAttachAddControlsBottom.setLayout(gbl_pnlAttachAddControlsBottom);
+		
 		btnAttachAdd = new JButton("Add");
-		GridBagConstraints gbc_btnAttachAdd = new GridBagConstraints();
-		gbc_btnAttachAdd.insets = new Insets(0, 0, 0, 5);
-		gbc_btnAttachAdd.gridx = 0;
-		gbc_btnAttachAdd.gridy = 3;
-		pnlAttachAddControls.add(btnAttachAdd, gbc_btnAttachAdd);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0, 0, 0, 5);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		pnlAttachAddControlsBottom.add(btnAttachAdd, gbc);
+		
+		btnAttachEdit = new JButton("Edit");
+		btnAttachEdit.setEnabled(false);
+		GridBagConstraints gbc_btnAttachEdit = new GridBagConstraints();
+		gbc_btnAttachEdit.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAttachEdit.gridx = 1;
+		gbc_btnAttachEdit.gridy = 0;
+		pnlAttachAddControlsBottom.add(btnAttachEdit, gbc_btnAttachEdit);
+		
+		btnAttachRemove = new JButton("Remove");
+		btnAttachRemove.setEnabled(false);
+		GridBagConstraints gbc_btnAttachRemove = new GridBagConstraints();
+		gbc_btnAttachRemove.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAttachRemove.anchor = GridBagConstraints.SOUTH;
+		gbc_btnAttachRemove.gridx = 2;
+		gbc_btnAttachRemove.gridy = 0;
+		pnlAttachAddControlsBottom.add(btnAttachRemove, gbc_btnAttachRemove);
+		
+		btnAttachCancel = new JButton("Cancel");
+		btnAttachCancel.setEnabled(false);
+		GridBagConstraints gbc_btnAttachCancel = new GridBagConstraints();
+		gbc_btnAttachCancel.gridx = 3;
+		gbc_btnAttachCancel.gridy = 0;
+		pnlAttachAddControlsBottom.add(btnAttachCancel, gbc_btnAttachCancel);
 		
 		JPanel pnlOutput = new JPanel();
 		pnlOutput.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -1582,6 +1651,7 @@ public class JMkvpropedit {
 				
 				String[] rowData = { 
 						txtAttachAddFile.getText().trim(),
+						txtAttachAddName.getText().trim(),
 						txtAttachAddDesc.getText().trim(),
 						cbAttachAddMime.getSelectedItem().toString()
 						};
@@ -1590,6 +1660,114 @@ public class JMkvpropedit {
 				
 				Utils.adjustColumnPreferredWidths(tblAttachAdd);
 				tblAttachAdd.revalidate();
+				
+				txtAttachAddFile.setText("");
+				txtAttachAddName.setText("");
+				txtAttachAddDesc.setText("");
+				cbAttachAddMime.setSelectedIndex(0);
+			}
+		});
+		
+		
+		tblAttachAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (modelAttachmentsAdd.getRowCount() == 0 || !tblAttachAdd.isEnabled()) {
+					return;
+				}
+				
+				int selection = tblAttachAdd.getSelectedRow();
+				
+				if (selection != -1) {
+					String file = modelAttachmentsAdd.getValueAt(selection, 0).toString();
+					String name = modelAttachmentsAdd.getValueAt(selection, 1).toString();
+					String desc = modelAttachmentsAdd.getValueAt(selection, 2).toString();
+					String mime = modelAttachmentsAdd.getValueAt(selection, 3).toString();
+					
+					
+					txtAttachAddFile.setText(file);
+					txtAttachAddName.setText(name);
+					txtAttachAddDesc.setText(desc);
+					cbAttachAddMime.setSelectedIndex(mkvStrings.getMimeTypeList().indexOf(mime));
+					
+					tblAttachAdd.setEnabled(false);
+					btnAttachAdd.setEnabled(false);
+					btnAttachRemove.setEnabled(true);
+					btnAttachEdit.setEnabled(true);
+					btnAttachCancel.setEnabled(true);
+					tblAttachAdd.clearSelection();
+				}				
+			}
+		});
+		
+		btnAttachEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtAttachAddFile.getText().trim().isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"The file is mandatory for the attachment!",
+							"", JOptionPane.ERROR_MESSAGE);
+					
+					return;
+				}
+				
+				int selection = tblAttachAdd.getSelectedRow();
+				
+				String file = txtAttachAddFile.getText().trim();
+				String name = txtAttachAddName.getText().trim();
+				String desc = txtAttachAddDesc.getText().trim();
+				String mime = cbAttachAddMime.getSelectedItem().toString();
+				
+				modelAttachmentsAdd.setValueAt(file, selection, 0);
+				modelAttachmentsAdd.setValueAt(name, selection, 1);
+				modelAttachmentsAdd.setValueAt(desc, selection, 2);
+				modelAttachmentsAdd.setValueAt(mime, selection, 3);
+				
+				txtAttachAddFile.setText("");
+				txtAttachAddName.setText("");
+				txtAttachAddDesc.setText("");
+				cbAttachAddMime.setSelectedIndex(0);
+				
+				tblAttachAdd.setEnabled(true);
+				btnAttachAdd.setEnabled(true);
+				btnAttachRemove.setEnabled(false);
+				btnAttachEdit.setEnabled(false);
+				btnAttachCancel.setEnabled(false);
+				tblAttachAdd.clearSelection();
+			}
+		});
+		
+		btnAttachRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selection = tblAttachAdd.getSelectedRow();
+				
+				modelAttachmentsAdd.removeRow(selection);
+				
+				txtAttachAddFile.setText("");
+				txtAttachAddName.setText("");
+				txtAttachAddDesc.setText("");
+				cbAttachAddMime.setSelectedIndex(0);
+				
+				tblAttachAdd.setEnabled(true);
+				btnAttachAdd.setEnabled(true);
+				btnAttachRemove.setEnabled(false);
+				btnAttachEdit.setEnabled(false);
+				btnAttachCancel.setEnabled(false);
+			}
+		});
+		
+		btnAttachCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtAttachAddFile.setText("");
+				txtAttachAddName.setText("");
+				txtAttachAddDesc.setText("");
+				cbAttachAddMime.setSelectedIndex(0);
+				
+				tblAttachAdd.setEnabled(true);
+				btnAttachAdd.setEnabled(true);
+				btnAttachRemove.setEnabled(false);
+				btnAttachEdit.setEnabled(false);
+				btnAttachCancel.setEnabled(false);
+				tblAttachAdd.clearSelection();
 			}
 		});
 		
@@ -3132,21 +3310,62 @@ public class JMkvpropedit {
 		}
 	}
 	
+	private void setCmdLineAttachmentsAdd() {
+		cmdLineAttachmentsAdd = "";
+		cmdLineAttachmentsAddOpt = "";
+		
+		for (int i = 0; i < modelAttachmentsAdd.getRowCount(); i++) {
+			String file = modelAttachmentsAdd.getValueAt(i, 0).toString();
+			String name = modelAttachmentsAdd.getValueAt(i, 1).toString();
+			String desc = modelAttachmentsAdd.getValueAt(i, 2).toString();
+			String mime = modelAttachmentsAdd.getValueAt(i, 3).toString();
+			
+			
+			if (name.isEmpty() && desc.isEmpty() && mime.isEmpty()) {
+				cmdLineAttachmentsAdd += " --add-attachment \"" + file + "\"";
+				cmdLineAttachmentsAddOpt += " --add-attachment \"" + Utils.escapeName(file) + "\"";
+			} else {
+				if (!name.isEmpty()) {
+					cmdLineAttachmentsAdd += " --attachment-name \"" + name + "\"";
+					cmdLineAttachmentsAddOpt += " --attachment-name \"" + Utils.escapeName(name) + "\"";
+				}
+				
+				if (!desc.isEmpty()) {
+					cmdLineAttachmentsAdd += " --attachment-description \"" + desc + "\"";
+					cmdLineAttachmentsAddOpt += " --attachment-description \"" + Utils.escapeName(desc) + "\"";
+				}
+				
+				if (!mime.isEmpty()) {
+					cmdLineAttachmentsAdd += " --attachment-mime-type \"" + mime + "\"";
+					cmdLineAttachmentsAddOpt += " --attachment-mime-type \"" + mime + "\"";
+				}
+				
+				cmdLineAttachmentsAdd += " --add-attachment \"" + file + "\"";
+				cmdLineAttachmentsAddOpt += " --add-attachment \"" + Utils.escapeName(file) + "\"";
+			}
+		}
+	}
+	
 	private void setCmdLine() {
 		setCmdLineGeneral();
 		setCmdLineVideo();
 		setCmdLineAudio();
 		setCmdLineSubtitle();
+		setCmdLineAttachmentsAdd();
 		
 		cmdLineBatch = new ArrayList<String>();
 		cmdLineBatchOpt = new ArrayList<String>();
 		
-		String cmdTemp = cmdLineGeneral[0] + cmdLineVideo[0] + cmdLineAudio[0] + cmdLineSubtitle[0];
+		String cmdTemp = cmdLineGeneral[0] + cmdLineAttachmentsAdd
+				+ cmdLineVideo[0] + cmdLineAudio[0] + cmdLineSubtitle[0];
 		
 		if (!cmdTemp.isEmpty()) {
 			for (int i = 0; i < modelFiles.getSize(); i++) {
-				String cmdLineAll = cmdLineGeneral[i] + cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
-				String cmdLineAllOpt = cmdLineGeneralOpt[i] + cmdLineVideoOpt[i] + cmdLineAudioOpt[i] + cmdLineSubtitleOpt[i];
+				String cmdLineAll = cmdLineGeneral[i] + cmdLineAttachmentsAdd
+						+ cmdLineVideo[i] + cmdLineAudio[i] + cmdLineSubtitle[i];
+
+				String cmdLineAllOpt = cmdLineGeneralOpt[i] + cmdLineAttachmentsAddOpt
+						+ cmdLineVideoOpt[i] + cmdLineAudioOpt[i] + cmdLineSubtitleOpt[i];
 				
 				if (Utils.isWindows()) {
 					cmdLineBatch.add("\"" + txtMkvPropExe.getText() + "\" \"" + modelFiles.get(i) + "\"" + cmdLineAll);
@@ -3246,8 +3465,6 @@ public class JMkvpropedit {
 		}
 	}
 	
-	private boolean found = true;
-	
 	private boolean isExecutableInPath(final String exe) {
 		worker = new SwingWorker<Void, Void>() {
 			@Override
@@ -3261,10 +3478,11 @@ public class JMkvpropedit {
 					proc.waitFor();
 					in.close();
 					
-					found = true;
+					exeFound = true;
 				} catch (IOException e) {
-					found = false;
+					exeFound = false;
 				} catch (InterruptedException e) {
+					exeFound = false;
 				}
 				
 				return null;
@@ -3274,7 +3492,7 @@ public class JMkvpropedit {
 		worker.execute();
 		while (!worker.isDone()) { }
 
-		return found;
+		return exeFound;
 	}
 	
 	/* End of command line methods */
@@ -3401,15 +3619,11 @@ public class JMkvpropedit {
 		
 		int spWidth = scrollAttachAdd.getWidth()-2;
 		
-		// Set minimum width for columns
-		columnModel.getColumn(0).setMinWidth((int) (spWidth * 0.45));
-		columnModel.getColumn(1).setMinWidth((int) (spWidth * 0.30));
-		columnModel.getColumn(2).setMinWidth((int) (spWidth * 0.25));
-		
 		// Set prefered size for columns
-		columnModel.getColumn(0).setPreferredWidth(columnModel.getColumn(0).getMinWidth());
-		columnModel.getColumn(1).setPreferredWidth(columnModel.getColumn(1).getMinWidth());
-		columnModel.getColumn(2).setPreferredWidth(columnModel.getColumn(2).getMinWidth());
+		columnModel.getColumn(0).setPreferredWidth((int) (spWidth * 0.35));
+		columnModel.getColumn(1).setPreferredWidth((int) (spWidth * 0.20));
+		columnModel.getColumn(2).setPreferredWidth((int) (spWidth * 0.25));
+		columnModel.getColumn(3).setPreferredWidth((int) (spWidth * 0.20));
 		
 		tblAttachAdd.revalidate();
 	}
