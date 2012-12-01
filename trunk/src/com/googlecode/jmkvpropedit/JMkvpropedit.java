@@ -45,9 +45,9 @@ public class JMkvpropedit {
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
-	private static Process proc = null;
-	private static ProcessBuilder pb = new ProcessBuilder();
-	private static SwingWorker<Void, Void> worker = null;
+	private Process proc = null;
+	private ProcessBuilder pb = new ProcessBuilder();
+	private SwingWorker<Void, Void> worker = null;
 	
 	private static final File iniFile = new File("JMkvpropedit.ini");
 	private static final MkvStrings mkvStrings = new MkvStrings();
@@ -75,16 +75,16 @@ public class JMkvpropedit {
 	};
 	
 	
-	private static final FileFilter EXE_EXT_FILTER =
+	private FileFilter EXE_EXT_FILTER = 
 			new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
 	
-	private static final FileFilter MATROSKA_EXT_FILTER =
+	private FileFilter MATROSKA_EXT_FILTER =
 			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
 	
-	private static final FileFilter TXT_EXT_FILTER =
+	private FileFilter TXT_EXT_FILTER =
 			new FileNameExtensionFilter("Plain text files (*.txt)", "txt");	
 	
-	private static final FileFilter XML_EXT_FILTER =
+	private FileFilter XML_EXT_FILTER =
 			new FileNameExtensionFilter("XML files (*.xml)", "xml");
 	
 	
