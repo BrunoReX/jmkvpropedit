@@ -865,6 +865,7 @@ public class JMkvpropedit {
 		pnlAttachAdd.add(scrollAttachAdd, BorderLayout.CENTER);
 		
 		tblAttachAdd = new JTable();
+		tblAttachAdd.setModel(modelAttachmentsAdd);
 		tblAttachAdd.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblAttachAdd.setAutoscrolls(false);
 		tblAttachAdd.setFillsViewportHeight(true);
@@ -1028,6 +1029,14 @@ public class JMkvpropedit {
 				}
 			}
 		});
+		
+		frmJMkvpropedit.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resizeColumnsAttachAdd();
+			}
+		});
+		
 		
 		new FileDrop(listFiles, new FileDrop.Listener() {
         	public void filesDropped(java.io.File[] files) {
@@ -1570,17 +1579,6 @@ public class JMkvpropedit {
 					
 					return;
 				}
-				
-				
-				tblAttachAdd.setModel(modelAttachmentsAdd);
-				
-				TableColumnModel columnModel = tblAttachAdd.getColumnModel();
-				
-				// Set minimum width for columns
-				columnModel.getColumn(0).setMinWidth(300);
-				columnModel.getColumn(1).setMinWidth(200);
-				columnModel.getColumn(2).setMinWidth(200);
-				
 				
 				String[] rowData = { 
 						txtAttachAddFile.getText().trim(),
@@ -3394,5 +3392,28 @@ public class JMkvpropedit {
 	}
 	
 	/* End of INI configuration file methods */
+	
+	
+	/* Start of table methods */
+	
+	private void resizeColumnsAttachAdd() {
+		TableColumnModel columnModel = tblAttachAdd.getColumnModel();
+		
+		int spWidth = scrollAttachAdd.getWidth()-2;
+		
+		// Set minimum width for columns
+		columnModel.getColumn(0).setMinWidth((int) (spWidth * 0.45));
+		columnModel.getColumn(1).setMinWidth((int) (spWidth * 0.30));
+		columnModel.getColumn(2).setMinWidth((int) (spWidth * 0.25));
+		
+		// Set prefered size for columns
+		columnModel.getColumn(0).setPreferredWidth(columnModel.getColumn(0).getMinWidth());
+		columnModel.getColumn(1).setPreferredWidth(columnModel.getColumn(1).getMinWidth());
+		columnModel.getColumn(2).setPreferredWidth(columnModel.getColumn(2).getMinWidth());
+		
+		tblAttachAdd.revalidate();
+	}
+	
+	/* End of table methods */
 	
 }
