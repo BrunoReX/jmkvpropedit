@@ -185,7 +185,7 @@ public class Utils {
 			int maxwidth = 0;
 			for (int row = 0; row < table.getRowCount(); row++) {
 				TableCellRenderer rend = table.getCellRenderer(row, col);
-				Object value = table.getValueAt(row, col);
+				Object value = table.getValueAt(row, col) + "   ";
 				Component comp = rend.getTableCellRendererComponent(table,
 						value, false, false, row, col);
 				maxwidth = Math.max(comp.getPreferredSize().width, maxwidth);
