@@ -3629,20 +3629,15 @@ public class JMkvpropedit {
 			total += colSizes[i];
 		}
 		
-		colSizes[3] = colSizes[3] + (spWidth-total);
+		colSizes[colSizes.length-1] = colSizes[colSizes.length-1] + (spWidth-total);
 		
-		
-		// Set minimum size for columns
-		columnModel.getColumn(0).setMinWidth(colSizes[0]);
-		columnModel.getColumn(1).setMinWidth(colSizes[1]);
-		columnModel.getColumn(2).setMinWidth(colSizes[2]);
-		columnModel.getColumn(3).setMinWidth(colSizes[3]);
-		
-		// Set prefered size for columns
-		columnModel.getColumn(0).setPreferredWidth(colSizes[0]);
-		columnModel.getColumn(1).setPreferredWidth(colSizes[1]);
-		columnModel.getColumn(2).setPreferredWidth(colSizes[2]);
-		columnModel.getColumn(3).setPreferredWidth(colSizes[3]);
+		for (int i = 0; i < colSizes.length; i++) {
+			// Set minimum size for column
+			columnModel.getColumn(i).setMinWidth(colSizes[i]);
+			
+			// Set prefered size for column
+			columnModel.getColumn(i).setPreferredWidth(colSizes[i]);
+		}
 		
 		tblAttachAdd.revalidate();
 	}
