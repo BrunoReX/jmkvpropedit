@@ -88,6 +88,7 @@ public class JMkvpropedit {
 	
 	
 	private static final String[] COLUMNS_ATTACHMENTS_ADD = { "File", "Name", "Description", "MIME Type" };
+	private static final double[] COLUMN_SIZES_ATTACHMENTS_ADD = { 0.35, 0.20, 0.25, 0.20 };
 	private DefaultTableModel modelAttachmentsAdd = new DefaultTableModel(null, COLUMNS_ATTACHMENTS_ADD) {
 		private static final long serialVersionUID = 1L;
 		
@@ -100,6 +101,7 @@ public class JMkvpropedit {
 	
 	
 	private static final String[] COLUMNS_ATTACHMENTS_REPLACE = { "Type", "Original Value", "Replacement" };
+	private static final double[] COLUMN_SIZES_ATTACHMENTS_REPLACE = { 0.30, 0.30, 0.40 };
 	private DefaultTableModel modelAttachmentsReplace = new DefaultTableModel(null, COLUMNS_ATTACHMENTS_REPLACE) {
 		private static final long serialVersionUID = 1L;
 		
@@ -1311,8 +1313,8 @@ public class JMkvpropedit {
 		frmJMkvpropedit.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				resizeColumnsAttachAdd();
-				resizeColumnsAttachReplace();
+				resizeColumns(tblAttachAdd, COLUMN_SIZES_ATTACHMENTS_ADD);
+				resizeColumns(tblAttachReplace, COLUMN_SIZES_ATTACHMENTS_REPLACE);
 			}
 		});
 		
@@ -4065,67 +4067,30 @@ public class JMkvpropedit {
 	
 	/* Start of table methods */
 	
-	private void resizeColumnsAttachAdd() {
-		TableColumnModel columnModel = tblAttachAdd.getColumnModel();
+	private void resizeColumns(JTable table, double[] colSizes) {
+		TableColumnModel columnModel = table.getColumnModel();
+		int[] colWidths = new int[colSizes.length];
 		
-		int spWidth = spAttachAdd.getWidth()-2;
+		int parWidth = table.getParent().getWidth();
 		
-		
-		int[] colSizes = {
-				(int) (spWidth * 0.35),
-				(int) (spWidth * 0.20),
-				(int) (spWidth * 0.25),
-				(int) (spWidth * 0.20)
-			};
 		
 		int total = 0;
 		for (int i = 0; i < colSizes.length; i++) {
-			total += colSizes[i];
+			colWidths[i] = (int) (parWidth * colSizes[i]);
+			total += colWidths[i];
 		}
 		
-		colSizes[colSizes.length-1] += spWidth-total;
+		colWidths[colWidths.length-1] += parWidth-total;
 		
 		for (int i = 0; i < colSizes.length; i++) {
 			// Set minimum size for column
-			columnModel.getColumn(i).setMinWidth(colSizes[i]);
+			columnModel.getColumn(i).setMinWidth(colWidths[i]);
 			
 			// Set prefered size for column
-			columnModel.getColumn(i).setPreferredWidth(colSizes[i]);
+			columnModel.getColumn(i).setPreferredWidth(colWidths[i]);
 		}
 		
-		tblAttachAdd.revalidate();
-	}
-	
-	
-	private void resizeColumnsAttachReplace() {
-		TableColumnModel columnModel = tblAttachReplace.getColumnModel();
-		
-		int spWidth = spAttachReplace.getWidth()-2;
-		
-		
-		int[] colSizes = {
-				(int) (spWidth * 0.30),
-				(int) (spWidth * 0.30),
-				(int) (spWidth * 0.40)
-			};
-		
-		int total = 0;
-		for (int i = 0; i < colSizes.length; i++) {
-			total += colSizes[i];
-		}
-		
-		colSizes[colSizes.length-1] += spWidth-total;
-		
-		
-		for (int i = 0; i < colSizes.length; i++) {
-			// Set minimum size for column
-			columnModel.getColumn(i).setMinWidth(colSizes[i]);
-			
-			// Set prefered size for column
-			columnModel.getColumn(i).setPreferredWidth(colSizes[i]);
-		}
-		
-		tblAttachReplace.revalidate();
+		table.revalidate();
 	}
 	
 	/* End of table methods */
