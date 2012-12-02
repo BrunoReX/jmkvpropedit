@@ -27,16 +27,13 @@ package com.googlecode.jmkvpropedit;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.border.EmptyBorder;
 import org.ini4j.*;
 
@@ -264,7 +261,7 @@ public class JMkvpropedit {
 	//Attachments tab controls
 	private JTabbedPane pnlAttachments;
 	private JPanel pnlAttachAdd;
-	private JScrollPane scrollAttachAdd;
+	private JScrollPane spAttachAdd;
 	private JTable tblAttachAdd;
 	private JPanel pnlAttachAddControls;
 	private JLabel lblAttachAddFile;
@@ -336,13 +333,13 @@ public class JMkvpropedit {
 		pnlTabs.addTab("Input", null, pnlInput, null);
 		pnlInput.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollFiles = new JScrollPane();
-		scrollFiles.setViewportBorder(null);
-		pnlInput.add(scrollFiles);
+		JScrollPane spFiles = new JScrollPane();
+		spFiles.setViewportBorder(null);
+		pnlInput.add(spFiles);
 		
 		modelFiles = new DefaultListModel();
 		listFiles = new JList(modelFiles);
-		scrollFiles.setViewportView(listFiles);
+		spFiles.setViewportView(listFiles);
 		
 		JPanel pnlListToolbar = new JPanel();
 		pnlListToolbar.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -873,8 +870,8 @@ public class JMkvpropedit {
 		pnlAttachments.addTab("Add Attachments", null, pnlAttachAdd, null);
 		pnlAttachAdd.setLayout(new BorderLayout(0, 0));
 		
-		scrollAttachAdd = new JScrollPane();
-		pnlAttachAdd.add(scrollAttachAdd, BorderLayout.CENTER);
+		spAttachAdd = new JScrollPane();
+		pnlAttachAdd.add(spAttachAdd, BorderLayout.CENTER);
 		
 		tblAttachAdd = new JTable();
 		tblAttachAdd.setShowGrid(false);
@@ -883,7 +880,7 @@ public class JMkvpropedit {
 		tblAttachAdd.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblAttachAdd.setAutoscrolls(false);
 		tblAttachAdd.setFillsViewportHeight(true);
-		scrollAttachAdd.setViewportView(tblAttachAdd);
+		spAttachAdd.setViewportView(tblAttachAdd);
 		
 		pnlAttachAddControls = new JPanel();
 		pnlAttachAddControls.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -1021,13 +1018,13 @@ public class JMkvpropedit {
 		pnlTabs.addTab("Output", null, pnlOutput, null);
 		pnlOutput.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrPnlOutput = new JScrollPane();
-		pnlOutput.add(scrPnlOutput, BorderLayout.CENTER);
+		JScrollPane spOutput = new JScrollPane();
+		pnlOutput.add(spOutput, BorderLayout.CENTER);
 		
 		txtOutput = new JTextArea();
 		txtOutput.setLineWrap(true);
 		txtOutput.setEditable(false);
-		scrPnlOutput.setViewportView(txtOutput);
+		spOutput.setViewportView(txtOutput);
 		
 		JPanel pnlButtons = new JPanel();
 		frmJMkvpropedit.getContentPane().add(pnlButtons, BorderLayout.SOUTH);
@@ -3617,13 +3614,35 @@ public class JMkvpropedit {
 	private void resizeColumnsAttachAdd() {
 		TableColumnModel columnModel = tblAttachAdd.getColumnModel();
 		
-		int spWidth = scrollAttachAdd.getWidth()-2;
+		int spWidth = spAttachAdd.getWidth()-2;
+		
+		
+		int[] colSizes = {
+				(int) (spWidth * 0.35),
+				(int) (spWidth * 0.20),
+				(int) (spWidth * 0.25),
+				(int) (spWidth * 0.20)
+			};
+		
+		int total = 0;
+		for (int i = 0; i < colSizes.length; i++) {
+			total += colSizes[i];
+		}
+		
+		colSizes[3] = colSizes[3] + (spWidth-total);
+		
+		
+		// Set minimum size for columns
+		columnModel.getColumn(0).setMinWidth(colSizes[0]);
+		columnModel.getColumn(1).setMinWidth(colSizes[1]);
+		columnModel.getColumn(2).setMinWidth(colSizes[2]);
+		columnModel.getColumn(3).setMinWidth(colSizes[3]);
 		
 		// Set prefered size for columns
-		columnModel.getColumn(0).setPreferredWidth((int) (spWidth * 0.35));
-		columnModel.getColumn(1).setPreferredWidth((int) (spWidth * 0.20));
-		columnModel.getColumn(2).setPreferredWidth((int) (spWidth * 0.25));
-		columnModel.getColumn(3).setPreferredWidth((int) (spWidth * 0.20));
+		columnModel.getColumn(0).setPreferredWidth(colSizes[0]);
+		columnModel.getColumn(1).setPreferredWidth(colSizes[1]);
+		columnModel.getColumn(2).setPreferredWidth(colSizes[2]);
+		columnModel.getColumn(3).setPreferredWidth(colSizes[3]);
 		
 		tblAttachAdd.revalidate();
 	}
