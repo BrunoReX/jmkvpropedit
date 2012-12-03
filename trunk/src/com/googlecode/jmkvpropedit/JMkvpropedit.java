@@ -39,7 +39,7 @@ import org.ini4j.*;
 
 public class JMkvpropedit {
 	
-	private static final String VERSION_NUMBER = "1.2";
+	private static final String VERSION_NUMBER = "1.3";
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
@@ -399,7 +399,7 @@ public class JMkvpropedit {
 	private void initialize() {
 		frmJMkvpropedit = new JFrame();
 		frmJMkvpropedit.setTitle("JMkvpropedit " + VERSION_NUMBER);
-		frmJMkvpropedit.setBounds(100, 100, 760, 440);
+		frmJMkvpropedit.setBounds(100, 100, 760, 500);
 		frmJMkvpropedit.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
