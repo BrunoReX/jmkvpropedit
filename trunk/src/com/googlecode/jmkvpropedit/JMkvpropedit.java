@@ -39,7 +39,7 @@ import org.ini4j.*;
 
 public class JMkvpropedit {
 	
-	private static final String VERSION_NUMBER = "1.3";
+	private static final String VERSION_NUMBER = "1.3.1";
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
@@ -4331,7 +4331,7 @@ public class JMkvpropedit {
 				cmdLineAttachmentsDeleteOpt += " --delete-attachment \"name:" + Utils.escapeName(value) + "\"";
 			} else if (type.equals(rbAttachDeleteID.getText())) {
 				cmdLineAttachmentsDelete += " --delete-attachment \"" + value + "\"";
-				cmdLineAttachmentsDeleteOpt += " ---delete-attachment \"" + value + "\"";
+				cmdLineAttachmentsDeleteOpt += " --delete-attachment \"" + value + "\"";
 			} else {
 				cmdLineAttachmentsDelete += " --delete-attachment \"mime-type:" + Utils.escapeColons(value) + "\"";
 				cmdLineAttachmentsDeleteOpt += " --delete-attachment \"mime-type:" + Utils.escapeName(value) + "\"";
