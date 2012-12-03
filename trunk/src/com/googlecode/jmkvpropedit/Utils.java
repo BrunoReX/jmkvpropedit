@@ -86,6 +86,12 @@ public class Utils {
 		return text;
 	}
 	
+	public static String escapeColons(String text) {
+		text = text.replace(":", "\\c");
+		
+		return text;
+	}
+	
 	public static String escapeBackslashes(String text) {
 		text = text.replace("\\", "\\\\");
 		
