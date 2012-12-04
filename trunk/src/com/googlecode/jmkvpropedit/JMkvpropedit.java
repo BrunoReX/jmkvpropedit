@@ -352,19 +352,19 @@ public class JMkvpropedit {
 	private JRadioButton rbAttachDeleteName;
 	private JRadioButton rbAttachDeleteID;
 	private JRadioButton rbAttachDeleteMime;
+	private JLabel lblAttachDeleteValue;
+	private JPanel pnlAttachDeleteValue;
+	private JTextField txtAttachDeleteValue;
+	private JComboBox cbAttachDeleteValue;
 	private JPanel pnlAttachDeleteControlsBottom;
 	private JButton btnAttachDeleteAdd;
 	private JButton btnAttachDeleteEdit;
 	private JButton btnAttachDeleteRemove;
 	private JButton btnAttachDeleteCancel;
-	private JLabel lblAttachDeleteValue;
 	
 	
 	// Output tab controls
 	private JTextArea txtOutput;
-	private JPanel pnlAttachDeleteValue;
-	private JTextField txtAttachDeleteValue;
-	private JComboBox cbAttachDeleteValue;
 
 	
 	/**
