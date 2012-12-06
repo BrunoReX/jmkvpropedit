@@ -39,7 +39,7 @@ import org.ini4j.*;
 
 public class JMkvpropedit {
 	
-	private static final String VERSION_NUMBER = "1.3.1";
+	private static final String VERSION_NUMBER = "1.3.2";
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
@@ -896,7 +896,7 @@ public class JMkvpropedit {
 		
 		JPanel pnlSubtitle = new JPanel();
 		pnlSubtitle.setBorder(new EmptyBorder(10, 10, 10, 10));
-		pnlTabs.addTab("Subtitle", null, pnlSubtitle, null);
+		pnlTabs.addTab("Subtitles", null, pnlSubtitle, null);
 		GridBagLayout gbl_pnlSubtitle = new GridBagLayout();
 		gbl_pnlSubtitle.columnWidths = new int[]{705, 0};
 		gbl_pnlSubtitle.rowHeights = new int[]{30, 283, 0};
@@ -1566,14 +1566,14 @@ public class JMkvpropedit {
 		
 		
 		new FileDrop(listFiles, new FileDrop.Listener() {
-        	public void filesDropped(java.io.File[] files) {
+        	public void filesDropped(File[] files) {
         		for (int i = 0; i < files.length; i++) {
         			try {
         				if (!modelFiles.contains(files[i].getCanonicalPath()) &&
         					MATROSKA_EXT_FILTER.accept(files[i]) && !files[i].isDirectory()) {
         					modelFiles.add(modelFiles.getSize(), files[i].getCanonicalPath());
         				}
-        			} catch(java.io.IOException e) {
+        			} catch(IOException e) {
         			}
         		}
         	}
@@ -2072,6 +2072,17 @@ public class JMkvpropedit {
 			}
 		});
 		
+		new FileDrop(txtAttachAddFile, new FileDrop.Listener() {
+        	public void filesDropped(File[] files) {
+        		try {
+    				if (files[0].exists() && !files[0].isDirectory()) {
+    					txtAttachAddFile.setText(files[0].getCanonicalPath());
+    				}
+    			} catch(IOException e) {
+    			}
+        	}
+        });
+		
 		btnBrowseAttachAddFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -2271,6 +2282,17 @@ public class JMkvpropedit {
 				}
 			}
 		});
+		
+		new FileDrop(txtAttachReplaceNew, new FileDrop.Listener() {
+        	public void filesDropped(File[] files) {
+        		try {
+    				if (files[0].exists() && !files[0].isDirectory()) {
+    					txtAttachReplaceNew.setText(files[0].getCanonicalPath());
+    				}
+    			} catch(IOException e) {
+    			}
+        	}
+        });
 		
 		btnAttachReplaceNewBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

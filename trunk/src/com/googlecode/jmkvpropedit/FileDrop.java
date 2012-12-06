@@ -94,7 +94,6 @@ public class FileDrop
     final Listener listener )
     {   this( null,  // Logging stream
               c,     // Drop target
-              javax.swing.BorderFactory.createEmptyBorder(), //No border
               true, // Recursive
               listener );
     }   // end constructor    
@@ -117,7 +116,6 @@ public class FileDrop
     public FileDrop(
     final java.io.PrintStream out,
     final java.awt.Component c,
-    final javax.swing.border.Border dragBorder,
     final boolean recursive,
     final Listener listener) 
     {   
@@ -136,7 +134,6 @@ public class FileDrop
                         {   javax.swing.JComponent jc = (javax.swing.JComponent) c;
                             normalBorder = jc.getBorder();
                             log( out, "FileDrop: normal border saved." );
-                            jc.setBorder( dragBorder );
                             log( out, "FileDrop: drag border set." );
                         }   // end if: JComponent   
 
