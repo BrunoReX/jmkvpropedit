@@ -2075,7 +2075,7 @@ public class JMkvpropedit {
 		new FileDrop(txtAttachAddFile, new FileDrop.Listener() {
         	public void filesDropped(File[] files) {
         		try {
-    				if (files[0].exists() && !files[0].isDirectory()) {
+    				if (!files[0].isDirectory()) {
     					txtAttachAddFile.setText(files[0].getCanonicalPath());
     				}
     			} catch(IOException e) {
@@ -2286,7 +2286,7 @@ public class JMkvpropedit {
 		new FileDrop(txtAttachReplaceNew, new FileDrop.Listener() {
         	public void filesDropped(File[] files) {
         		try {
-    				if (files[0].exists() && !files[0].isDirectory()) {
+    				if (!files[0].isDirectory()) {
     					txtAttachReplaceNew.setText(files[0].getCanonicalPath());
     				}
     			} catch(IOException e) {
