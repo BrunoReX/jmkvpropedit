@@ -27,6 +27,7 @@ package com.googlecode.jmkvpropedit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MkvStrings {
 	
@@ -35,7 +36,7 @@ public class MkvStrings {
 	 * Taken from iso639.cpp, part of mkvtoolnix by Moritz Bunkus
 	 * 
 	 */
-	private String[] langName = {	"Abkhazian",
+	private String[] langNames = {	"Abkhazian",
 									"Achinese",
 									"Acoli",
 									"Adangme",
@@ -520,7 +521,7 @@ public class MkvStrings {
 									"Zulu",
 									"Zuni"	};
 		
-	private String[] langCode = { 	"abk",
+	private String[] langCodes = { 	"abk",
 									"ace",
 									"ach",
 									"ada",
@@ -1010,7 +1011,7 @@ public class MkvStrings {
 	 * Taken from extern_data.cpp, part of mkvtoolnix by Moritz Bunkus
 	 * 
 	 */
-	private String[] mimeType = {	"",
+	private String[] mimeTypes = {	"",
 									"application/activemessage",
 									"application/andrew-inset",
 									"application/applefile",
@@ -1635,32 +1636,32 @@ public class MkvStrings {
 									"x-world/x-vrml"	};
 	
 	
-	private ArrayList<String> alLangName = new ArrayList<String>(Arrays.asList(langName));
-	private ArrayList<String> alLangCode = new ArrayList<String>(Arrays.asList(langCode));
-	private ArrayList<String> alMimeType = new ArrayList<String>(Arrays.asList(mimeType));
+	private List<String> langNameList = new ArrayList<String>(Arrays.asList(langNames));
+	private List<String> langCodeList = new ArrayList<String>(Arrays.asList(langCodes));
+	private List<String> mimeTypeList = new ArrayList<String>(Arrays.asList(mimeTypes));
 	
 	
-	public String[] getLangName() {
-		return langName;
+	public String[] getLangNames() {
+		return langNames;
 	}
 
-	public String[] getLangCode() {
-		return langCode;
+	public String[] getLangCodes() {
+		return langCodes;
 	}
 	
-	public String[] getMimeType() {
-		return mimeType;
+	public String[] getMimeTypes() {
+		return mimeTypes;
 	}
 
-	public ArrayList<String> getLangNameList() {
-		return alLangName;
+	public List<String> getLangNameList() {
+		return langNameList;
 	}
 
-	public ArrayList<String> getLangCodeList() {
-		return alLangCode;
+	public List<String> getLangCodeList() {
+		return langCodeList;
 	}
-	
-	public ArrayList<String> getMimeTypeList() {
-		return alMimeType;
-	}	
+
+	public List<String> getMimeTypeList() {
+		return mimeTypeList;
+	}
 }

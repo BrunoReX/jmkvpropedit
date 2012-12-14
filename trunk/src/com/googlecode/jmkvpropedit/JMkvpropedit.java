@@ -30,6 +30,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.filechooser.*;
@@ -150,8 +151,8 @@ public class JMkvpropedit {
 	private String cmdLineAttachmentsDelete = null;
 	private String cmdLineAttachmentsDeleteOpt = null;
 	
-	private ArrayList<String> cmdLineBatch = null;
-	private ArrayList<String> cmdLineBatchOpt = null;
+	private List<String> cmdLineBatch = null;
+	private List<String> cmdLineBatchOpt = null;
 	
 	
 	// Window controls
@@ -1042,7 +1043,7 @@ public class JMkvpropedit {
 		pnlAttachAddControls.add(lblAttachAddMime, gbc_lblAttachAddMime);
 		
 		cbAttachAddMime = new JComboBox();
-		cbAttachAddMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeType()));
+		cbAttachAddMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeTypes()));
 		GridBagConstraints gbc_cbAttachAddMime = new GridBagConstraints();
 		gbc_cbAttachAddMime.insets = new Insets(0, 0, 5, 5);
 		gbc_cbAttachAddMime.fill = GridBagConstraints.HORIZONTAL;
@@ -1189,7 +1190,7 @@ public class JMkvpropedit {
 		txtAttachReplaceOrig.setColumns(10);
 		
 		cbAttachReplaceOrig = new JComboBox();
-		ArrayList<String> mimeList = mkvStrings.getMimeTypeList();
+		List<String> mimeList = mkvStrings.getMimeTypeList();
 		mimeList.remove(0);
 		cbAttachReplaceOrig.setModel(new DefaultComboBoxModel(mimeList.toArray()));
 		cbAttachReplaceOrig.setVisible(false);
@@ -1263,7 +1264,7 @@ public class JMkvpropedit {
 		pnlAttachReplaceControls.add(lblAttachReplaceMime, gbc_lblAttachReplaceMime);
 		
 		cbAttachReplaceMime = new JComboBox();
-		cbAttachReplaceMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeType()));
+		cbAttachReplaceMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeTypes()));
 		GridBagConstraints gbc_cbAttachReplaceMime = new GridBagConstraints();
 		gbc_cbAttachReplaceMime.insets = new Insets(0, 0, 5, 5);
 		gbc_cbAttachReplaceMime.fill = GridBagConstraints.HORIZONTAL;
@@ -2948,7 +2949,7 @@ public class JMkvpropedit {
 			
 			cbLangVideo[nVideo] = new JComboBox();
 			cbLangVideo[nVideo].setEnabled(false);
-			cbLangVideo[nVideo].setModel(new DefaultComboBoxModel(mkvStrings.getLangName()));
+			cbLangVideo[nVideo].setModel(new DefaultComboBoxModel(mkvStrings.getLangNames()));
 			cbLangVideo[nVideo].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
 			GridBagConstraints gbc_cbLangVideo = new GridBagConstraints();
 			gbc_cbLangVideo.insets = new Insets(0, 0, 10, 0);
@@ -3299,7 +3300,7 @@ public class JMkvpropedit {
 			
 			cbLangAudio[nAudio] = new JComboBox();
 			cbLangAudio[nAudio].setEnabled(false);
-			cbLangAudio[nAudio].setModel(new DefaultComboBoxModel(mkvStrings.getLangName()));
+			cbLangAudio[nAudio].setModel(new DefaultComboBoxModel(mkvStrings.getLangNames()));
 			cbLangAudio[nAudio].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
 			GridBagConstraints gbc_cbLangAudio = new GridBagConstraints();
 			gbc_cbLangAudio.insets = new Insets(0, 0, 10, 0);
@@ -3650,7 +3651,7 @@ public class JMkvpropedit {
 			
 			cbLangSubtitle[nSubtitle] = new JComboBox();
 			cbLangSubtitle[nSubtitle].setEnabled(false);
-			cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel(mkvStrings.getLangName()));
+			cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel(mkvStrings.getLangNames()));
 			cbLangSubtitle[nSubtitle].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
 			GridBagConstraints gbc_cbLangSubtitle = new GridBagConstraints();
 			gbc_cbLangSubtitle.insets = new Insets(0, 0, 10, 0);
