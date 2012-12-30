@@ -36,6 +36,9 @@ import javax.swing.table.*;
 import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.*;
 import org.ini4j.*;
 
 public class JMkvpropedit {
@@ -81,12 +84,14 @@ public class JMkvpropedit {
 	private FileFilter MATROSKA_EXT_FILTER =
 			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
 	
+	private IOFileFilter MATROSKA_FILE_FILTER =
+			new WildcardFileFilter(new String[]{"*.mkv", "*.mka", "*.mk3d"});
+	
 	private FileFilter TXT_EXT_FILTER =
 			new FileNameExtensionFilter("Plain text files (*.txt)", "txt");	
 	
 	private FileFilter XML_EXT_FILTER =
 			new FileNameExtensionFilter("XML files (*.xml)", "xml");
-	
 	
 	private static final String[] COLUMNS_ATTACHMENTS_ADD = { "File", "Name", "Description", "MIME Type" };
 	private static final double[] COLUMN_SIZES_ATTACHMENTS_ADD = { 0.35, 0.20, 0.25, 0.20 };
@@ -1569,13 +1574,11 @@ public class JMkvpropedit {
 		new FileDrop(listFiles, new FileDrop.Listener() {
         	public void filesDropped(File[] files) {
         		for (int i = 0; i < files.length; i++) {
-        			try {
-        				if (!modelFiles.contains(files[i].getCanonicalPath()) &&
-        					MATROSKA_EXT_FILTER.accept(files[i]) && !files[i].isDirectory()) {
-        					modelFiles.add(modelFiles.getSize(), files[i].getCanonicalPath());
-        				}
-        			} catch(IOException e) {
-        			}
+    				if (files[i].isDirectory()) {
+    					addMkvFilesFromFolder(files[i]);
+    				} else {
+    					addFile(files[i], true);
+    				}
         		}
         	}
         });
@@ -4467,16 +4470,21 @@ public class JMkvpropedit {
 	
 	private void parseFiles(String[] argsArray) {
 		if (argsArray.length > 0) {
-			File f = null;
+			File file = null;
 			
 			for (String arg : argsArray) {
 				try {
-					f = new File(arg);
+					file = new File(arg);
 					
-					if (f.exists() && !f.isDirectory() && MATROSKA_EXT_FILTER.accept(f)
-						&& !modelFiles.contains(f.getCanonicalPath())) {
-						modelFiles.add(modelFiles.getSize(), f.getCanonicalPath());
+					if (!file.exists()) {
+						continue;
 					}
+					
+					if (file.isDirectory()) {
+    					addMkvFilesFromFolder(file);
+    				} else {
+    					addFile(file, true);
+    				}
 				} catch (Exception e) {
 				}
 			}
@@ -4658,5 +4666,38 @@ public class JMkvpropedit {
 	}
 	
 	/* End of table methods */
+	
+	
+	/* Start of file methods */
+	
+	private void addFile(File file, boolean checkExtension) {
+		try {
+			if (!modelFiles.contains(file.getCanonicalPath()) && !checkExtension) {
+				modelFiles.add(modelFiles.getSize(), file.getCanonicalPath());
+			} else if (!modelFiles.contains(file.getCanonicalPath()) &&
+					MATROSKA_EXT_FILTER.accept(file)) {
+				modelFiles.add(modelFiles.getSize(), file.getCanonicalPath());
+			}
+		} catch (IOException e) {
+		}
+	}
+	
+	private void addMkvFilesFromFolder(final File folder) {
+		Runnable tmpWorker = new Runnable() {
+			@Override
+			public void run() {
+				Iterator<File> mkvFiles = FileUtils.iterateFiles(folder,
+						MATROSKA_FILE_FILTER, TrueFileFilter.INSTANCE);
+				
+				while (mkvFiles.hasNext()) {
+					addFile(mkvFiles.next(), false);
+				}
+		    }
+		};
+				
+		SwingUtilities.invokeLater(tmpWorker);
+	}
+	
+	/* End of file methods */
 	
 }

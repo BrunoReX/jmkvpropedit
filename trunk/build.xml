@@ -41,6 +41,7 @@
 	<target name="jar" depends="compile">
 		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
 			<zipfileset src="${lib.dir}/ini4j/ini4j-0.5.2.jar" excludes="**/META-INF/" />
+			<zipfileset src="${lib.dir}/commons-io/commons-io-2.4.jar" excludes="**/META-INF/" />
 		    <manifest>
                 <attribute name="Main-Class" value="${main.class}" />
             </manifest>
