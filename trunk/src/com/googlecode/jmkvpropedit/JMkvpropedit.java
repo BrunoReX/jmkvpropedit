@@ -37,13 +37,13 @@ import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.*;
 import org.apache.commons.io.filefilter.*;
 import org.ini4j.*;
 
 public class JMkvpropedit {
 	
-	private static final String VERSION_NUMBER = "1.3.3";
+	private static final String VERSION_NUMBER = "1.3.3.1";
 	private static final int MAX_STREAMS = 30;
 	private static String[] argsArray;
 	
@@ -85,7 +85,7 @@ public class JMkvpropedit {
 			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
 	
 	private IOFileFilter MATROSKA_FILE_FILTER =
-			new WildcardFileFilter(new String[]{"*.mkv", "*.mka", "*.mk3d"});
+			new WildcardFileFilter(new String[]{"*.mkv", "*.mka", "*.mk3d"}, IOCase.INSENSITIVE);
 	
 	private FileFilter TXT_EXT_FILTER =
 			new FileNameExtensionFilter("Plain text files (*.txt)", "txt");	
