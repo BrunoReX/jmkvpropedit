@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2012 Bruno Barbieri
+ * Copyright (c) 2012-2013 Bruno Barbieri
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -82,10 +82,12 @@ public class JMkvpropedit {
 			new FileNameExtensionFilter("Excecutable files (*.exe)", "exe");
 	
 	private FileFilter MATROSKA_EXT_FILTER =
-			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d) ", "mkv", "mka", "mk3d");
+			new FileNameExtensionFilter("Matroska files (*.mkv; *.mka; *.mk3d; *.webm; *.mks) ",
+					"mkv", "mka", "mk3d", "webm", "mks");
 	
 	private IOFileFilter MATROSKA_FILE_FILTER =
-			new WildcardFileFilter(new String[]{"*.mkv", "*.mka", "*.mk3d"}, IOCase.INSENSITIVE);
+			new WildcardFileFilter(new String[]{"*.mkv", "*.mka", "*.mk3d", ".webm", ".mks"},
+					IOCase.INSENSITIVE);
 	
 	private FileFilter TXT_EXT_FILTER =
 			new FileNameExtensionFilter("Plain text files (*.txt)", "txt");	
