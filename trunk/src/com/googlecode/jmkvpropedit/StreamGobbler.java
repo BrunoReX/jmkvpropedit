@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (c) 2012-2013 Bruno Barbieri
  * All rights reserved.
  *
@@ -20,7 +20,7 @@
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  */
 
 package com.googlecode.jmkvpropedit;
@@ -34,37 +34,31 @@ import javax.swing.JTextArea;
 /*
  * Original code by Michael C. Daconta
  * Source: http://www.javaworld.com/javaworld/jw-12-2000/jw-1229-traps.html?page=4
- * 
+ *
  */
 
-public class StreamGobbler extends Thread
-{
+public class StreamGobbler extends Thread {
     private final InputStream is;
     private final JTextArea text;
 
-    public StreamGobbler(InputStream is, JTextArea text)
-    {
+    public StreamGobbler(InputStream is, JTextArea text) {
         this.is = is;
         this.text = text;
     }
 
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader br = new BufferedReader(isr);
-            String line=null;
-            while ((line = br.readLine()) != null)
-            {
+            String line = null;
+
+            while ((line = br.readLine()) != null) {
                 text.append(line + "\n"); // JTextArea.append is thread safe
                 text.setCaretPosition(text.getText().length()); // Autoscroll
             }
-        }
-        catch (IOException ioe)
-        {
-            text.append(ioe.toString());
-            ioe.printStackTrace();  
+        } catch (IOException e) {
+            text.append(e.toString());
+            e.printStackTrace();
         }
     }
 }

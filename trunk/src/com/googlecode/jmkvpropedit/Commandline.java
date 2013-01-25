@@ -24,18 +24,18 @@ import java.util.Vector;
 /*
  * Original code from Apache Ant (org.apache.tools.ant.types.Commandline)
  * URL: http://ant.apache.org/
- * 
+ *
  */
 
 public class Commandline {
-	
-	/**
+
+    /**
      * Crack a command line.
      * @param toProcess the command line to process.
      * @return the command line broken into strings.
      * An empty or null toProcess parameter results in a zero sized array.
      */
-	
+
     public static String[] translateCommandline(String toProcess) {
         if (toProcess == null || toProcess.length() == 0) {
             //no command? no string
@@ -92,7 +92,7 @@ public class Commandline {
             v.addElement(current.toString());
         }
         /*if (state == inQuote || state == inDoubleQuote) {
-			throw new BuildException("unbalanced quotes in " + toProcess);
+            throw new BuildException("unbalanced quotes in " + toProcess);
         }*/
         String[] args = new String[v.size()];
         v.copyInto(args);
