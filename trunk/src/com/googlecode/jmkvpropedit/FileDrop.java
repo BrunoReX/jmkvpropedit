@@ -145,7 +145,8 @@ public class FileDrop {
                            log(out, "FileDrop: file list accepted.");
 
                            // Get a useful list
-                           List<?> fileList = (List<?>) tr.getTransferData(DataFlavor.javaFileListFlavor);
+                           List<?> fileList = (List<?>)
+                                   tr.getTransferData(DataFlavor.javaFileListFlavor);
 
                            // Convert list to array
                            File[] filesTemp = new File[fileList.size()];
