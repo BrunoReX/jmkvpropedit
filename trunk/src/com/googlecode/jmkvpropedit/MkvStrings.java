@@ -520,7 +520,8 @@ public class MkvStrings {
             "Zenaga",
             "Zhuang; Chuang",
             "Zulu",
-            "Zuni" };
+            "Zuni"
+    };
 
     private String[] langCodes = {
             "abk",
@@ -1006,7 +1007,8 @@ public class MkvStrings {
             "zen",
             "zha",
             "zul",
-            "zun" };
+            "zun"
+    };
 
     /*
      * Matroska MIME Types
@@ -1636,7 +1638,8 @@ public class MkvStrings {
             "video/x-ms-wvx",
             "video/x-sgi-movie",
             "x-conference/x-cooltalk",
-            "x-world/x-vrml" };
+            "x-world/x-vrml"
+    };
 
 
     private List<String> langNameList = new ArrayList<String>(Arrays.asList(langNames));
