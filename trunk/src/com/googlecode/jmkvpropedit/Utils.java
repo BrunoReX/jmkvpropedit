@@ -104,11 +104,22 @@ public class Utils {
     /* Start of right-click menu code */
 
     private static void showRCMenu(JTextComponent text, MouseEvent e) {
+        int selStart = text.getSelectionStart();
+        int selEnd = text.getSelectionEnd();
+
         JPopupMenu rightClickMenu = new JPopupMenu();
-        JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
-        JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
-        JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
-        JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
+
+        JMenuItem copyMenuItem = new JMenuItem(text.getActionMap()
+                .get(DefaultEditorKit.copyAction));
+
+        JMenuItem cutMenuItem = new JMenuItem(text.getActionMap()
+                .get(DefaultEditorKit.cutAction));
+
+        JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap()
+                .get(DefaultEditorKit.pasteAction));
+
+        JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap()
+                .get(DefaultEditorKit.selectAllAction));
 
         copyMenuItem.setText("Copy");
         cutMenuItem.setText("Cut");
@@ -127,12 +138,12 @@ public class Utils {
             cutMenuItem.setEnabled(false);
         }
 
-        if (text.getSelectionStart() == text.getSelectionEnd()) {
+        if (selStart == selEnd) {
             copyMenuItem.setEnabled(false);
             cutMenuItem.setEnabled(false);
         }
 
-        if ((text.getSelectionStart()+text.getSelectionEnd()) == text.getText().length()) {
+        if ((selStart+selEnd) == text.getText().length()) {
             selectAllMenuItem.setEnabled(false);
         }
 
@@ -191,9 +202,12 @@ public class Utils {
 
             for (int row = 0; row < table.getRowCount(); row++) {
                 TableCellRenderer rend = table.getCellRenderer(row, col);
+
                 Object value = table.getValueAt(row, col) + "   ";
-                Component comp = rend.getTableCellRendererComponent(table,
-                        value, false, false, row, col);
+
+                Component comp = rend.getTableCellRendererComponent(
+                        table, value, false, false, row, col);
+
                 maxwidth = Math.max(comp.getPreferredSize().width, maxwidth);
             }
 
