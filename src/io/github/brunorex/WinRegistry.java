@@ -23,7 +23,7 @@
  *
  */
 
-package com.googlecode.jmkvpropedit;
+package io.github.brunorex;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

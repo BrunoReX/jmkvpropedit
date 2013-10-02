@@ -23,7 +23,7 @@
  *
  */
 
-package com.googlecode.jmkvpropedit;
+package io.github.brunorex;
 
 import java.awt.Component;
 import java.awt.event.*;

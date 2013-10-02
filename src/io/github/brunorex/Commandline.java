@@ -16,7 +16,7 @@
  *
  */
 
-package com.googlecode.jmkvpropedit;
+package io.github.brunorex;
 
 import java.util.StringTokenizer;
 import java.util.Vector;

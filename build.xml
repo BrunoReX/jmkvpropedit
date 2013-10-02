@@ -7,7 +7,7 @@
 	<property name="build.dir" value="build" />
 	<property name="lib.dir" value="lib" />
 	<property name="launch4j.dir" location="launch4j" />
-	<property name="main.class" value="com.googlecode.jmkvpropedit.JMkvpropedit" />
+	<property name="main.class" value="io.github.brunorex.JMkvpropedit" />
 	
 	<path id="lib.classpath">
 	  <fileset dir="${lib.dir}" >

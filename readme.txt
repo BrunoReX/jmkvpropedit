@@ -5,5 +5,5 @@ It should work on Windows, Linux and other *nixes (not tested).
 Requires Java 6 or newer.
 
 Source and downloads at:
-http://jmkvpropedit.googlecode.com/
+https://github.com/BrunoReX/jmkvpropedit
 

@@ -23,7 +23,7 @@
  *
  */
 
-package com.googlecode.jmkvpropedit;
+package io.github.brunorex;
 
 import java.io.BufferedReader;
 import java.io.IOException;
