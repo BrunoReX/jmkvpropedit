@@ -27,7 +27,9 @@ package io.github.brunorex;
 
 import java.awt.Component;
 import java.awt.event.*;
+import java.io.File;
 import java.text.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.text.*;
@@ -184,10 +186,31 @@ public class Utils {
         return formatter.format(number);
     }
 
-    public static String getPathWithoutExt(String file) {
+    public static int getDotIndex(String file) {
         int dotIndex = file.lastIndexOf(".");
 
-        return file.substring(0, dotIndex);
+        if (dotIndex != -1)
+            return dotIndex;
+        else
+            return file.length();
+    }
+
+    public static int getSeparatorIndex(String file) {
+        int sepIndex = file.lastIndexOf(File.separator);
+
+        if (sepIndex != -1) {
+                return sepIndex+1;
+        } else {
+            return 0;
+        }
+    }
+
+    public static String getFileNameWithoutExt(String file) {
+        return file.substring(getSeparatorIndex(file), getDotIndex(file));
+    }
+
+    public static String getPathWithoutExt(String file) {
+        return file.substring(0, getDotIndex(file));
     }
 
     /**

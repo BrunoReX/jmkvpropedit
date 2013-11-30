@@ -31,6 +31,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.filechooser.*;
@@ -3930,21 +3931,22 @@ public class JMkvpropedit {
                 cmdLineGeneral[i] += " --edit info";
                 cmdLineGeneralOpt[i] += " --edit info";
 
+                String newTitle = txtTitleGeneral.getText();
+
                 if (chbNumbGeneral.isSelected()) {
                     int pad = 0;
 
                     pad = Integer.parseInt(txtNumbPadGeneral.getText());
-
-                    String newTitle = txtTitleGeneral.getText();
                     newTitle = newTitle.replace("{num}", Utils.padNumber(pad, start));
-                    start++;
 
-                    cmdLineGeneral[i] += " --set title=\"" + Utils.escapeQuotes(newTitle) + "\"";
-                    cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(newTitle) + "\"";
-                } else {
-                    cmdLineGeneral[i] += " --set title=\"" + Utils.escapeQuotes(txtTitleGeneral.getText()) + "\"";
-                    cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(txtTitleGeneral.getText()) + "\"";
+                    start++;
                 }
+
+                newTitle = newTitle.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+
+                cmdLineGeneral[i] += " --set title=\"" + Utils.escapeQuotes(newTitle) + "\"";
+                cmdLineGeneralOpt[i] += " --set title=\"" + Utils.escapeName(newTitle) + "\"";
+
             }
 
             if (chbExtraCmdGeneral.isSelected() && !txtExtraCmdGeneral.getText().trim().isEmpty()) {
@@ -4052,6 +4054,9 @@ public class JMkvpropedit {
                     numStartVideo[i]++;
                 }
 
+                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+
                 cmdLineVideo[j] += tmpText;
                 cmdLineVideoOpt[j] += tmpText2;
             }
@@ -4155,6 +4160,9 @@ public class JMkvpropedit {
                     numStartAudio[i]++;
                 }
 
+                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+
                 cmdLineAudio[j] += tmpText;
                 cmdLineAudioOpt[j] += tmpText2;
             }
@@ -4257,6 +4265,9 @@ public class JMkvpropedit {
                     tmpText2 = tmpText.replace("{num}", Utils.padNumber(numPadSubtitle[i], numStartSubtitle[i]));
                     numStartSubtitle[i]++;
                 }
+
+                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
 
                 cmdLineSubtitle[j] += tmpText;
                 cmdLineSubtitleOpt[j] += tmpText2;
