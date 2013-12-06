@@ -198,11 +198,10 @@ public class Utils {
     public static int getSeparatorIndex(String file) {
         int sepIndex = file.lastIndexOf(File.separator);
 
-        if (sepIndex != -1) {
-                return sepIndex+1;
-        } else {
+        if (sepIndex != -1)
+            return sepIndex+1;
+        else
             return 0;
-        }
     }
 
     public static String getFileNameWithoutExt(String file) {
