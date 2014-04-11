@@ -172,8 +172,8 @@ public class JMkvpropedit {
 
 
     // Input tab controls
-    private DefaultListModel modelFiles;
-    private JList listFiles;
+    private DefaultListModel<String> modelFiles;
+    private JList<String> listFiles;
     private JButton btnAddFiles;
     private JButton btnRemoveFiles;
     private JButton btnTopFiles;
@@ -193,15 +193,15 @@ public class JMkvpropedit {
     private JTextField txtNumbPadGeneral;
     private JLabel lblNumbExplainGeneral;
     private JCheckBox chbChapters;
-    private JComboBox cbChapters;
+    private JComboBox<String> cbChapters;
     private JButton btnBrowseChapters;
-    private JComboBox cbExtChapters;
+    private JComboBox<String> cbExtChapters;
     private JTextField txtChapters;
     private JCheckBox chbTags;
-    private JComboBox cbTags;
+    private JComboBox<String> cbTags;
     private JTextField txtTags;
     private JButton btnBrowseTags;
-    private JComboBox cbExtTags;
+    private JComboBox<String> cbExtTags;
     private JCheckBox chbExtraCmdGeneral;
     private JTextField txtExtraCmdGeneral;
     private JTextField txtMkvPropExe;
@@ -209,7 +209,7 @@ public class JMkvpropedit {
 
 
     // Video tab controls
-    private JComboBox cbVideo;
+    private JComboBox<String> cbVideo;
     private JButton btnAddVideo;
     private JButton btnRemoveVideo;
     private CardLayout lytLyrdPnlVideo;
@@ -234,13 +234,14 @@ public class JMkvpropedit {
     private JTextField[] txtNumbPadVideo = new JTextField[MAX_STREAMS];
     private JLabel[] lblNumbExplainVideo = new JLabel[MAX_STREAMS];
     private JCheckBox[] chbLangVideo = new JCheckBox[MAX_STREAMS];
-    private JComboBox[] cbLangVideo = new JComboBox[MAX_STREAMS];
     private JCheckBox[] chbExtraCmdVideo = new JCheckBox[MAX_STREAMS];
     private JTextField[] txtExtraCmdVideo = new JTextField[MAX_STREAMS];
+    @SuppressWarnings("unchecked")
+    private JComboBox<String>[] cbLangVideo = new JComboBox[MAX_STREAMS];
 
 
     // Audio tab controls
-    private JComboBox cbAudio;
+    private JComboBox<String> cbAudio;
     private JButton btnAddAudio;
     private JButton btnRemoveAudio;
     private CardLayout lytLyrdPnlAudio;
@@ -265,13 +266,14 @@ public class JMkvpropedit {
     private JTextField[] txtNumbPadAudio = new JTextField[MAX_STREAMS];
     private JLabel[] lblNumbExplainAudio = new JLabel[MAX_STREAMS];
     private JCheckBox[] chbLangAudio = new JCheckBox[MAX_STREAMS];
-    private JComboBox[] cbLangAudio = new JComboBox[MAX_STREAMS];
     private JCheckBox[] chbExtraCmdAudio = new JCheckBox[MAX_STREAMS];
     private JTextField[] txtExtraCmdAudio = new JTextField[MAX_STREAMS];
+    @SuppressWarnings("unchecked")
+    private JComboBox<String>[] cbLangAudio = new JComboBox[MAX_STREAMS];
 
 
     // Subtitle tab controls
-    private JComboBox cbSubtitle;
+    private JComboBox<String> cbSubtitle;
     private AbstractButton btnAddSubtitle;
     private AbstractButton btnRemoveSubtitle;
     private CardLayout lytLyrdPnlSubtitle;
@@ -296,9 +298,10 @@ public class JMkvpropedit {
     private JTextField[] txtNumbPadSubtitle = new JTextField[MAX_STREAMS];
     private JLabel[] lblNumbExplainSubtitle = new JLabel[MAX_STREAMS];
     private JCheckBox[] chbLangSubtitle = new JCheckBox[MAX_STREAMS];
-    private JComboBox[] cbLangSubtitle = new JComboBox[MAX_STREAMS];
     private JCheckBox[] chbExtraCmdSubtitle = new JCheckBox[MAX_STREAMS];
     private JTextField[] txtExtraCmdSubtitle = new JTextField[MAX_STREAMS];
+    @SuppressWarnings("unchecked")
+    private JComboBox<String>[] cbLangSubtitle = new JComboBox[MAX_STREAMS];
 
 
     //Attachments tab controls
@@ -315,7 +318,7 @@ public class JMkvpropedit {
     private JLabel lblAttachAddDesc;
     private JTextField txtAttachAddDesc;
     private JLabel lblAttachAddMime;
-    private JComboBox cbAttachAddMime;
+    private JComboBox<String> cbAttachAddMime;
     private JPanel pnlAttachAddControlsBottom;
     private JButton btnAttachAddAdd;
     private JButton btnAttachAddRemove;
@@ -335,7 +338,7 @@ public class JMkvpropedit {
     private JPanel pnlAttachReplaceOrig;
     private JLabel lblAttachReplaceOrig;
     private JTextField txtAttachReplaceOrig;
-    private JComboBox cbAttachReplaceOrig;
+    private JComboBox<String> cbAttachReplaceOrig;
     private JLabel lblAttachReplaceNew;
     private JTextField txtAttachReplaceNew;
     private JButton btnAttachReplaceNewBrowse;
@@ -344,7 +347,7 @@ public class JMkvpropedit {
     private JLabel lblAttachReplaceDesc;
     private JTextField txtAttachReplaceDesc;
     private JLabel lblAttachReplaceMime;
-    private JComboBox cbAttachReplaceMime;
+    private JComboBox<String> cbAttachReplaceMime;
     private JPanel pnlAttachReplaceControlsBottom;
     private JButton btnAttachReplaceAdd;
     private JButton btnAttachReplaceEdit;
@@ -364,7 +367,7 @@ public class JMkvpropedit {
     private JLabel lblAttachDeleteValue;
     private JPanel pnlAttachDeleteValue;
     private JTextField txtAttachDeleteValue;
-    private JComboBox cbAttachDeleteValue;
+    private JComboBox<String> cbAttachDeleteValue;
     private JPanel pnlAttachDeleteControlsBottom;
     private JButton btnAttachDeleteAdd;
     private JButton btnAttachDeleteEdit;
@@ -427,8 +430,8 @@ public class JMkvpropedit {
         spFiles.setViewportBorder(null);
         pnlInput.add(spFiles);
 
-        modelFiles = new DefaultListModel();
-        listFiles = new JList(modelFiles);
+        modelFiles = new DefaultListModel<String>();
+        listFiles = new JList<String>(modelFiles);
         spFiles.setViewportView(listFiles);
 
         JPanel pnlListToolbar = new JPanel();
@@ -603,9 +606,10 @@ public class JMkvpropedit {
         gbc_chbChapters.gridy = 3;
         pnlGeneral.add(chbChapters, gbc_chbChapters);
 
-        cbChapters = new JComboBox();
+        cbChapters = new JComboBox<String>();
         cbChapters.setEnabled(false);
-        cbChapters.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:", "Match file name with suffix:"}));
+        cbChapters.setModel(new DefaultComboBoxModel<String>(
+                new String[] {"Remove", "From file:", "Match file name with suffix:"}));
         cbChapters.setPrototypeDisplayValue("Match file name with suffix:  ");
         GridBagConstraints gbc_cbChapters = new GridBagConstraints();
         gbc_cbChapters.insets = new Insets(0, 0, 5, 0);
@@ -654,9 +658,10 @@ public class JMkvpropedit {
         gbc_btnBrowseChapters.gridy = 0;
         pnlChapControlsGeneral.add(btnBrowseChapters, gbc_btnBrowseChapters);
 
-        cbExtChapters = new JComboBox();
+        cbExtChapters = new JComboBox<String>();
         cbExtChapters.setVisible(false);
-        cbExtChapters.setModel(new DefaultComboBoxModel(new String[] {".xml", ".txt"}));
+        cbExtChapters.setModel(new DefaultComboBoxModel<String>(
+                new String[] {".xml", ".txt"}));
         GridBagConstraints gbc_cbExtChapters = new GridBagConstraints();
         gbc_cbExtChapters.insets = new Insets(0, 0, 8, 0);
         gbc_cbExtChapters.gridx = 2;
@@ -671,9 +676,10 @@ public class JMkvpropedit {
         gbc_chbTags.gridy = 5;
         pnlGeneral.add(chbTags, gbc_chbTags);
 
-        cbTags = new JComboBox();
+        cbTags = new JComboBox<String>();
         cbTags.setEnabled(false);
-        cbTags.setModel(new DefaultComboBoxModel(new String[] {"Remove", "From file:", "Match file name with suffix:"}));
+        cbTags.setModel(new DefaultComboBoxModel<String>(
+                new String[] {"Remove", "From file:", "Match file name with suffix:"}));
         cbTags.setPrototypeDisplayValue("Match file name with suffix:  ");
         GridBagConstraints gbc_cbTags = new GridBagConstraints();
         gbc_cbTags.insets = new Insets(0, 0, 5, 0);
@@ -722,9 +728,10 @@ public class JMkvpropedit {
         gbc_btnBrowseTags.gridy = 0;
         pnlTagControlsGeneral.add(btnBrowseTags, gbc_btnBrowseTags);
 
-        cbExtTags = new JComboBox();
+        cbExtTags = new JComboBox<String>();
         cbExtTags.setVisible(false);
-        cbExtTags.setModel(new DefaultComboBoxModel(new String[] {".xml", ".txt"}));
+        cbExtTags.setModel(new DefaultComboBoxModel<String>(
+                new String[] {".xml", ".txt"}));
         GridBagConstraints gbc_cbExtTags = new GridBagConstraints();
         gbc_cbExtTags.insets = new Insets(0, 0, 8, 0);
         gbc_cbExtTags.gridx = 2;
@@ -822,7 +829,7 @@ public class JMkvpropedit {
         pnlVideo.add(pnlControlsVideo, gbc_pnlControlsVideo);
         pnlControlsVideo.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        cbVideo = new JComboBox();
+        cbVideo = new JComboBox<String>();
         pnlControlsVideo.add(cbVideo);
 
         btnAddVideo = new JButton("");
@@ -872,7 +879,7 @@ public class JMkvpropedit {
         pnlAudio.add(pnlControlsAudio, gbc_pnlControlsAudio);
         pnlControlsAudio.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        cbAudio = new JComboBox();
+        cbAudio = new JComboBox<String>();
         pnlControlsAudio.add(cbAudio);
 
         btnAddAudio = new JButton("");
@@ -922,7 +929,7 @@ public class JMkvpropedit {
         pnlSubtitle.add(pnlControlsSubtitle, gbc_pnlControlsSubtitle);
         pnlControlsSubtitle.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        cbSubtitle = new JComboBox();
+        cbSubtitle = new JComboBox<String>();
         pnlControlsSubtitle.add(cbSubtitle);
 
         btnAddSubtitle = new JButton("");
@@ -1050,8 +1057,8 @@ public class JMkvpropedit {
         gbc_lblAttachAddMime.gridy = 3;
         pnlAttachAddControls.add(lblAttachAddMime, gbc_lblAttachAddMime);
 
-        cbAttachAddMime = new JComboBox();
-        cbAttachAddMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeTypes()));
+        cbAttachAddMime = new JComboBox<String>();
+        cbAttachAddMime.setModel(new DefaultComboBoxModel<String>(mkvStrings.getMimeTypes()));
         GridBagConstraints gbc_cbAttachAddMime = new GridBagConstraints();
         gbc_cbAttachAddMime.insets = new Insets(0, 0, 5, 5);
         gbc_cbAttachAddMime.fill = GridBagConstraints.HORIZONTAL;
@@ -1197,10 +1204,11 @@ public class JMkvpropedit {
         pnlAttachReplaceOrig.add(txtAttachReplaceOrig, "txtAttachReplaceOrig");
         txtAttachReplaceOrig.setColumns(10);
 
-        cbAttachReplaceOrig = new JComboBox();
+        cbAttachReplaceOrig = new JComboBox<String>();
         List<String> mimeList = mkvStrings.getMimeTypeList();
         mimeList.remove(0);
-        cbAttachReplaceOrig.setModel(new DefaultComboBoxModel(mimeList.toArray()));
+        cbAttachReplaceOrig.setModel(new DefaultComboBoxModel<String>(
+                mimeList.toArray(new String[mimeList.size()])));
         cbAttachReplaceOrig.setVisible(false);
         pnlAttachReplaceOrig.add(cbAttachReplaceOrig, "cbAttachReplaceOrig");
 
@@ -1271,8 +1279,8 @@ public class JMkvpropedit {
         gbc_lblAttachReplaceMime.gridy = 5;
         pnlAttachReplaceControls.add(lblAttachReplaceMime, gbc_lblAttachReplaceMime);
 
-        cbAttachReplaceMime = new JComboBox();
-        cbAttachReplaceMime.setModel(new DefaultComboBoxModel(mkvStrings.getMimeTypes()));
+        cbAttachReplaceMime = new JComboBox<String>();
+        cbAttachReplaceMime.setModel(new DefaultComboBoxModel<String>(mkvStrings.getMimeTypes()));
         GridBagConstraints gbc_cbAttachReplaceMime = new GridBagConstraints();
         gbc_cbAttachReplaceMime.insets = new Insets(0, 0, 5, 5);
         gbc_cbAttachReplaceMime.fill = GridBagConstraints.HORIZONTAL;
@@ -1419,9 +1427,10 @@ public class JMkvpropedit {
         pnlAttachDeleteValue.add(txtAttachDeleteValue, "txtAttachDeleteValue");
         txtAttachDeleteValue.setColumns(10);
 
-        cbAttachDeleteValue = new JComboBox();
+        cbAttachDeleteValue = new JComboBox<String>();
         cbAttachDeleteValue.setVisible(false);
-        cbAttachDeleteValue.setModel(new DefaultComboBoxModel(mimeList.toArray()));
+        cbAttachDeleteValue.setModel(new DefaultComboBoxModel<String>(
+                mimeList.toArray(new String[mimeList.size()])));
         pnlAttachDeleteValue.add(cbAttachDeleteValue, "cbAttachDeleteValue");
 
         pnlAttachDeleteControlsBottom = new JPanel();
@@ -2953,9 +2962,9 @@ public class JMkvpropedit {
             gbc_chbLangVideo.gridy = 6;
             subPnlVideo[nVideo].add(chbLangVideo[nVideo], gbc_chbLangVideo);
 
-            cbLangVideo[nVideo] = new JComboBox();
+            cbLangVideo[nVideo] = new JComboBox<String>();
             cbLangVideo[nVideo].setEnabled(false);
-            cbLangVideo[nVideo].setModel(new DefaultComboBoxModel(mkvStrings.getLangNames()));
+            cbLangVideo[nVideo].setModel(new DefaultComboBoxModel<String>(mkvStrings.getLangNames()));
             cbLangVideo[nVideo].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
             GridBagConstraints gbc_cbLangVideo = new GridBagConstraints();
             gbc_cbLangVideo.insets = new Insets(0, 0, 10, 0);
@@ -3304,9 +3313,9 @@ public class JMkvpropedit {
             gbc_chbLangAudio.gridy = 6;
             subPnlAudio[nAudio].add(chbLangAudio[nAudio], gbc_chbLangAudio);
 
-            cbLangAudio[nAudio] = new JComboBox();
+            cbLangAudio[nAudio] = new JComboBox<String>();
             cbLangAudio[nAudio].setEnabled(false);
-            cbLangAudio[nAudio].setModel(new DefaultComboBoxModel(mkvStrings.getLangNames()));
+            cbLangAudio[nAudio].setModel(new DefaultComboBoxModel<String>(mkvStrings.getLangNames()));
             cbLangAudio[nAudio].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
             GridBagConstraints gbc_cbLangAudio = new GridBagConstraints();
             gbc_cbLangAudio.insets = new Insets(0, 0, 10, 0);
@@ -3655,9 +3664,9 @@ public class JMkvpropedit {
             gbc_chbLangSubtitle.gridy = 6;
             subPnlSubtitle[nSubtitle].add(chbLangSubtitle[nSubtitle], gbc_chbLangSubtitle);
 
-            cbLangSubtitle[nSubtitle] = new JComboBox();
+            cbLangSubtitle[nSubtitle] = new JComboBox<String>();
             cbLangSubtitle[nSubtitle].setEnabled(false);
-            cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel(mkvStrings.getLangNames()));
+            cbLangSubtitle[nSubtitle].setModel(new DefaultComboBoxModel<String>(mkvStrings.getLangNames()));
             cbLangSubtitle[nSubtitle].setSelectedIndex(mkvStrings.getLangCodeList().indexOf("und"));
             GridBagConstraints gbc_cbLangSubtitle = new GridBagConstraints();
             gbc_cbLangSubtitle.insets = new Insets(0, 0, 10, 0);
