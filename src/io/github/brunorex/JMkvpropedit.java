@@ -3905,12 +3905,12 @@ public class JMkvpropedit {
                 switch (cbChapters.getSelectedIndex()) {
                     case 0:
                         cmdLineGeneral[i] += " --chapters \"\"";
-                        cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
+                        cmdLineGeneralOpt[i] += " --chapters ''";
                         break;
                     case 1:
                         if (txtChapters.getText().trim().isEmpty()) {
                             cmdLineGeneral[i] += " --chapters \"\"";
-                            cmdLineGeneralOpt[i] += " --chapters #EMPTY#";
+                            cmdLineGeneralOpt[i] += " --chapters ''";
                         } else {
                             if (Utils.isWindows()) {
                                 cmdLineGeneral[i] += " --chapters \"" + txtChapters.getText() + "\"";
