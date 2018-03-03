@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Bruno Barbieri
+ * Copyright (c) 2012-2018 Bruno Barbieri
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

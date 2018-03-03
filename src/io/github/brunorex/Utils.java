@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Bruno Barbieri
+ * Copyright (c) 2012-2018 Bruno Barbieri
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -75,7 +75,7 @@ public class Utils {
             name = name.replace("\\","\\\\");
             name = name.replace(" ", "\\s");
             name = name.replace("\"","\\2");
-            name = name.replace(":","\\c");
+            //name = name.replace(":","\\c");
             name = name.replace("#","\\h");
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Bruno Barbieri
+ * Copyright (c) 2012-2018 Bruno Barbieri
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -4434,22 +4434,29 @@ public class JMkvpropedit {
 
                 for (int i = 0; i < cmdLineBatch.size(); i++) {
                     try {
-                        File optFile = new File("options.txt");
+                        File optFile = new File("options.json");
                         PrintWriter optFilePW = new PrintWriter(optFile, "UTF-8");
                         String[] optFileContents = Commandline.translateCommandline(cmdLineBatchOpt.get(i));
+                        int optFileMaxLines = optFileContents.length-1;
 
                         if (!optFile.exists()) {
                             optFile.createNewFile();
                         }
 
+                        optFilePW.println("[");
+                        int curLine = 0;
                         for (String content:optFileContents) {
-                            optFilePW.println(content);
+                            optFilePW.print("  \"" + content + "\"");
+                            if (curLine != optFileMaxLines) optFilePW.print(",");
+                            optFilePW.println();
+                            curLine++;
                         }
+                        optFilePW.println("]");
 
                         optFilePW.flush();
                         optFilePW.close();
 
-                        pb.command(txtMkvPropExe.getText(), "@options.txt");
+                        pb.command(txtMkvPropExe.getText(), "@options.json");
                         pb.redirectErrorStream(true);
 
                         txtOutput.append("File: " + modelFiles.get(i) + "\n");
