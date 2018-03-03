@@ -4349,7 +4349,7 @@ public class JMkvpropedit {
             }
 
             if (type.equals(rbAttachReplaceName.getText())) {
-                cmdLineAttachmentsReplace += " --replace-attachment \"name:" + Utils.escapeColons(orig)
+                cmdLineAttachmentsReplace += " --replace-attachment \"name:" + orig
                         + ":" + replace + "\"";
                 cmdLineAttachmentsReplaceOpt += " --replace-attachment \"name:" + Utils.escapeName(orig)
                         + ":" + Utils.escapeName(replace) + "\"";
@@ -4357,7 +4357,7 @@ public class JMkvpropedit {
                 cmdLineAttachmentsReplace += " --replace-attachment \"" + orig    + ":" + replace + "\"";
                 cmdLineAttachmentsReplaceOpt += " --replace-attachment \"" + orig + ":" + Utils.escapeName(replace) + "\"";
             } else {
-                cmdLineAttachmentsReplace += " --replace-attachment \"mime-type:" + Utils.escapeColons(orig)
+                cmdLineAttachmentsReplace += " --replace-attachment \"mime-type:" + orig
                         + ":" + replace + "\"";
                 cmdLineAttachmentsReplaceOpt += " --replace-attachment \"mime-type:" + Utils.escapeName(orig)
                         + ":" + Utils.escapeName(replace) + "\"";
@@ -4380,7 +4380,7 @@ public class JMkvpropedit {
                 cmdLineAttachmentsDelete += " --delete-attachment \"" + value + "\"";
                 cmdLineAttachmentsDeleteOpt += " --delete-attachment \"" + value + "\"";
             } else {
-                cmdLineAttachmentsDelete += " --delete-attachment \"mime-type:" + Utils.escapeColons(value) + "\"";
+                cmdLineAttachmentsDelete += " --delete-attachment \"mime-type:" + value + "\"";
                 cmdLineAttachmentsDeleteOpt += " --delete-attachment \"mime-type:" + Utils.escapeName(value) + "\"";
             }
         }
@@ -4446,6 +4446,8 @@ public class JMkvpropedit {
                         optFilePW.println("[");
                         int curLine = 0;
                         for (String content:optFileContents) {
+                            content = Utils.fixEscapedQuotes(content);
+
                             optFilePW.print("  \"" + content + "\"");
                             if (curLine != optFileMaxLines) optFilePW.print(",");
                             optFilePW.println();

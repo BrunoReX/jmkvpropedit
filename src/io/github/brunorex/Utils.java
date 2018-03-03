@@ -72,11 +72,8 @@ public class Utils {
 
     public static String escapeName(String name) {
         if (!name.isEmpty()) {
+            name = name.replace("\"", "####escaped__quotes#####"); // lol 
             name = name.replace("\\","\\\\");
-            name = name.replace(" ", "\\s");
-            name = name.replace("\"","\\2");
-            //name = name.replace(":","\\c");
-            name = name.replace("#","\\h");
         }
 
         return name;
@@ -88,14 +85,16 @@ public class Utils {
         return text;
     }
 
-    public static String escapeColons(String text) {
-        text = text.replace(":", "\\c");
+    public static String escapeBackslashes(String text) {
+        text = text.replace("\\", "\\\\");
 
         return text;
     }
 
-    public static String escapeBackslashes(String text) {
-        text = text.replace("\\", "\\\\");
+    public static String fixEscapedQuotes(String text) {
+        if (!text.isEmpty()) {
+            text = text.replace("####escaped__quotes#####", "\\\"");
+        }
 
         return text;
     }
