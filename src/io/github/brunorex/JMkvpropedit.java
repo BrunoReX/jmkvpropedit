@@ -44,7 +44,7 @@ import org.ini4j.*;
 
 public class JMkvpropedit {
 
-    private static final String VERSION_NUMBER = "1.4";
+    private static final String VERSION_NUMBER = "1.4.1";
     private static final int MAX_STREAMS = 100;
     private static String[] argsArray;
 
@@ -589,7 +589,7 @@ public class JMkvpropedit {
         txtNumbPadGeneral.setColumns(10);
         pnlNumbControlsGeneral.add(txtNumbPadGeneral);
 
-        lblNumbExplainGeneral = new JLabel("      To use it, add {num} to the title (e.g. \"My Title {num}\")");
+        lblNumbExplainGeneral = new JLabel("      To use it, add {num} to the title (e.g. \"My Title {num}\"). Use {file_name} to use the file name as the title.");
         lblNumbExplainGeneral.setEnabled(false);
         GridBagConstraints gbc_lblNumbExplainGeneral = new GridBagConstraints();
         gbc_lblNumbExplainGeneral.insets = new Insets(0, 0, 10, 0);
@@ -2944,7 +2944,7 @@ public class JMkvpropedit {
             txtNumbPadVideo[nVideo].setColumns(10);
             pnlNumbControlsVideo.add(txtNumbPadVideo[nVideo]);
 
-            lblNumbExplainVideo[nVideo] = new JLabel("      To use it, add {num} to the name (e.g. \"My Video {num}\")");
+            lblNumbExplainVideo[nVideo] = new JLabel("      To use it, add {num} to the name (e.g. \"My Video {num}\"). Use {file_name} to use the file name as the name.");
             lblNumbExplainVideo[nVideo].setEnabled(false);
             GridBagConstraints gbc_lblNumbExplainVideo = new GridBagConstraints();
             gbc_lblNumbExplainVideo.insets = new Insets(0, 0, 10, 0);
@@ -3295,7 +3295,7 @@ public class JMkvpropedit {
             txtNumbPadAudio[nAudio].setColumns(10);
             pnlNumbControlsAudio.add(txtNumbPadAudio[nAudio]);
 
-            lblNumbExplainAudio[nAudio] = new JLabel("      To use it, add {num} to the name (e.g. \"My Audio {num}\")");
+            lblNumbExplainAudio[nAudio] = new JLabel("      To use it, add {num} to the name (e.g. \"My Audio {num}\"). Use {file_name} to use the file name as the name.");
             lblNumbExplainAudio[nAudio].setEnabled(false);
             GridBagConstraints gbc_lblNumbExplainAudio = new GridBagConstraints();
             gbc_lblNumbExplainAudio.insets = new Insets(0, 0, 10, 0);
@@ -3646,7 +3646,7 @@ public class JMkvpropedit {
             txtNumbPadSubtitle[nSubtitle].setColumns(10);
             pnlNumbControlsSubtitle.add(txtNumbPadSubtitle[nSubtitle]);
 
-            lblNumbExplainSubtitle[nSubtitle] = new JLabel("      To use it, add {num} to the name (e.g. \"My Subtitle {num}\")");
+            lblNumbExplainSubtitle[nSubtitle] = new JLabel("      To use it, add {num} to the name (e.g. \"My Subtitle {num}\"). Use {file_name} to use the file name as the name.");
             lblNumbExplainSubtitle[nSubtitle].setEnabled(false);
             GridBagConstraints gbc_lblNumbExplainSubtitle = new GridBagConstraints();
             gbc_lblNumbExplainSubtitle.insets = new Insets(0, 0, 10, 0);
@@ -4062,8 +4062,8 @@ public class JMkvpropedit {
                     numStartVideo[i]++;
                 }
 
-                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
-                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(j)));
+                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(j)));
 
                 cmdLineVideo[j] += tmpText;
                 cmdLineVideoOpt[j] += tmpText2;
@@ -4168,8 +4168,8 @@ public class JMkvpropedit {
                     numStartAudio[i]++;
                 }
 
-                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
-                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(j)));
+                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(j)));
 
                 cmdLineAudio[j] += tmpText;
                 cmdLineAudioOpt[j] += tmpText2;
@@ -4274,8 +4274,8 @@ public class JMkvpropedit {
                     numStartSubtitle[i]++;
                 }
 
-                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
-                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(i)));
+                tmpText = tmpText.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(j)));
+                tmpText2 = tmpText2.replace("{file_name}", Utils.getFileNameWithoutExt((String) modelFiles.get(j)));
 
                 cmdLineSubtitle[j] += tmpText;
                 cmdLineSubtitleOpt[j] += tmpText2;
