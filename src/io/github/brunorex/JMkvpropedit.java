@@ -44,7 +44,7 @@ import org.ini4j.*;
 
 public class JMkvpropedit {
 
-    private static final String VERSION_NUMBER = "1.4.2";
+    private static final String VERSION_NUMBER = "1.4.3";
     private static final int MAX_STREAMS = 100;
     private static String[] argsArray;
 
@@ -175,6 +175,7 @@ public class JMkvpropedit {
     private DefaultListModel<String> modelFiles;
     private JList<String> listFiles;
     private JButton btnAddFiles;
+    private JButton btnAddFolder;
     private JButton btnRemoveFiles;
     private JButton btnTopFiles;
     private JButton btnUpFiles;
@@ -446,10 +447,24 @@ public class JMkvpropedit {
         btnAddFiles.setContentAreaFilled(false);
         btnAddFiles.setFocusPainted(false);
         btnAddFiles.setOpaque(false);
+        btnAddFiles.setToolTipText("Add files");
         pnlListToolbar.add(btnAddFiles);
 
         Component verticalStrut1 = Box.createVerticalStrut(10);
         pnlListToolbar.add(verticalStrut1);
+
+        btnAddFolder = new JButton("");
+        btnAddFolder.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-add-folder.png")));
+        btnAddFolder.setMargin(new Insets(0, 0, 0, 0));
+        btnAddFolder.setBorderPainted(false);
+        btnAddFolder.setContentAreaFilled(false);
+        btnAddFolder.setFocusPainted(false);
+        btnAddFolder.setOpaque(false);
+        btnAddFolder.setToolTipText("Add folder");
+        pnlListToolbar.add(btnAddFolder);
+
+        Component verticalStrut1b = Box.createVerticalStrut(10);
+        pnlListToolbar.add(verticalStrut1b);
 
         btnRemoveFiles = new JButton("");
         btnRemoveFiles.setIcon(new ImageIcon(JMkvpropedit.class.getResource("/res/list-remove.png")));
@@ -458,6 +473,7 @@ public class JMkvpropedit {
         btnRemoveFiles.setContentAreaFilled(false);
         btnRemoveFiles.setFocusPainted(false);
         btnRemoveFiles.setOpaque(false);
+        btnRemoveFiles.setToolTipText("Remove selected files");
         pnlListToolbar.add(btnRemoveFiles);
 
         Component verticalStrut2 = Box.createVerticalStrut(10);
@@ -470,6 +486,7 @@ public class JMkvpropedit {
         btnTopFiles.setContentAreaFilled(false);
         btnTopFiles.setFocusPainted(false);
         btnTopFiles.setOpaque(false);
+        btnTopFiles.setToolTipText("Move selected files to the top");
         pnlListToolbar.add(btnTopFiles);
 
         Component verticalStrut3 = Box.createVerticalStrut(10);
@@ -482,6 +499,7 @@ public class JMkvpropedit {
         btnUpFiles.setContentAreaFilled(false);
         btnUpFiles.setFocusPainted(false);
         btnUpFiles.setOpaque(false);
+        btnUpFiles.setToolTipText("Move selected files up");
         pnlListToolbar.add(btnUpFiles);
 
         Component verticalStrut4 = Box.createVerticalStrut(10);
@@ -494,6 +512,7 @@ public class JMkvpropedit {
         btnDownFiles.setContentAreaFilled(false);
         btnDownFiles.setFocusPainted(false);
         btnDownFiles.setOpaque(false);
+        btnDownFiles.setToolTipText("Move selected files down");
         pnlListToolbar.add(btnDownFiles);
 
         Component verticalStrut5 = Box.createVerticalStrut(10);
@@ -506,6 +525,7 @@ public class JMkvpropedit {
         btnBottomFiles.setContentAreaFilled(false);
         btnBottomFiles.setFocusPainted(false);
         btnBottomFiles.setOpaque(false);
+        btnBottomFiles.setToolTipText("Move selected files to the bottom");
         pnlListToolbar.add(btnBottomFiles);
 
         Component verticalStrut6 = Box.createVerticalStrut(10);
@@ -518,6 +538,7 @@ public class JMkvpropedit {
         btnClearFiles.setContentAreaFilled(false);
         btnClearFiles.setFocusPainted(false);
         btnClearFiles.setOpaque(false);
+        btnClearFiles.setToolTipText("Clear file list");
         pnlListToolbar.add(btnClearFiles);
 
         JPanel pnlGeneral = new JPanel();
@@ -1618,6 +1639,24 @@ public class JMkvpropedit {
                             } catch (IOException e1) {
                             }
                     }
+                }
+
+            }
+        });
+
+        btnAddFolder.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                File folder = null;
+
+                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                chooser.setDialogTitle("Select folder with Matroska files to edit");
+                chooser.setAcceptAllFileFilterUsed(false);
+
+                int open = chooser.showOpenDialog(frmJMkvpropedit);
+
+                if (open == JFileChooser.APPROVE_OPTION) {
+                    folder = chooser.getSelectedFile();
+                    addMkvFilesFromFolder(folder);
                 }
 
             }
