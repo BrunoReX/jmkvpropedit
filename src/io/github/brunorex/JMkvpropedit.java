@@ -205,8 +205,6 @@ public class JMkvpropedit {
     private JComboBox<String> cbExtTags;
     private JCheckBox chbExtraCmdGeneral;
     private JTextField txtExtraCmdGeneral;
-    private JTextField txtMkvPropExe;
-    private JCheckBox chbMkvPropExeDef;
 
 
     // Video tab controls
@@ -374,6 +372,12 @@ public class JMkvpropedit {
     private JButton btnAttachDeleteEdit;
     private JButton btnAttachDeleteRemove;
     private JButton btnAttachDeleteCancel;
+
+
+    // Option tab controls
+    private JPanel pnlOptions;
+    private JTextField txtMkvPropExe;
+    private JCheckBox chbMkvPropExeDef;
 
 
     // Output tab controls
@@ -776,60 +780,6 @@ public class JMkvpropedit {
         gbc_txtExtraCmdGeneral.gridy = 7;
         pnlGeneral.add(txtExtraCmdGeneral, gbc_txtExtraCmdGeneral);
         txtExtraCmdGeneral.setColumns(10);
-
-        Component verticalGlue = Box.createVerticalGlue();
-        GridBagConstraints gbc_verticalGlue = new GridBagConstraints();
-        gbc_verticalGlue.insets = new Insets(0, 0, 20, 0);
-        gbc_verticalGlue.gridx = 1;
-        gbc_verticalGlue.gridy = 8;
-        pnlGeneral.add(verticalGlue, gbc_verticalGlue);
-
-        JLabel lblMkvPropExe = new JLabel("Mkvpropedit executable:");
-        GridBagConstraints gbc_lblMkvPropExe = new GridBagConstraints();
-        gbc_lblMkvPropExe.anchor = GridBagConstraints.WEST;
-        gbc_lblMkvPropExe.insets = new Insets(0, 0, 5, 5);
-        gbc_lblMkvPropExe.gridx = 0;
-        gbc_lblMkvPropExe.gridy = 9;
-        pnlGeneral.add(lblMkvPropExe, gbc_lblMkvPropExe);
-
-        txtMkvPropExe = new JTextField("mkvpropedit");
-        txtMkvPropExe.setEditable(false);
-        GridBagConstraints gbc_txtMkvPropExe = new GridBagConstraints();
-        gbc_txtMkvPropExe.insets = new Insets(0, 0, 5, 0);
-        gbc_txtMkvPropExe.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txtMkvPropExe.gridx = 1;
-        gbc_txtMkvPropExe.gridy = 9;
-        pnlGeneral.add(txtMkvPropExe, gbc_txtMkvPropExe);
-        txtMkvPropExe.setColumns(10);
-
-        JPanel pnlMkvPropExeControls = new JPanel();
-        GridBagConstraints gbc_pnlMkvPropExeControls = new GridBagConstraints();
-        gbc_pnlMkvPropExeControls.fill = GridBagConstraints.HORIZONTAL;
-        gbc_pnlMkvPropExeControls.gridx = 1;
-        gbc_pnlMkvPropExeControls.gridy = 10;
-        pnlGeneral.add(pnlMkvPropExeControls, gbc_pnlMkvPropExeControls);
-        GridBagLayout gbl_pnlMkvPropExeControls = new GridBagLayout();
-        gbl_pnlMkvPropExeControls.columnWidths = new int[]{0, 0, 0};
-        gbl_pnlMkvPropExeControls.rowHeights = new int[]{0, 0};
-        gbl_pnlMkvPropExeControls.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-        gbl_pnlMkvPropExeControls.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        pnlMkvPropExeControls.setLayout(gbl_pnlMkvPropExeControls);
-
-        chbMkvPropExeDef = new JCheckBox("Use default");
-        chbMkvPropExeDef.setSelected(true);
-        chbMkvPropExeDef.setEnabled(false);
-        GridBagConstraints gbc_chckbxUseDefault = new GridBagConstraints();
-        gbc_chckbxUseDefault.anchor = GridBagConstraints.WEST;
-        gbc_chckbxUseDefault.insets = new Insets(0, 0, 0, 5);
-        gbc_chckbxUseDefault.gridx = 0;
-        gbc_chckbxUseDefault.gridy = 0;
-        pnlMkvPropExeControls.add(chbMkvPropExeDef, gbc_chckbxUseDefault);
-
-        JButton btnBrowseMkvPropExe = new JButton("Browse...");
-        GridBagConstraints gbc_btnBrowseMkvPropExe = new GridBagConstraints();
-        gbc_btnBrowseMkvPropExe.gridx = 1;
-        gbc_btnBrowseMkvPropExe.gridy = 0;
-        pnlMkvPropExeControls.add(btnBrowseMkvPropExe, gbc_btnBrowseMkvPropExe);
 
         JPanel pnlVideo = new JPanel();
         pnlVideo.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -1498,6 +1448,65 @@ public class JMkvpropedit {
         gbc_btnAttachDeleteCancel.gridx = 3;
         gbc_btnAttachDeleteCancel.gridy = 0;
         pnlAttachDeleteControlsBottom.add(btnAttachDeleteCancel, gbc_btnAttachDeleteCancel);
+
+        pnlOptions = new JPanel();
+        pnlOptions.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlTabs.addTab("Options", null, pnlOptions, null);
+        GridBagLayout gbl_pnlOptions = new GridBagLayout();
+        gbl_pnlOptions.columnWidths = new int[] {0, 0, 0};
+        gbl_pnlOptions.rowHeights = new int[]{0, 0, 0, 0};
+        gbl_pnlOptions.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_pnlOptions.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+        pnlOptions.setLayout(gbl_pnlOptions);
+
+        JLabel lblMkvPropExe = new JLabel("Mkvpropedit executable:");
+        lblMkvPropExe.setHorizontalAlignment(SwingConstants.CENTER);
+        GridBagConstraints gbc_label = new GridBagConstraints();
+        gbc_label.anchor = GridBagConstraints.WEST;
+        gbc_label.insets = new Insets(0, 0, 5, 5);
+        gbc_label.gridx = 0;
+        gbc_label.gridy = 0;
+        pnlOptions.add(lblMkvPropExe, gbc_label);
+
+        txtMkvPropExe = new JTextField("mkvpropedit");
+        txtMkvPropExe.setEditable(false);
+        txtMkvPropExe.setColumns(10);
+        GridBagConstraints gbc_textField = new GridBagConstraints();
+        gbc_textField.insets = new Insets(0, 0, 5, 0);
+        gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_textField.gridx = 1;
+        gbc_textField.gridy = 0;
+        pnlOptions.add(txtMkvPropExe, gbc_textField);
+
+        JPanel pnlMkvPropExeControls = new JPanel();
+        GridBagConstraints gbc_panel = new GridBagConstraints();
+        gbc_panel.insets = new Insets(0, 0, 5, 0);
+        gbc_panel.fill = GridBagConstraints.BOTH;
+        gbc_panel.gridx = 1;
+        gbc_panel.gridy = 1;
+        pnlOptions.add(pnlMkvPropExeControls, gbc_panel);
+        GridBagLayout gbl_panel = new GridBagLayout();
+        gbl_panel.columnWidths = new int[]{0, 0, 0};
+        gbl_panel.rowHeights = new int[]{0, 0};
+        gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        pnlMkvPropExeControls.setLayout(gbl_panel);
+
+        chbMkvPropExeDef = new JCheckBox("Use default");
+        chbMkvPropExeDef.setSelected(true);
+        chbMkvPropExeDef.setEnabled(false);
+        GridBagConstraints gbc_checkBox = new GridBagConstraints();
+        gbc_checkBox.anchor = GridBagConstraints.WEST;
+        gbc_checkBox.insets = new Insets(0, 0, 0, 5);
+        gbc_checkBox.gridx = 0;
+        gbc_checkBox.gridy = 0;
+        pnlMkvPropExeControls.add(chbMkvPropExeDef, gbc_checkBox);
+
+        JButton btnBrowseMkvPropExe = new JButton("Browse...");
+        GridBagConstraints gbc_button = new GridBagConstraints();
+        gbc_button.gridx = 1;
+        gbc_button.gridy = 0;
+        pnlMkvPropExeControls.add(btnBrowseMkvPropExe, gbc_button);
 
         JPanel pnlOutput = new JPanel();
         pnlOutput.setBorder(new EmptyBorder(10, 10, 10, 10));
