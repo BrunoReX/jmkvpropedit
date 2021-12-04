@@ -4628,7 +4628,7 @@ public class JMkvpropedit {
 
             }
         } else if (Utils.isWindows()) {
-            String exePath = getMkvPropExeFromReg();
+            String exePath = getMkvPropExeDefaullt();
 
             if (exePath != null) {
                 txtMkvPropExe.setText(exePath);
@@ -4681,36 +4681,20 @@ public class JMkvpropedit {
         }
     }
 
-    private String getMkvPropExeFromReg() {
-        String exePath = null;
+    private String getMkvPropExeDefaullt() {
+        String sysDrive = System.getenv("SystemDrive");
+        String exePaths[] = new String[]{ sysDrive + "\\Program Files (x86)\\MKVToolNix",
+            sysDrive + "\\Program Files\\MKVToolNix"};
 
-        try {
-            exePath = WinRegistry.readString(WinRegistry.HKEY_LOCAL_MACHINE,
-                    "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MKVtoolnix",
-                    "UninstallString");
-
-            if (exePath == null) {
-                exePath = WinRegistry.readString(WinRegistry.HKEY_LOCAL_MACHINE,
-                        "Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MKVtoolnix",
-                        "UninstallString");
-            }
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
-        }
-
-        if (exePath != null) {
-            File tmpExe = new File(exePath);
-            tmpExe = new File(tmpExe.getParent()+"\\mkvpropedit.exe");
+        for (int i=0; i < exePaths.length; i++) {
+            File tmpExe = new File(exePaths[i]+"\\mkvpropedit.exe");
 
             if (tmpExe.exists()) {
-                exePath = tmpExe.toString();
-            } else {
-                exePath = null;
+                return tmpExe.toString();
             }
         }
 
-        return exePath;
+        return null;
     }
 
     /* End of INI configuration file methods */
