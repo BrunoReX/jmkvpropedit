@@ -248,7 +248,7 @@ public class FileDrop {
                support = false;
            } // end catch
 
-           supportsDnD = new Boolean(support);
+           supportsDnD = Boolean.valueOf(support);
        } // end if: first time through
        return supportsDnD.booleanValue();
     } // end supportsDnD

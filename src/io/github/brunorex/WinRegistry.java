@@ -241,14 +241,14 @@ public class WinRegistry {
             regCloseKey.invoke(
                     systemRoot,
                     new Object[] {
-                        new Integer(ret[0])
+                        Integer.valueOf(ret[0])
                     });
         } else if (hkey == HKEY_CURRENT_USER) {
             ret = createKey(userRoot, hkey, key);
             regCloseKey.invoke(
                     userRoot,
                     new Object[] {
-                        new Integer(ret[0])
+                        Integer.valueOf(ret[0])
                     });
         } else {
             throw new IllegalArgumentException("hkey=" + hkey);
@@ -349,9 +349,9 @@ public class WinRegistry {
         int[] handles = (int[]) regOpenKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key),
-                    new Integer(KEY_ALL_ACCESS)
+                    Integer.valueOf(KEY_ALL_ACCESS)
                 });
 
         if (handles[1] != REG_SUCCESS) {
@@ -361,13 +361,13 @@ public class WinRegistry {
         int rc = ((Integer) regDeleteValue.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0]),
+                    Integer.valueOf(handles[0]),
                     toCstr(value)
                 })).intValue();
 
         regCloseKey.invoke(root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
 
         return rc;
@@ -382,7 +382,7 @@ public class WinRegistry {
         int rc = ((Integer) regDeleteKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key)
                 })).intValue();
 
@@ -399,9 +399,9 @@ public class WinRegistry {
         int[] handles = (int[]) regOpenKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key),
-                    new Integer(KEY_READ)
+                    Integer.valueOf(KEY_READ)
                 });
 
         if (handles[1] != REG_SUCCESS) {
@@ -411,14 +411,14 @@ public class WinRegistry {
         byte[] valb = (byte[]) regQueryValueEx.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0]),
+                    Integer.valueOf(handles[0]),
                     toCstr(value)
                 });
 
         regCloseKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
 
         return (valb != null ? new String(valb).trim() : null);
@@ -435,9 +435,9 @@ public class WinRegistry {
         int[] handles = (int[]) regOpenKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key),
-                    new Integer(KEY_READ)
+                    Integer.valueOf(KEY_READ)
                 });
 
         if (handles[1] != REG_SUCCESS) {
@@ -447,7 +447,7 @@ public class WinRegistry {
         int[] info = (int[]) regQueryInfoKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
 
         int count = info[2]; // count
@@ -457,10 +457,10 @@ public class WinRegistry {
             byte[] name = (byte[]) regEnumValue.invoke(
                     root,
                     new Object[] {
-                        new Integer
+                        Integer.valueOf
                         (handles[0]),
-                        new Integer(index),
-                        new Integer(maxlen+1)
+                        Integer.valueOf(index),
+                        Integer.valueOf(maxlen+1)
                     });
 
            String value = readString(hkey, key, new String(name));
@@ -470,7 +470,7 @@ public class WinRegistry {
         regCloseKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
 
         return results;
@@ -487,9 +487,9 @@ public class WinRegistry {
         int[] handles = (int[]) regOpenKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key),
-                    new Integer(KEY_READ)
+                    Integer.valueOf(KEY_READ)
                 });
 
         if (handles[1] != REG_SUCCESS) {
@@ -499,7 +499,7 @@ public class WinRegistry {
         int[] info = (int[]) regQueryInfoKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
 
         int count = info[0]; // count
@@ -509,10 +509,10 @@ public class WinRegistry {
             byte[] name = (byte[]) regEnumKeyEx.invoke(
                     root,
                     new Object[] {
-                        new Integer
+                        Integer.valueOf
                         (handles[0]),
-                        new Integer(index),
-                        new Integer(maxlen + 1)
+                        Integer.valueOf(index),
+                        Integer.valueOf(maxlen + 1)
                     });
 
             results.add(new String(name).trim());
@@ -521,7 +521,7 @@ public class WinRegistry {
         regCloseKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
 
         return results;
@@ -536,7 +536,7 @@ public class WinRegistry {
         return (int[]) regCreateKeyEx.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key)
                 });
     }
@@ -552,15 +552,15 @@ public class WinRegistry {
         int[] handles = (int[]) regOpenKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(hkey),
+                    Integer.valueOf(hkey),
                     toCstr(key),
-                    new Integer(KEY_ALL_ACCESS)
+                    Integer.valueOf(KEY_ALL_ACCESS)
                 });
 
         regSetValueEx.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0]),
+                    Integer.valueOf(handles[0]),
                     toCstr(valueName),
                     toCstr(value)
                 });
@@ -568,7 +568,7 @@ public class WinRegistry {
         regCloseKey.invoke(
                 root,
                 new Object[] {
-                    new Integer(handles[0])
+                    Integer.valueOf(handles[0])
                 });
     }
 
