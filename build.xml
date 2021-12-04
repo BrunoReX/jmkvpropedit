@@ -33,7 +33,7 @@
 	</target>
 	
 	<target name="compile" depends="init" >
-		<javac includeantruntime="false" target="9" source="9" srcdir="${src.dir}" destdir="${build.dir}" debug="false" encoding="UTF-8">
+		<javac includeantruntime="false" target="8" source="8" srcdir="${src.dir}" destdir="${build.dir}" debug="false" encoding="UTF-8">
 			<classpath refid="lib.classpath" />
 		</javac>
 	</target>
