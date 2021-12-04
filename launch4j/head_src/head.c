@@ -2,7 +2,7 @@
 	Launch4j (http://launch4j.sourceforge.net/)
 	Cross-platform Java application wrapper for creating Windows native executables.
 
-	Copyright (c) 2004, 2015 Grzegorz Kowal,
+	Copyright (c) 2004, 2019 Grzegorz Kowal,
 							 Ian Roberts (jdk preference patch)
 							 Sylvain Mina (single instance patch)
 
@@ -312,27 +312,118 @@ BOOL regQueryValue(const char* regPath, unsigned char* buffer,
 	return result;
 }
 
+int findNextVersionPart(const char* startAt)
+{
+	if (startAt == NULL || strlen(startAt) == 0)
+    {
+		return 0;
+	}
+
+	char* firstSeparatorA = strchr(startAt, '.');
+	char* firstSeparatorB = strchr(startAt, '_');
+	char* firstSeparator;
+	if (firstSeparatorA == NULL)
+    {
+		firstSeparator = firstSeparatorB;
+	}
+    else if (firstSeparatorB == NULL)
+    {
+		firstSeparator = firstSeparatorA;
+	}
+    else
+    {
+		firstSeparator = min(firstSeparatorA, firstSeparatorB);
+	}
+
+	if (firstSeparator == NULL)
+    {
+		return strlen(startAt);
+	}
+
+	return firstSeparator - startAt;
+}
+
+/**
+ * This method will take java version from `originalVersion` string and convert/format it
+ * into `version` string that can be used for string comparison with other versions.
+ *
+ * Due to different version schemas <=8 vs. >=9 it will "normalize" versions to 1 format
+ * so we can directly compare old and new versions.
+ */
 void formatJavaVersion(char* version, const char* originalVersion)
 {
-    char* updatePart = strchr(originalVersion, '_');
-
-    if (updatePart != NULL)
+	strcpy(version, "");
+	if (originalVersion == NULL || strlen(originalVersion) == 0)
     {
-        // skip underscore
-        updatePart++;
+		return;
+	}
 
-        if (strlen(updatePart) < 3)
+	int partsAdded = 0;
+	int i;
+	char* pos = (char*) originalVersion;
+	int curPartLen;
+
+	while ((curPartLen = findNextVersionPart(pos)) > 0)
+    {
+		char number[curPartLen + 1];
+		memset(number, 0, curPartLen + 1);
+		strncpy(number, pos, curPartLen);
+
+		if (partsAdded == 0 && (curPartLen != 1 || number[0] != '1'))
         {
-            const int majorVersionLength = updatePart - originalVersion;
-            strncpy(version, originalVersion, majorVersionLength);
-            *(version + majorVersionLength) = 0;
-            strcat(version, "0");
-            strcat(version, updatePart);
-            return;
-        }
-    }
-    
-    strcpy(version, originalVersion);
+			// NOTE: When it's java 9+ we'll add "1" as the first part of the version
+			strcpy(version, "1");
+			partsAdded++;
+		}
+
+		if (partsAdded < 3)
+        {
+			if (partsAdded > 0)
+            {
+				strcat(version, ".");
+			}
+			for (i = 0;
+					(partsAdded > 0)
+							&& (i < JRE_VER_MAX_DIGITS_PER_PART - strlen(number));
+					i++)
+            {
+				strcat(version, "0");
+			}
+			strcat(version, number);
+		}
+        else if (partsAdded == 3)
+        {
+			// add as an update
+			strcat(version, "_");
+			for (i = 0; i < JRE_VER_MAX_DIGITS_PER_PART - strlen(number); i++)
+            {
+				strcat(version, "0");
+			}
+			strcat(version, number);
+		}
+        else if (partsAdded >= 4)
+        {
+			debug("Warning:\tformatJavaVersion() too many parts added.\n");
+			break;
+		}
+		partsAdded++;
+
+		pos += curPartLen + 1;
+		if (pos >= originalVersion + strlen(originalVersion))
+        {
+			break;
+		}
+	}
+
+	for (i = partsAdded; i < 3; i++)
+    {
+		strcat(version, ".");
+		int j;
+		for (j = 0; j < JRE_VER_MAX_DIGITS_PER_PART; j++)
+        {
+			strcat(version, "0");
+		}
+	}
 }
 
 void regSearch(const char* keyName, const int searchType)
@@ -419,10 +510,6 @@ BOOL isJavaHomeValid(const char* keyName, const int searchType)
 				path[i] = buffer[i];
 			} while (path[i++] != 0);
 			
-			if (searchType & FOUND_SDK)
-			{
-				appendPath(path, "jre");
-			}
 			valid = isLauncherPathValid(path);
 		}
 		RegCloseKey(hKey);
@@ -824,37 +911,80 @@ void setWorkingDirectory(const char *exePath, const int pathLen)
 	}
 }
 
+void removeChar(char *src, const char toRemove)
+{
+    char* dst = src;
+
+    do
+	{
+		if (*src != toRemove)
+		{
+            *dst++ = *src;
+        }
+	} while (*src++ != 0);
+}
+
 BOOL bundledJreSearch(const char *exePath, const int pathLen)
 {
     debugAll("bundledJreSearch()\n");
-	char tmpPath[_MAX_PATH] = {0};
+	char jrePathSpec[_MAX_PATH] = {0};
+    BOOL is64BitJre = loadBool(BUNDLED_JRE_64_BIT);
 
-	if (loadString(JRE_PATH, tmpPath))
+    if (!wow64 && is64BitJre)
+    {
+        debug("Bundled JRE:\tCannot use 64-bit runtime on 32-bit OS.\n");
+        return FALSE;
+    }
+    
+	if (loadString(JRE_PATH, jrePathSpec))
 	{
 		char jrePath[MAX_ARGS] = {0};
-		expandVars(jrePath, tmpPath, exePath, pathLen);
-		debug("Bundled JRE:\t%s\n", jrePath);
+		expandVars(jrePath, jrePathSpec, exePath, pathLen);
+		debug("Bundled JRE(s):\t%s\n", jrePath);
+        char* path = strtok(jrePath, ";");
+        
+        while (path != NULL)
+        {
+            char pathNoBin[_MAX_PATH] = {0};
+            char *lastBackslash = strrchr(path, '\\');
+            char *lastSlash = strrchr(path, '/');
 
-		if (jrePath[0] == '\\' || jrePath[1] == ':')
-		{
-			// Absolute
-			strcpy(launcher.cmd, jrePath);
-		}
-		else
-		{
-			// Relative
-			strncpy(launcher.cmd, exePath, pathLen);
-			appendPath(launcher.cmd, jrePath);
-		}
+            if (lastBackslash != NULL && strcasecmp(lastBackslash, "\\bin") == 0)
+            {
+                strncpy(pathNoBin, path, lastBackslash - path);
+            }
+            else if (lastSlash != NULL && strcasecmp(lastSlash, "/bin") == 0)
+            {
+                strncpy(pathNoBin, path, lastSlash - path);
+            }
+            else
+            {
+                strcpy(pathNoBin, path);
+            }
+            
+            removeChar(pathNoBin, '"');
 
-		if (isLauncherPathValid(launcher.cmd))
-		{
-			search.foundJava = (wow64 && loadBool(BUNDLED_JRE_64_BIT))
-				? FOUND_BUNDLED | KEY_WOW64_64KEY
-				: FOUND_BUNDLED;
-			strcpy(search.foundJavaHome, launcher.cmd);
-			return TRUE;
-		}
+            if (*pathNoBin == '\\' || (*pathNoBin != '\0' && *(pathNoBin + 1) == ':'))
+    		{
+    			// Absolute
+    			strcpy(launcher.cmd, pathNoBin);
+    		}
+    		else
+    		{
+    			// Relative
+    			strncpy(launcher.cmd, exePath, pathLen);
+    			appendPath(launcher.cmd, pathNoBin);
+    		}
+
+    		if (isLauncherPathValid(launcher.cmd))
+    		{
+                search.foundJava = is64BitJre ? FOUND_BUNDLED | KEY_WOW64_64KEY : FOUND_BUNDLED;
+    			strcpy(search.foundJavaHome, launcher.cmd);
+    			return TRUE;
+    		}
+
+            path = strtok(NULL, ";");
+        }
     }
 
     return FALSE;

@@ -26,13 +26,20 @@
 package io.github.brunorex;
 
 import java.awt.Component;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.text.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
-import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.text.*;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.JTextComponent;
 
 public class Utils {
 
@@ -67,13 +74,12 @@ public class Utils {
 
     /* End of OS detection functions */
 
-
     /* Start of escaping functions */
 
     public static String escapeName(String name) {
         if (!name.isEmpty()) {
-            name = name.replace("\"", "####escaped__quotes#####"); // lol 
-            name = name.replace("\\","\\\\");
+            name = name.replace("\"", "####escaped__quotes#####"); // lol
+            name = name.replace("\\", "\\\\");
         }
 
         return name;
@@ -101,7 +107,6 @@ public class Utils {
 
     /* End of escaping functions */
 
-
     /* Start of right-click menu code */
 
     private static void showRCMenu(JTextComponent text, MouseEvent e) {
@@ -110,17 +115,13 @@ public class Utils {
 
         JPopupMenu rightClickMenu = new JPopupMenu();
 
-        JMenuItem copyMenuItem = new JMenuItem(text.getActionMap()
-                .get(DefaultEditorKit.copyAction));
+        JMenuItem copyMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.copyAction));
 
-        JMenuItem cutMenuItem = new JMenuItem(text.getActionMap()
-                .get(DefaultEditorKit.cutAction));
+        JMenuItem cutMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.cutAction));
 
-        JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap()
-                .get(DefaultEditorKit.pasteAction));
+        JMenuItem pasteMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.pasteAction));
 
-        JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap()
-                .get(DefaultEditorKit.selectAllAction));
+        JMenuItem selectAllMenuItem = new JMenuItem(text.getActionMap().get(DefaultEditorKit.selectAllAction));
 
         copyMenuItem.setText("Copy");
         cutMenuItem.setText("Cut");
@@ -144,7 +145,7 @@ public class Utils {
             cutMenuItem.setEnabled(false);
         }
 
-        if ((selStart+selEnd) == text.getText().length()) {
+        if ((selStart + selEnd) == text.getText().length()) {
             selectAllMenuItem.setEnabled(false);
         }
 
@@ -169,7 +170,6 @@ public class Utils {
     }
 
     /* End of right-click menu code */
-
 
     public static String padNumber(int pad, int number) {
         NumberFormat formatter = new DecimalFormat("0");
@@ -198,7 +198,7 @@ public class Utils {
         int sepIndex = file.lastIndexOf(File.separator);
 
         if (sepIndex != -1)
-            return sepIndex+1;
+            return sepIndex + 1;
         else
             return 0;
     }
@@ -226,8 +226,7 @@ public class Utils {
 
                 Object value = table.getValueAt(row, col) + "   ";
 
-                Component comp = rend.getTableCellRendererComponent(
-                        table, value, false, false, row, col);
+                Component comp = rend.getTableCellRendererComponent(table, value, false, false, row, col);
 
                 maxwidth = Math.max(comp.getPreferredSize().width, maxwidth);
             }

@@ -145,7 +145,7 @@ public class Config implements IValidatable {
 		Validator.checkOptStrings(variables,
 				Validator.MAX_ARGS,
 				Validator.MAX_ARGS,
-				"[^=%\t]+=[^=\t]+",
+				"[^=%\t]+=[^\t]+",
 				"variables",
 				Messages.getString("Config.variables"),
 				Messages.getString("Config.variables.err"));

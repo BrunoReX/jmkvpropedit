@@ -15,8 +15,7 @@
   <icon>java.ico</icon>
   <jre>
     <path></path>
-    <minVersion>1.7.0</minVersion>
+    <minVersion>9</minVersion>
     <maxVersion></maxVersion>
-    <jdkPreference>preferJre</jdkPreference>
   </jre>
 </launch4jConfig>

@@ -39,7 +39,6 @@ package net.sf.launch4j;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
@@ -112,11 +111,6 @@ public class RcBuilder {
 	public static final int INSTANCE_ALREADY_EXISTS_MSG = 105;
 
 	private final StringBuffer _sb = new StringBuffer();
-	private final Log _log;
-	
-	public RcBuilder(Log log) {
-		_log = log;
-	}
 	
 	public String getContent() {
 		return _sb.toString();
@@ -181,13 +175,7 @@ public class RcBuilder {
 		return file;
 	}
 	
-	private void logResourceFile() {
-		_log.append("Resource file:");
-		_log.append(_sb.toString());
-	}
-
 	private void writeResourceFile(File file) throws IOException {
-		logResourceFile();
 		FileOutputStream os = null;
 		OutputStreamWriter osw = null;
 		BufferedWriter w = null;
@@ -208,7 +196,6 @@ public class RcBuilder {
 	 * Handle Japanese encoding - by toshimm.
 	 */
 	private void writeKanjiResourceFile(File file) throws IOException {
-		logResourceFile();
 		FileOutputStream output = null;
 		KanjiEscapeOutputStream kanji = null;
 		OutputStreamWriter writer = null;

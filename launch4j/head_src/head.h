@@ -54,7 +54,9 @@
 #include <process.h>
 
 #define LAUNCH4j "Launch4j"
-#define VERSION "3.11"
+#define VERSION "3.14"
+
+#define JRE_VER_MAX_DIGITS_PER_PART 3
 
 #define NO_JAVA_FOUND 0
 #define FOUND_JRE 1
@@ -125,6 +127,7 @@ void appendHeapSize(char *dst, const int megabytesID, const int percentID,
 void setJvmOptions(char *jvmOptions, const char *exePath);
 BOOL createMutex();
 void setWorkingDirectory(const char *exePath, const int pathLen);
+void removeChar(char *src, const char toRemove);
 BOOL bundledJreSearch(const char *exePath, const int pathLen);
 BOOL installedJreSearch();
 void createJreSearchError();
