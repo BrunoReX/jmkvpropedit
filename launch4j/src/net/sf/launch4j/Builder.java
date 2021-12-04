@@ -80,7 +80,7 @@ public class Builder {
 		File outfile = null;
 		FileInputStream is = null;
 		FileOutputStream os = null;
-		final RcBuilder rcb = new RcBuilder(_log);
+		final RcBuilder rcb = new RcBuilder();
 		try {
 			if (c.isJniApplication()) {
 				_log.append("WARNING: Some features are not implemented in JNI headers, see documentation.");

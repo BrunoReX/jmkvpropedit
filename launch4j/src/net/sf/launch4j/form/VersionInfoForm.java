@@ -3,6 +3,9 @@ package net.sf.launch4j.form;
 import com.jeta.forms.components.separator.TitledSeparator;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+
+import net.sf.launch4j.config.LanguageID;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -13,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 
 public abstract class VersionInfoForm extends JPanel
 {
@@ -39,7 +43,7 @@ public abstract class VersionInfoForm extends JPanel
    protected final JLabel _companyNameLabel = new JLabel();
    protected final JTextField _companyNameField = new JTextField();
    protected final JLabel _languageLabel = new JLabel();
-   protected final JComboBox _languageCombo = new JComboBox();
+   protected final JComboBox<LanguageID> _languageCombo = new JComboBox<LanguageID>();
    protected final JLabel _trademarksLabel = new JLabel();
    protected final JTextField _trademarksField = new JTextField();
 

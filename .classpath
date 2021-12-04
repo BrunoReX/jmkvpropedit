@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="launch4j/launch4j.jar"/>
 	<classpathentry kind="lib" path="lib/ini4j/ini4j-0.5.4.jar"/>
-	<classpathentry kind="lib" path="lib/commons-io/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io/commons-io-2.11.0"/>
 	<classpathentry kind="lib" path="launch4j/lib/ant.jar"/>
 	<classpathentry kind="lib" path="launch4j/lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="launch4j/lib/commons-logging.jar"/>

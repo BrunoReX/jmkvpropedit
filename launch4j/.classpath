@@ -10,9 +10,9 @@
 	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/foxtrot.jar"/>
 	<classpathentry kind="lib" path="lib/ant.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6"/>
 	<classpathentry kind="lib" path="lib/jgoodies-common.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-forms.jar"/>
-	<classpathentry kind="lib" path="lib/jgoodies-looks.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/flatlaf.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

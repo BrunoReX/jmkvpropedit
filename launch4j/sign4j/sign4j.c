@@ -42,6 +42,7 @@
 #endif
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #define ZIP_END_HEADER     "\x50\x4B\x05\x06"
 #define END_HEADER_SIZE    22
