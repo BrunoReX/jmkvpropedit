@@ -96,7 +96,7 @@ import org.ini4j.InvalidFileFormatException;
 
 public class JMkvpropedit {
 
-    private static final String VERSION_NUMBER = "1.5.1";
+    private static final String VERSION_NUMBER = "1.5.2";
     private static final int MAX_STREAMS = 200;
     private static String[] argsArray;
 

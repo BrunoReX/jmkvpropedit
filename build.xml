@@ -6,6 +6,7 @@
 	<property name="dist.dir" value="dist" />
 	<property name="build.dir" value="build" />
 	<property name="lib.dir" value="lib" />
+	<property name="extra.dir" value="extra" />
 	<property name="launch4j.dir" location="launch4j" />
 	<property name="main.class" value="io.github.brunorex.JMkvpropedit" />
 	
@@ -29,6 +30,10 @@
 		
 		<copy todir="${dist.dir}">
 			<fileset dir="." includes="*.txt" />
+		</copy>
+		
+		<copy todir="${dist.dir}">
+			<fileset dir="${extra.dir}" includes="*.*" />
 		</copy>
 	</target>
 	
